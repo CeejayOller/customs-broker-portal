@@ -1,0 +1,81 @@
+{
+  "name": "customs-broker-portal",
+  "version": "0.1.0",
+  "lastUpdate": "2024-03-26",
+  "stack": {
+    "framework": "Next.js 14.2.16",
+    "authentication": "Google Auth",
+    "styling": "Tailwind CSS",
+    "uiComponents": "shadcn/ui",
+    "stateManagement": "@tanstack/react-query"
+  },
+  "completedFeatures": {
+    "adminDashboard": {
+      "status": "implemented",
+      "components": [
+        "Dashboard Overview",
+        "Activity Stats",
+        "Recent Activities",
+        "Alerts & Deadlines"
+      ]
+    },
+    "importClearance": {
+      "status": "implemented",
+      "features": [
+        "Document Upload Interface",
+        "Workflow Management",
+        "Status Tracking"
+      ]
+    },
+    "navigation": {
+      "status": "implemented",
+      "components": [
+        "Sidebar Navigation",
+        "Header with Notifications"
+      ]
+    }
+  },
+  "projectStructure": {
+    "src": {
+      "app": {
+        "admin": {
+          "admin": {
+            "page.tsx": "Main dashboard with stats and activities",
+            "import": {
+              "page.tsx": "Import clearance list view",
+              "clearance": {
+                "page.tsx": "New clearance form"
+              },
+              "components": {
+                "ImportClearanceWorkflow.tsx": "Document workflow component",
+                "ImportDocumentUpload.tsx": "File upload component"
+              }
+            }
+          },
+          "layout.tsx": "Admin layout"
+        }
+      },
+      "components": {
+        "admin": {
+          "header.tsx": "Admin header with notifications",
+          "sidebar.tsx": "Navigation sidebar"
+        },
+        "ui": "shadcn/ui components"
+      },
+      "lib": {
+        "google": "Google service integrations",
+        "utils.ts": "Utility functions"
+      }
+    }
+  },
+  "inProgress": {
+    "api": {
+      "status": "pending",
+      "description": "Implementing API routes for document upload"
+    },
+    "storage": {
+      "status": "pending",
+      "description": "Setting up Google Drive integration"
+    }
+  }
+}
