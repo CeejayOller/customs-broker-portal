@@ -1,4 +1,3 @@
-// src/components/admin/sidebar.tsx
 "use client";
 
 import Link from 'next/link';
@@ -23,43 +22,43 @@ export default function Sidebar() {
 
   const routes = [
     {
-      href: '/admin/admin',
+      href: '/admin',  // Changed from '/admin/admin'
       icon: <TrendingUp className="w-5 h-5 mr-3" />,
       label: 'Overview',
       exact: true
     },
     {
-      href: '/admin/admin/import',
+      href: '/admin/import', // Changed from '/admin/admin/import'
       icon: <ArrowDownToLine className="w-5 h-5 mr-3" />,
       label: 'Import Clearance'
     },
     {
-      href: '/admin/admin/export',
+      href: '/admin/export', // Changed from '/admin/admin/export'
       icon: <ArrowUpFromLine className="w-5 h-5 mr-3" />,
       label: 'Export Clearance'
     },
     {
-      href: '/admin/admin/shipments',
+      href: '/admin/shipments', // Changed from '/admin/admin/shipments'
       icon: <Package className="w-5 h-5 mr-3" />,
       label: 'Shipments'
     },
     {
-      href: '/admin/admin/documents',
+      href: '/admin/documents', // Changed from '/admin/admin/documents'
       icon: <FileText className="w-5 h-5 mr-3" />,
       label: 'Documents'
     },
     {
-      href: '/admin/admin/clients',
+      href: '/admin/clients', // Changed from '/admin/admin/clients'
       icon: <Users className="w-5 h-5 mr-3" />,
       label: 'Importers'
     },
     {
-      href: '/admin/admin/reports',
+      href: '/admin/reports', // Changed from '/admin/admin/reports'
       icon: <ClipboardList className="w-5 h-5 mr-3" />,
       label: 'Reports'
     },
     {
-      href: '/admin/admin/settings',
+      href: '/admin/settings', // Changed from '/admin/admin/settings'
       icon: <Settings className="w-5 h-5 mr-3" />,
       label: 'Settings'
     }

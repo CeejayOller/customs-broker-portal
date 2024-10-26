@@ -1,13 +1,14 @@
 // src/app/layout.tsx
-import './globals.css';
-import type { Metadata } from 'next';
+import './globals.css'
+import { Inter } from 'next/font/google'
+import { Providers } from '@/components/providers'
 
-export const metadata: Metadata = {
-  title: 'CLEX Customs Brokerage',
-  description: 'Customs Brokerage Management System',
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Customs Broker Portal',
+  description: 'Professional customs brokerage services in the Philippines',
 }
-
-export const dynamic = 'force-dynamic';
 
 export default function RootLayout({
   children,
@@ -16,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
-  );
+  )
 }

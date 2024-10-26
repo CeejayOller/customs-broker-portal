@@ -1,4 +1,6 @@
 // src/app/(admin)/admin/import/components/ImportDocumentUpload.tsx
+"use client"
+
 import React from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Upload, FileUp, Loader2 } from 'lucide-react';

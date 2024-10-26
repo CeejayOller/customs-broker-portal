@@ -1,11 +1,13 @@
 // src/app/(admin)/admin/import/components/ImportClearanceWorkflow.tsx
+"use client"
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle, Clock, AlertTriangle } from "lucide-react";
-import ImportDocumentUpload from './ImportDocumentUpload';
+import ImportDocumentUpload from './ImportDocumentUpload'; // Changed to default import
 import { useToast } from '@/components/ui/use-toast';
 import type { ImportClearance, ClearanceStatus, DocumentType } from '@/types/clearance';
 
@@ -130,17 +132,17 @@ const ImportClearanceWorkflow: React.FC<ImportClearanceWorkflowProps> = ({
                 <ImportDocumentUpload
                   clearanceId={clearanceId}
                   documentType="bill_of_lading"
-                  onUploadSuccess={(fileUrl) => handleUploadSuccess('Bill of Lading', fileUrl)}
+                  onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Bill of Lading', fileUrl)}
                 />
                 <ImportDocumentUpload
                   clearanceId={clearanceId}
                   documentType="commercial_invoice"
-                  onUploadSuccess={(fileUrl) => handleUploadSuccess('Commercial Invoice', fileUrl)}
+                  onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Commercial Invoice', fileUrl)}
                 />
                 <ImportDocumentUpload
                   clearanceId={clearanceId}
                   documentType="packing_list"
-                  onUploadSuccess={(fileUrl) => handleUploadSuccess('Packing List', fileUrl)}
+                  onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Packing List', fileUrl)}
                 />
               </div>
             </TabsContent>
@@ -149,7 +151,7 @@ const ImportClearanceWorkflow: React.FC<ImportClearanceWorkflowProps> = ({
               <ImportDocumentUpload
                 clearanceId={clearanceId}
                 documentType="other"
-                onUploadSuccess={(fileUrl) => handleUploadSuccess('Additional Document', fileUrl)}
+                onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Additional Document', fileUrl)}
               />
             </TabsContent>
           </Tabs>
