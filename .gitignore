@@ -21,6 +21,7 @@
 
 # Environment Variables
 .env*
+!.env.example
 .env.local
 .env.development.local
 .env.test.local
@@ -49,14 +50,11 @@ Thumbs.db
 *.tsbuildinfo
 next-env.d.ts
 
-# Project specific
-project-manifest.json
+# Sensitive data
 service-account*.json
 *-credentials.json
 *.key
 *.pem
-
-# Sensitive data
 **/private/
 **/confidential/
 **/*secret*
@@ -69,14 +67,14 @@ service-account*.json
 *.temp
 *.bak
 
-# Documentation drafts
-/docs/drafts/
-/docs/private/
-
 # Local development
 local.settings.json
 *.local
 /local/
+
+# Documentation drafts
+/docs/drafts/
+/docs/private/
 
 # Custom application files
 /src/config/private/
