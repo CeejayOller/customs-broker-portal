@@ -1,0 +1,2825 @@
+.
+├── node_modules
+│   ├── @alloc
+│   │   └── quick-lru
+│   ├── @babel
+│   │   └── runtime
+│   │       ├── helpers
+│   │       │   └── esm
+│   │       └── regenerator
+│   ├── @clerk
+│   │   ├── backend
+│   │   │   ├── dist
+│   │   │   │   ├── api
+│   │   │   │   │   ├── endpoints
+│   │   │   │   │   └── resources
+│   │   │   │   ├── fixtures
+│   │   │   │   ├── jwt
+│   │   │   │   ├── runtime
+│   │   │   │   │   ├── browser
+│   │   │   │   │   └── node
+│   │   │   │   ├── tokens
+│   │   │   │   └── util
+│   │   │   ├── errors
+│   │   │   ├── internal
+│   │   │   └── jwt
+│   │   ├── clerk-react
+│   │   │   ├── dist
+│   │   │   ├── errors
+│   │   │   └── internal
+│   │   ├── nextjs
+│   │   │   ├── dist
+│   │   │   │   ├── cjs
+│   │   │   │   │   ├── app-router
+│   │   │   │   │   │   ├── client
+│   │   │   │   │   │   └── server
+│   │   │   │   │   ├── client-boundary
+│   │   │   │   │   │   └── hooks
+│   │   │   │   │   ├── pages
+│   │   │   │   │   ├── server
+│   │   │   │   │   │   └── data
+│   │   │   │   │   └── utils
+│   │   │   │   ├── esm
+│   │   │   │   │   ├── app-router
+│   │   │   │   │   │   ├── client
+│   │   │   │   │   │   └── server
+│   │   │   │   │   ├── client-boundary
+│   │   │   │   │   │   └── hooks
+│   │   │   │   │   ├── pages
+│   │   │   │   │   ├── server
+│   │   │   │   │   │   └── data
+│   │   │   │   │   └── utils
+│   │   │   │   └── types
+│   │   │   │       ├── app-router
+│   │   │   │       │   ├── client
+│   │   │   │       │   └── server
+│   │   │   │       ├── client-boundary
+│   │   │   │       │   └── hooks
+│   │   │   │       ├── pages
+│   │   │   │       ├── server
+│   │   │   │       │   └── data
+│   │   │   │       └── utils
+│   │   │   ├── errors
+│   │   │   └── server
+│   │   ├── shared
+│   │   │   ├── apiUrlFromPublishableKey
+│   │   │   ├── authorization
+│   │   │   ├── browser
+│   │   │   ├── callWithRetry
+│   │   │   ├── color
+│   │   │   ├── constants
+│   │   │   ├── cookie
+│   │   │   ├── date
+│   │   │   ├── deprecated
+│   │   │   ├── deriveState
+│   │   │   ├── dist
+│   │   │   │   └── react
+│   │   │   ├── error
+│   │   │   ├── file
+│   │   │   ├── globs
+│   │   │   ├── handleValueOrFn
+│   │   │   ├── isomorphicAtob
+│   │   │   ├── isomorphicBtoa
+│   │   │   ├── keys
+│   │   │   ├── loadClerkJsScript
+│   │   │   ├── loadScript
+│   │   │   ├── localStorageBroadcastChannel
+│   │   │   ├── logger
+│   │   │   ├── pathToRegexp
+│   │   │   ├── poller
+│   │   │   ├── proxy
+│   │   │   ├── react
+│   │   │   ├── router
+│   │   │   ├── scripts
+│   │   │   ├── telemetry
+│   │   │   ├── underscore
+│   │   │   ├── url
+│   │   │   ├── versionSelector
+│   │   │   └── webauthn
+│   │   └── types
+│   │       └── dist
+│   │           └── esm
+│   ├── @eslint
+│   │   ├── eslintrc
+│   │   │   ├── conf
+│   │   │   ├── dist
+│   │   │   └── lib
+│   │   │       ├── config-array
+│   │   │       └── shared
+│   │   └── js
+│   │       └── src
+│   │           └── configs
+│   ├── @eslint-community
+│   │   ├── eslint-utils
+│   │   └── regexpp
+│   ├── @floating-ui
+│   │   ├── core
+│   │   │   └── dist
+│   │   ├── dom
+│   │   │   └── dist
+│   │   ├── react-dom
+│   │   │   └── dist
+│   │   └── utils
+│   │       ├── dist
+│   │       └── dom
+│   ├── @humanwhocodes
+│   │   ├── config-array
+│   │   ├── module-importer
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   └── object-schema
+│   │       └── src
+│   ├── @isaacs
+│   │   └── cliui
+│   │       ├── build
+│   │       │   └── lib
+│   │       └── node_modules
+│   │           ├── ansi-regex
+│   │           └── strip-ansi
+│   ├── @jridgewell
+│   │   ├── gen-mapping
+│   │   │   └── dist
+│   │   │       └── types
+│   │   ├── resolve-uri
+│   │   │   └── dist
+│   │   │       └── types
+│   │   ├── set-array
+│   │   │   └── dist
+│   │   │       └── types
+│   │   ├── sourcemap-codec
+│   │   │   └── dist
+│   │   │       └── types
+│   │   └── trace-mapping
+│   │       └── dist
+│   │           └── types
+│   ├── @next
+│   │   ├── env
+│   │   │   └── dist
+│   │   ├── eslint-plugin-next
+│   │   │   └── dist
+│   │   │       ├── rules
+│   │   │       └── utils
+│   │   └── swc-darwin-arm64
+│   ├── @nodelib
+│   │   ├── fs.scandir
+│   │   │   └── out
+│   │   │       ├── adapters
+│   │   │       ├── providers
+│   │   │       ├── types
+│   │   │       └── utils
+│   │   ├── fs.stat
+│   │   │   └── out
+│   │   │       ├── adapters
+│   │   │       ├── providers
+│   │   │       └── types
+│   │   └── fs.walk
+│   │       └── out
+│   │           ├── providers
+│   │           ├── readers
+│   │           └── types
+│   ├── @nolyfill
+│   │   └── is-core-module
+│   ├── @panva
+│   │   └── hkdf
+│   │       └── dist
+│   │           ├── node
+│   │           │   ├── cjs
+│   │           │   │   └── runtime
+│   │           │   └── esm
+│   │           │       └── runtime
+│   │           ├── types
+│   │           └── web
+│   │               └── runtime
+│   ├── @pkgjs
+│   │   └── parseargs
+│   │       ├── examples
+│   │       └── internal
+│   ├── @prisma
+│   │   └── client
+│   │       ├── generator-build
+│   │       ├── runtime
+│   │       └── scripts
+│   ├── @radix-ui
+│   │   ├── number
+│   │   │   └── dist
+│   │   ├── primitive
+│   │   │   └── dist
+│   │   ├── react-alert-dialog
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   ├── react-arrow
+│   │   │   └── dist
+│   │   ├── react-collection
+│   │   │   ├── dist
+│   │   │   └── node_modules
+│   │   │       └── @radix-ui
+│   │   │           └── react-context
+│   │   │               └── dist
+│   │   ├── react-compose-refs
+│   │   │   └── dist
+│   │   ├── react-context
+│   │   │   └── dist
+│   │   ├── react-dialog
+│   │   │   └── dist
+│   │   ├── react-direction
+│   │   │   └── dist
+│   │   ├── react-dismissable-layer
+│   │   │   └── dist
+│   │   ├── react-dropdown-menu
+│   │   │   └── dist
+│   │   ├── react-focus-guards
+│   │   │   └── dist
+│   │   ├── react-focus-scope
+│   │   │   └── dist
+│   │   ├── react-id
+│   │   │   └── dist
+│   │   ├── react-menu
+│   │   │   └── dist
+│   │   ├── react-popper
+│   │   │   ├── dist
+│   │   │   └── node_modules
+│   │   │       └── @radix-ui
+│   │   │           └── react-context
+│   │   │               └── dist
+│   │   ├── react-portal
+│   │   │   └── dist
+│   │   ├── react-presence
+│   │   │   └── dist
+│   │   ├── react-primitive
+│   │   │   └── dist
+│   │   ├── react-roving-focus
+│   │   │   ├── dist
+│   │   │   └── node_modules
+│   │   │       └── @radix-ui
+│   │   │           └── react-context
+│   │   │               └── dist
+│   │   ├── react-select
+│   │   │   └── dist
+│   │   ├── react-slot
+│   │   │   └── dist
+│   │   ├── react-toast
+│   │   │   └── dist
+│   │   ├── react-use-callback-ref
+│   │   │   └── dist
+│   │   ├── react-use-controllable-state
+│   │   │   └── dist
+│   │   ├── react-use-escape-keydown
+│   │   │   └── dist
+│   │   ├── react-use-layout-effect
+│   │   │   └── dist
+│   │   ├── react-use-previous
+│   │   │   └── dist
+│   │   ├── react-use-rect
+│   │   │   └── dist
+│   │   ├── react-use-size
+│   │   │   └── dist
+│   │   ├── react-visually-hidden
+│   │   │   └── dist
+│   │   └── rect
+│   │       └── dist
+│   ├── @rtsao
+│   │   └── scc
+│   ├── @rushstack
+│   │   └── eslint-patch
+│   │       └── lib
+│   │           ├── eslint-bulk-suppressions
+│   │           │   └── cli
+│   │           │       └── utils
+│   │           └── exports
+│   ├── @shadcn
+│   │   └── ui
+│   │       ├── dist
+│   │       ├── node_modules
+│   │       │   ├── chalk
+│   │       │   │   └── source
+│   │       │   │       └── vendor
+│   │       │   │           ├── ansi-styles
+│   │       │   │           └── supports-color
+│   │       │   ├── commander
+│   │       │   │   ├── lib
+│   │       │   │   └── typings
+│   │       │   └── node-fetch
+│   │       │       ├── @types
+│   │       │       └── src
+│   │       │           ├── errors
+│   │       │           └── utils
+│   │       └── src
+│   │           └── utils
+│   ├── @swc
+│   │   ├── counter
+│   │   └── helpers
+│   │       ├── _
+│   │       │   ├── _apply_decorated_descriptor
+│   │       │   ├── _apply_decs_2203_r
+│   │       │   ├── _array_like_to_array
+│   │       │   ├── _array_with_holes
+│   │       │   ├── _array_without_holes
+│   │       │   ├── _assert_this_initialized
+│   │       │   ├── _async_generator
+│   │       │   ├── _async_generator_delegate
+│   │       │   ├── _async_iterator
+│   │       │   ├── _async_to_generator
+│   │       │   ├── _await_async_generator
+│   │       │   ├── _await_value
+│   │       │   ├── _check_private_redeclaration
+│   │       │   ├── _class_apply_descriptor_destructure
+│   │       │   ├── _class_apply_descriptor_get
+│   │       │   ├── _class_apply_descriptor_set
+│   │       │   ├── _class_apply_descriptor_update
+│   │       │   ├── _class_call_check
+│   │       │   ├── _class_check_private_static_access
+│   │       │   ├── _class_check_private_static_field_descriptor
+│   │       │   ├── _class_extract_field_descriptor
+│   │       │   ├── _class_name_tdz_error
+│   │       │   ├── _class_private_field_destructure
+│   │       │   ├── _class_private_field_get
+│   │       │   ├── _class_private_field_init
+│   │       │   ├── _class_private_field_loose_base
+│   │       │   ├── _class_private_field_loose_key
+│   │       │   ├── _class_private_field_set
+│   │       │   ├── _class_private_field_update
+│   │       │   ├── _class_private_method_get
+│   │       │   ├── _class_private_method_init
+│   │       │   ├── _class_private_method_set
+│   │       │   ├── _class_static_private_field_destructure
+│   │       │   ├── _class_static_private_field_spec_get
+│   │       │   ├── _class_static_private_field_spec_set
+│   │       │   ├── _class_static_private_field_update
+│   │       │   ├── _class_static_private_method_get
+│   │       │   ├── _construct
+│   │       │   ├── _create_class
+│   │       │   ├── _create_for_of_iterator_helper_loose
+│   │       │   ├── _create_super
+│   │       │   ├── _decorate
+│   │       │   ├── _defaults
+│   │       │   ├── _define_enumerable_properties
+│   │       │   ├── _define_property
+│   │       │   ├── _dispose
+│   │       │   ├── _export_star
+│   │       │   ├── _extends
+│   │       │   ├── _get
+│   │       │   ├── _get_prototype_of
+│   │       │   ├── _inherits
+│   │       │   ├── _inherits_loose
+│   │       │   ├── _initializer_define_property
+│   │       │   ├── _initializer_warning_helper
+│   │       │   ├── _instanceof
+│   │       │   ├── _interop_require_default
+│   │       │   ├── _interop_require_wildcard
+│   │       │   ├── _is_native_function
+│   │       │   ├── _is_native_reflect_construct
+│   │       │   ├── _iterable_to_array
+│   │       │   ├── _iterable_to_array_limit
+│   │       │   ├── _iterable_to_array_limit_loose
+│   │       │   ├── _jsx
+│   │       │   ├── _new_arrow_check
+│   │       │   ├── _non_iterable_rest
+│   │       │   ├── _non_iterable_spread
+│   │       │   ├── _object_destructuring_empty
+│   │       │   ├── _object_spread
+│   │       │   ├── _object_spread_props
+│   │       │   ├── _object_without_properties
+│   │       │   ├── _object_without_properties_loose
+│   │       │   ├── _possible_constructor_return
+│   │       │   ├── _read_only_error
+│   │       │   ├── _set
+│   │       │   ├── _set_prototype_of
+│   │       │   ├── _skip_first_generator_next
+│   │       │   ├── _sliced_to_array
+│   │       │   ├── _sliced_to_array_loose
+│   │       │   ├── _super_prop_base
+│   │       │   ├── _tagged_template_literal
+│   │       │   ├── _tagged_template_literal_loose
+│   │       │   ├── _throw
+│   │       │   ├── _to_array
+│   │       │   ├── _to_consumable_array
+│   │       │   ├── _to_primitive
+│   │       │   ├── _to_property_key
+│   │       │   ├── _ts_decorate
+│   │       │   ├── _ts_generator
+│   │       │   ├── _ts_metadata
+│   │       │   ├── _ts_param
+│   │       │   ├── _ts_values
+│   │       │   ├── _type_of
+│   │       │   ├── _unsupported_iterable_to_array
+│   │       │   ├── _update
+│   │       │   ├── _using
+│   │       │   ├── _wrap_async_generator
+│   │       │   ├── _wrap_native_super
+│   │       │   ├── _write_only_error
+│   │       │   └── index
+│   │       ├── cjs
+│   │       ├── esm
+│   │       ├── scripts
+│   │       └── src
+│   ├── @tanstack
+│   │   ├── query-core
+│   │   │   ├── build
+│   │   │   │   ├── legacy
+│   │   │   │   └── modern
+│   │   │   └── src
+│   │   │       └── __tests__
+│   │   └── react-query
+│   │       ├── build
+│   │       │   ├── codemods
+│   │       │   │   └── src
+│   │       │   │       ├── utils
+│   │       │   │       │   └── transformers
+│   │       │   │       ├── v4
+│   │       │   │       │   └── utils
+│   │       │   │       │       └── replacers
+│   │       │   │       └── v5
+│   │       │   │           ├── is-loading
+│   │       │   │           ├── keep-previous-data
+│   │       │   │           │   └── utils
+│   │       │   │           ├── remove-overloads
+│   │       │   │           │   ├── transformers
+│   │       │   │           │   └── utils
+│   │       │   │           ├── rename-hydrate
+│   │       │   │           └── rename-properties
+│   │       │   ├── legacy
+│   │       │   ├── modern
+│   │       │   └── query-codemods
+│   │       └── src
+│   │           └── __tests__
+│   ├── @types
+│   │   ├── base-64
+│   │   ├── json5
+│   │   ├── node
+│   │   │   ├── assert
+│   │   │   ├── compatibility
+│   │   │   ├── dns
+│   │   │   ├── fs
+│   │   │   ├── readline
+│   │   │   ├── stream
+│   │   │   ├── timers
+│   │   │   └── ts5.6
+│   │   ├── prop-types
+│   │   ├── react
+│   │   │   └── ts5.0
+│   │   └── react-dom
+│   │       └── test-utils
+│   ├── @typescript-eslint
+│   │   ├── eslint-plugin
+│   │   │   ├── dist
+│   │   │   │   ├── configs
+│   │   │   │   ├── rules
+│   │   │   │   │   ├── enum-utils
+│   │   │   │   │   ├── naming-convention-utils
+│   │   │   │   │   └── prefer-optional-chain-utils
+│   │   │   │   └── util
+│   │   │   └── docs
+│   │   │       └── rules
+│   │   ├── parser
+│   │   │   └── dist
+│   │   ├── scope-manager
+│   │   │   └── dist
+│   │   │       ├── definition
+│   │   │       ├── lib
+│   │   │       ├── referencer
+│   │   │       ├── scope
+│   │   │       └── variable
+│   │   ├── type-utils
+│   │   │   └── dist
+│   │   │       └── typeOrValueSpecifiers
+│   │   ├── types
+│   │   │   └── dist
+│   │   │       └── generated
+│   │   ├── typescript-estree
+│   │   │   ├── dist
+│   │   │   │   ├── create-program
+│   │   │   │   ├── jsx
+│   │   │   │   ├── parseSettings
+│   │   │   │   └── ts-estree
+│   │   │   └── node_modules
+│   │   │       ├── brace-expansion
+│   │   │       └── minimatch
+│   │   │           └── dist
+│   │   │               ├── commonjs
+│   │   │               └── esm
+│   │   ├── utils
+│   │   │   └── dist
+│   │   │       ├── ast-utils
+│   │   │       │   └── eslint-utils
+│   │   │       ├── eslint-utils
+│   │   │       ├── ts-eslint
+│   │   │       │   └── eslint
+│   │   │       └── ts-utils
+│   │   └── visitor-keys
+│   │       └── dist
+│   ├── @ungap
+│   │   └── structured-clone
+│   │       ├── cjs
+│   │       └── esm
+│   ├── acorn
+│   │   ├── bin
+│   │   └── dist
+│   ├── acorn-jsx
+│   ├── agent-base
+│   │   └── dist
+│   ├── ajv
+│   │   ├── dist
+│   │   ├── lib
+│   │   │   ├── compile
+│   │   │   ├── dot
+│   │   │   ├── dotjs
+│   │   │   └── refs
+│   │   └── scripts
+│   ├── ansi-regex
+│   ├── ansi-styles
+│   ├── any-promise
+│   │   └── register
+│   ├── anymatch
+│   ├── arg
+│   ├── argparse
+│   │   └── lib
+│   ├── aria-hidden
+│   │   └── dist
+│   │       ├── es2015
+│   │       ├── es2019
+│   │       └── es5
+│   ├── aria-query
+│   │   └── lib
+│   │       ├── etc
+│   │       │   └── roles
+│   │       │       ├── abstract
+│   │       │       ├── dpub
+│   │       │       ├── graphics
+│   │       │       └── literal
+│   │       └── util
+│   ├── array-buffer-byte-length
+│   │   └── test
+│   ├── array-includes
+│   │   └── test
+│   ├── array.prototype.findlast
+│   │   └── test
+│   ├── array.prototype.findlastindex
+│   │   └── test
+│   ├── array.prototype.flat
+│   │   └── test
+│   ├── array.prototype.flatmap
+│   │   └── test
+│   ├── array.prototype.tosorted
+│   │   └── test
+│   ├── arraybuffer.prototype.slice
+│   │   └── test
+│   ├── ast-types-flow
+│   │   └── lib
+│   ├── asynckit
+│   │   └── lib
+│   ├── autoprefixer
+│   │   ├── bin
+│   │   ├── data
+│   │   └── lib
+│   │       └── hacks
+│   ├── available-typed-arrays
+│   │   └── test
+│   ├── axe-core
+│   │   └── locales
+│   ├── axios
+│   │   ├── dist
+│   │   │   ├── browser
+│   │   │   ├── esm
+│   │   │   └── node
+│   │   └── lib
+│   │       ├── adapters
+│   │       ├── cancel
+│   │       ├── core
+│   │       ├── defaults
+│   │       ├── env
+│   │       │   └── classes
+│   │       ├── helpers
+│   │       └── platform
+│   │           ├── browser
+│   │           │   └── classes
+│   │           ├── common
+│   │           └── node
+│   │               └── classes
+│   ├── axobject-query
+│   │   └── lib
+│   │       ├── etc
+│   │       │   └── objects
+│   │       └── util
+│   ├── balanced-match
+│   ├── base-64
+│   ├── base64-js
+│   ├── bignumber.js
+│   │   └── doc
+│   ├── binary-extensions
+│   ├── bl
+│   │   └── test
+│   ├── brace-expansion
+│   ├── braces
+│   │   └── lib
+│   ├── browserslist
+│   ├── buffer
+│   ├── buffer-equal-constant-time
+│   ├── busboy
+│   │   ├── bench
+│   │   ├── lib
+│   │   │   └── types
+│   │   └── test
+│   ├── call-bind
+│   │   └── test
+│   ├── callsites
+│   ├── camelcase-css
+│   ├── caniuse-lite
+│   │   ├── data
+│   │   │   ├── features
+│   │   │   └── regions
+│   │   └── dist
+│   │       ├── lib
+│   │       └── unpacker
+│   ├── chalk
+│   │   └── source
+│   ├── chokidar
+│   │   ├── lib
+│   │   ├── node_modules
+│   │   │   └── glob-parent
+│   │   └── types
+│   ├── class-variance-authority
+│   │   ├── dist
+│   │   └── node_modules
+│   │       └── clsx
+│   │           └── dist
+│   ├── cli-cursor
+│   ├── cli-spinners
+│   ├── client-only
+│   ├── clone
+│   ├── clsx
+│   │   └── dist
+│   ├── color-convert
+│   ├── color-name
+│   ├── combined-stream
+│   │   └── lib
+│   ├── commander
+│   │   └── typings
+│   ├── concat-map
+│   │   ├── example
+│   │   └── test
+│   ├── cookie
+│   ├── cross-spawn
+│   │   └── lib
+│   │       └── util
+│   ├── crypto-js
+│   │   └── docs
+│   ├── cssesc
+│   │   ├── bin
+│   │   └── man
+│   ├── csstype
+│   ├── damerau-levenshtein
+│   │   ├── scripts
+│   │   └── test
+│   ├── data-uri-to-buffer
+│   │   ├── dist
+│   │   └── src
+│   ├── data-view-buffer
+│   │   └── test
+│   ├── data-view-byte-length
+│   │   └── test
+│   ├── data-view-byte-offset
+│   │   └── test
+│   ├── debug
+│   │   └── src
+│   ├── deep-is
+│   │   ├── example
+│   │   └── test
+│   ├── defaults
+│   ├── define-data-property
+│   │   └── test
+│   ├── define-properties
+│   ├── delayed-stream
+│   │   └── lib
+│   ├── detect-node-es
+│   │   ├── es5
+│   │   └── esm
+│   ├── didyoumean
+│   ├── dlv
+│   │   └── dist
+│   ├── doctrine
+│   │   └── lib
+│   ├── dot-case
+│   │   ├── dist
+│   │   └── dist.es2015
+│   ├── eastasianwidth
+│   ├── ecdsa-sig-formatter
+│   │   └── src
+│   ├── electron-to-chromium
+│   ├── emoji-regex
+│   │   └── es2015
+│   ├── enhanced-resolve
+│   │   └── lib
+│   │       └── util
+│   ├── es-abstract
+│   │   ├── 2015
+│   │   │   └── tables
+│   │   ├── 2016
+│   │   │   └── tables
+│   │   ├── 2017
+│   │   │   └── tables
+│   │   ├── 2018
+│   │   │   └── tables
+│   │   ├── 2019
+│   │   │   └── tables
+│   │   ├── 2020
+│   │   │   ├── BigInt
+│   │   │   ├── Number
+│   │   │   └── tables
+│   │   ├── 2021
+│   │   │   ├── BigInt
+│   │   │   ├── Number
+│   │   │   └── tables
+│   │   ├── 2022
+│   │   │   ├── BigInt
+│   │   │   ├── Number
+│   │   │   └── tables
+│   │   ├── 2023
+│   │   │   ├── BigInt
+│   │   │   ├── Number
+│   │   │   └── tables
+│   │   ├── 2024
+│   │   │   ├── BigInt
+│   │   │   ├── Number
+│   │   │   └── tables
+│   │   ├── 5
+│   │   ├── helpers
+│   │   │   └── records
+│   │   └── operations
+│   ├── es-define-property
+│   │   └── test
+│   ├── es-errors
+│   │   └── test
+│   ├── es-iterator-helpers
+│   │   ├── Iterator
+│   │   ├── Iterator.concat
+│   │   ├── Iterator.from
+│   │   ├── Iterator.prototype
+│   │   ├── Iterator.prototype.constructor
+│   │   ├── Iterator.prototype.drop
+│   │   ├── Iterator.prototype.every
+│   │   ├── Iterator.prototype.filter
+│   │   ├── Iterator.prototype.find
+│   │   ├── Iterator.prototype.flatMap
+│   │   ├── Iterator.prototype.forEach
+│   │   ├── Iterator.prototype.map
+│   │   ├── Iterator.prototype.reduce
+│   │   ├── Iterator.prototype.some
+│   │   ├── Iterator.prototype.take
+│   │   ├── Iterator.prototype.toArray
+│   │   ├── IteratorHelperPrototype
+│   │   ├── WrapForValidIteratorPrototype
+│   │   ├── aos
+│   │   └── test
+│   │       └── helpers
+│   ├── es-object-atoms
+│   │   └── test
+│   ├── es-set-tostringtag
+│   │   └── test
+│   ├── es-shim-unscopables
+│   │   └── test
+│   ├── es-to-primitive
+│   │   ├── helpers
+│   │   └── test
+│   ├── escalade
+│   │   ├── dist
+│   │   └── sync
+│   ├── escape-string-regexp
+│   ├── eslint
+│   │   ├── bin
+│   │   ├── conf
+│   │   ├── lib
+│   │   │   ├── cli-engine
+│   │   │   │   └── formatters
+│   │   │   ├── config
+│   │   │   ├── eslint
+│   │   │   ├── linter
+│   │   │   │   └── code-path-analysis
+│   │   │   ├── rule-tester
+│   │   │   ├── rules
+│   │   │   │   └── utils
+│   │   │   │       ├── patterns
+│   │   │   │       └── unicode
+│   │   │   ├── shared
+│   │   │   └── source-code
+│   │   │       └── token-store
+│   │   └── messages
+│   ├── eslint-config-next
+│   ├── eslint-import-resolver-node
+│   │   └── node_modules
+│   │       └── debug
+│   │           └── src
+│   ├── eslint-import-resolver-typescript
+│   │   └── lib
+│   ├── eslint-module-utils
+│   │   └── node_modules
+│   │       └── debug
+│   │           └── src
+│   ├── eslint-plugin-import
+│   │   ├── config
+│   │   │   └── flat
+│   │   ├── docs
+│   │   │   └── rules
+│   │   ├── lib
+│   │   │   ├── core
+│   │   │   ├── exportMap
+│   │   │   └── rules
+│   │   ├── memo-parser
+│   │   └── node_modules
+│   │       ├── debug
+│   │       │   └── src
+│   │       ├── doctrine
+│   │       │   └── lib
+│   │       └── semver
+│   │           └── bin
+│   ├── eslint-plugin-jsx-a11y
+│   │   ├── __mocks__
+│   │   ├── __tests__
+│   │   │   ├── __util__
+│   │   │   │   └── helpers
+│   │   │   └── src
+│   │   │       ├── rules
+│   │   │       └── util
+│   │   │           └── implicitRoles
+│   │   ├── docs
+│   │   │   └── rules
+│   │   └── lib
+│   │       ├── configs
+│   │       ├── rules
+│   │       └── util
+│   │           └── implicitRoles
+│   ├── eslint-plugin-react
+│   │   ├── configs
+│   │   ├── lib
+│   │   │   ├── rules
+│   │   │   └── util
+│   │   └── node_modules
+│   │       ├── doctrine
+│   │       │   └── lib
+│   │       ├── resolve
+│   │       │   ├── bin
+│   │       │   ├── example
+│   │       │   ├── lib
+│   │       │   └── test
+│   │       │       ├── dotdot
+│   │       │       │   └── abc
+│   │       │       ├── module_dir
+│   │       │       │   ├── xmodules
+│   │       │       │   │   └── aaa
+│   │       │       │   ├── ymodules
+│   │       │       │   │   └── aaa
+│   │       │       │   └── zmodules
+│   │       │       │       └── bbb
+│   │       │       ├── node_path
+│   │       │       │   ├── x
+│   │       │       │   │   ├── aaa
+│   │       │       │   │   └── ccc
+│   │       │       │   └── y
+│   │       │       │       ├── bbb
+│   │       │       │       └── ccc
+│   │       │       ├── pathfilter
+│   │       │       │   └── deep_ref
+│   │       │       ├── precedence
+│   │       │       │   ├── aaa
+│   │       │       │   └── bbb
+│   │       │       ├── resolver
+│   │       │       │   ├── baz
+│   │       │       │   ├── browser_field
+│   │       │       │   ├── dot_main
+│   │       │       │   ├── dot_slash_main
+│   │       │       │   ├── empty_main
+│   │       │       │   ├── false_main
+│   │       │       │   ├── incorrect_main
+│   │       │       │   ├── invalid_main
+│   │       │       │   ├── missing_index
+│   │       │       │   ├── missing_main
+│   │       │       │   ├── multirepo
+│   │       │       │   │   └── packages
+│   │       │       │   │       ├── package-a
+│   │       │       │   │       └── package-b
+│   │       │       │   ├── nested_symlinks
+│   │       │       │   │   └── mylib
+│   │       │       │   ├── null_main
+│   │       │       │   ├── other_path
+│   │       │       │   │   └── lib
+│   │       │       │   ├── quux
+│   │       │       │   │   └── foo
+│   │       │       │   ├── same_names
+│   │       │       │   │   └── foo
+│   │       │       │   ├── symlinked
+│   │       │       │   │   ├── _
+│   │       │       │   │   │   ├── node_modules
+│   │       │       │   │   │   └── symlink_target
+│   │       │       │   │   └── package
+│   │       │       │   └── without_basedir
+│   │       │       └── shadowed_core
+│   │       │           └── node_modules
+│   │       │               └── util
+│   │       └── semver
+│   │           └── bin
+│   ├── eslint-plugin-react-hooks
+│   │   └── cjs
+│   ├── eslint-scope
+│   │   ├── dist
+│   │   └── lib
+│   ├── eslint-visitor-keys
+│   │   ├── dist
+│   │   └── lib
+│   ├── espree
+│   │   ├── dist
+│   │   └── lib
+│   ├── esquery
+│   │   └── dist
+│   ├── esrecurse
+│   ├── estraverse
+│   ├── esutils
+│   │   └── lib
+│   ├── execa
+│   │   ├── lib
+│   │   └── node_modules
+│   │       ├── is-stream
+│   │       └── signal-exit
+│   ├── extend
+│   ├── fast-deep-equal
+│   │   └── es6
+│   ├── fast-glob
+│   │   ├── node_modules
+│   │   │   └── glob-parent
+│   │   └── out
+│   │       ├── managers
+│   │       ├── providers
+│   │       │   ├── filters
+│   │       │   ├── matchers
+│   │       │   └── transformers
+│   │       ├── readers
+│   │       ├── types
+│   │       └── utils
+│   ├── fast-json-stable-stringify
+│   │   ├── benchmark
+│   │   ├── example
+│   │   └── test
+│   ├── fast-levenshtein
+│   ├── fastq
+│   │   └── test
+│   ├── fetch-blob
+│   ├── file-entry-cache
+│   ├── fill-range
+│   ├── find-up
+│   ├── flat-cache
+│   │   └── src
+│   ├── flatted
+│   │   ├── cjs
+│   │   ├── esm
+│   │   ├── php
+│   │   ├── python
+│   │   │   └── __pycache__
+│   │   └── types
+│   ├── follow-redirects
+│   ├── for-each
+│   │   └── test
+│   ├── foreground-child
+│   │   └── dist
+│   │       ├── commonjs
+│   │       └── esm
+│   ├── form-data
+│   │   └── lib
+│   ├── formdata-polyfill
+│   ├── fraction.js
+│   ├── fs-extra
+│   │   └── lib
+│   │       ├── copy
+│   │       ├── empty
+│   │       ├── ensure
+│   │       ├── fs
+│   │       ├── json
+│   │       ├── mkdirs
+│   │       ├── move
+│   │       ├── output-file
+│   │       ├── path-exists
+│   │       ├── remove
+│   │       └── util
+│   ├── fs.realpath
+│   ├── fsevents
+│   ├── function-bind
+│   │   └── test
+│   ├── function.prototype.name
+│   │   ├── helpers
+│   │   └── test
+│   ├── functions-have-names
+│   │   └── test
+│   ├── gaxios
+│   │   ├── build
+│   │   │   └── src
+│   │   └── node_modules
+│   │       └── uuid
+│   │           └── dist
+│   │               ├── bin
+│   │               ├── commonjs-browser
+│   │               ├── esm-browser
+│   │               └── esm-node
+│   ├── gcp-metadata
+│   │   └── build
+│   │       └── src
+│   ├── get-intrinsic
+│   │   └── test
+│   ├── get-nonce
+│   │   └── dist
+│   │       ├── es2015
+│   │       └── es5
+│   ├── get-stream
+│   ├── get-symbol-description
+│   │   └── test
+│   ├── get-tsconfig
+│   │   └── dist
+│   ├── glob
+│   │   ├── dist
+│   │   │   ├── commonjs
+│   │   │   └── esm
+│   │   └── node_modules
+│   │       ├── brace-expansion
+│   │       └── minimatch
+│   │           └── dist
+│   │               ├── commonjs
+│   │               └── esm
+│   ├── glob-parent
+│   ├── glob-to-regexp
+│   ├── globals
+│   ├── globalthis
+│   │   └── test
+│   ├── google-auth-library
+│   │   └── build
+│   │       └── src
+│   │           ├── auth
+│   │           └── crypto
+│   │               ├── browser
+│   │               └── node
+│   ├── googleapis
+│   │   └── build
+│   │       └── src
+│   │           ├── apis
+│   │           │   ├── abusiveexperiencereport
+│   │           │   ├── acceleratedmobilepageurl
+│   │           │   ├── accessapproval
+│   │           │   ├── accesscontextmanager
+│   │           │   ├── acmedns
+│   │           │   ├── addressvalidation
+│   │           │   ├── adexchangebuyer
+│   │           │   ├── adexchangebuyer2
+│   │           │   ├── adexperiencereport
+│   │           │   ├── admin
+│   │           │   ├── admob
+│   │           │   ├── adsense
+│   │           │   ├── adsensehost
+│   │           │   ├── adsenseplatform
+│   │           │   ├── advisorynotifications
+│   │           │   ├── aiplatform
+│   │           │   ├── airquality
+│   │           │   ├── alertcenter
+│   │           │   ├── alloydb
+│   │           │   ├── analytics
+│   │           │   ├── analyticsadmin
+│   │           │   ├── analyticsdata
+│   │           │   ├── analyticshub
+│   │           │   ├── analyticsreporting
+│   │           │   ├── androiddeviceprovisioning
+│   │           │   ├── androidenterprise
+│   │           │   ├── androidmanagement
+│   │           │   ├── androidpublisher
+│   │           │   ├── apigateway
+│   │           │   ├── apigeeregistry
+│   │           │   ├── apikeys
+│   │           │   ├── apim
+│   │           │   ├── appengine
+│   │           │   ├── apphub
+│   │           │   ├── appsactivity
+│   │           │   ├── area120tables
+│   │           │   ├── artifactregistry
+│   │           │   ├── assuredworkloads
+│   │           │   ├── authorizedbuyersmarketplace
+│   │           │   ├── backupdr
+│   │           │   ├── baremetalsolution
+│   │           │   ├── batch
+│   │           │   ├── beyondcorp
+│   │           │   ├── biglake
+│   │           │   ├── bigquery
+│   │           │   ├── bigqueryconnection
+│   │           │   ├── bigquerydatapolicy
+│   │           │   ├── bigquerydatatransfer
+│   │           │   ├── bigqueryreservation
+│   │           │   ├── bigtableadmin
+│   │           │   ├── billingbudgets
+│   │           │   ├── binaryauthorization
+│   │           │   ├── blockchainnodeengine
+│   │           │   ├── blogger
+│   │           │   ├── books
+│   │           │   ├── businessprofileperformance
+│   │           │   ├── calendar
+│   │           │   ├── certificatemanager
+│   │           │   ├── chat
+│   │           │   ├── checks
+│   │           │   ├── chromemanagement
+│   │           │   ├── chromepolicy
+│   │           │   ├── chromeuxreport
+│   │           │   ├── civicinfo
+│   │           │   ├── classroom
+│   │           │   ├── cloudasset
+│   │           │   ├── cloudbilling
+│   │           │   ├── cloudbuild
+│   │           │   ├── cloudchannel
+│   │           │   ├── cloudcontrolspartner
+│   │           │   ├── clouddebugger
+│   │           │   ├── clouddeploy
+│   │           │   ├── clouderrorreporting
+│   │           │   ├── cloudfunctions
+│   │           │   ├── cloudidentity
+│   │           │   ├── cloudiot
+│   │           │   ├── cloudkms
+│   │           │   ├── cloudprofiler
+│   │           │   ├── cloudresourcemanager
+│   │           │   ├── cloudscheduler
+│   │           │   ├── cloudsearch
+│   │           │   ├── cloudshell
+│   │           │   ├── cloudsupport
+│   │           │   ├── cloudtasks
+│   │           │   ├── cloudtrace
+│   │           │   ├── composer
+│   │           │   ├── compute
+│   │           │   ├── config
+│   │           │   ├── connectors
+│   │           │   ├── contactcenteraiplatform
+│   │           │   ├── contactcenterinsights
+│   │           │   ├── container
+│   │           │   ├── containeranalysis
+│   │           │   ├── content
+│   │           │   ├── contentwarehouse
+│   │           │   ├── css
+│   │           │   ├── customsearch
+│   │           │   ├── datacatalog
+│   │           │   ├── dataflow
+│   │           │   ├── dataform
+│   │           │   ├── datafusion
+│   │           │   ├── datalabeling
+│   │           │   ├── datalineage
+│   │           │   ├── datamigration
+│   │           │   ├── datapipelines
+│   │           │   ├── dataplex
+│   │           │   ├── dataportability
+│   │           │   ├── dataproc
+│   │           │   ├── datastore
+│   │           │   ├── datastream
+│   │           │   ├── deploymentmanager
+│   │           │   ├── developerconnect
+│   │           │   ├── dfareporting
+│   │           │   ├── dialogflow
+│   │           │   ├── digitalassetlinks
+│   │           │   ├── discovery
+│   │           │   ├── discoveryengine
+│   │           │   ├── displayvideo
+│   │           │   ├── dlp
+│   │           │   ├── dns
+│   │           │   ├── docs
+│   │           │   ├── documentai
+│   │           │   ├── domains
+│   │           │   ├── domainsrdap
+│   │           │   ├── doubleclickbidmanager
+│   │           │   ├── doubleclicksearch
+│   │           │   ├── drive
+│   │           │   ├── driveactivity
+│   │           │   ├── drivelabels
+│   │           │   ├── essentialcontacts
+│   │           │   ├── eventarc
+│   │           │   ├── factchecktools
+│   │           │   ├── fcm
+│   │           │   ├── fcmdata
+│   │           │   ├── file
+│   │           │   ├── firebase
+│   │           │   ├── firebaseappcheck
+│   │           │   ├── firebaseappdistribution
+│   │           │   ├── firebasedatabase
+│   │           │   ├── firebasedynamiclinks
+│   │           │   ├── firebasehosting
+│   │           │   ├── firebaseml
+│   │           │   ├── firebaserules
+│   │           │   ├── firebasestorage
+│   │           │   ├── firestore
+│   │           │   ├── fitness
+│   │           │   ├── forms
+│   │           │   ├── games
+│   │           │   ├── gamesConfiguration
+│   │           │   ├── gamesManagement
+│   │           │   ├── gameservices
+│   │           │   ├── genomics
+│   │           │   ├── gkebackup
+│   │           │   ├── gkehub
+│   │           │   ├── gkeonprem
+│   │           │   ├── gmail
+│   │           │   ├── gmailpostmastertools
+│   │           │   ├── groupsmigration
+│   │           │   ├── groupssettings
+│   │           │   ├── healthcare
+│   │           │   ├── homegraph
+│   │           │   ├── iam
+│   │           │   ├── iamcredentials
+│   │           │   ├── iap
+│   │           │   ├── ideahub
+│   │           │   ├── identitytoolkit
+│   │           │   ├── ids
+│   │           │   ├── indexing
+│   │           │   ├── integrations
+│   │           │   ├── jobs
+│   │           │   ├── keep
+│   │           │   ├── kgsearch
+│   │           │   ├── kmsinventory
+│   │           │   ├── language
+│   │           │   ├── libraryagent
+│   │           │   ├── licensing
+│   │           │   ├── lifesciences
+│   │           │   ├── localservices
+│   │           │   ├── logging
+│   │           │   ├── looker
+│   │           │   ├── managedidentities
+│   │           │   ├── manufacturers
+│   │           │   ├── marketingplatformadmin
+│   │           │   ├── meet
+│   │           │   ├── memcache
+│   │           │   ├── merchantapi
+│   │           │   ├── metastore
+│   │           │   ├── migrationcenter
+│   │           │   ├── ml
+│   │           │   ├── monitoring
+│   │           │   ├── mybusinessaccountmanagement
+│   │           │   ├── mybusinessbusinesscalls
+│   │           │   ├── mybusinessbusinessinformation
+│   │           │   ├── mybusinesslodging
+│   │           │   ├── mybusinessnotifications
+│   │           │   ├── mybusinessplaceactions
+│   │           │   ├── mybusinessqanda
+│   │           │   ├── mybusinessverifications
+│   │           │   ├── networkconnectivity
+│   │           │   ├── networkmanagement
+│   │           │   ├── networksecurity
+│   │           │   ├── networkservices
+│   │           │   ├── notebooks
+│   │           │   ├── oauth2
+│   │           │   ├── ondemandscanning
+│   │           │   ├── orgpolicy
+│   │           │   ├── osconfig
+│   │           │   ├── oslogin
+│   │           │   ├── pagespeedonline
+│   │           │   ├── paymentsresellersubscription
+│   │           │   ├── people
+│   │           │   ├── places
+│   │           │   ├── playablelocations
+│   │           │   ├── playcustomapp
+│   │           │   ├── playdeveloperreporting
+│   │           │   ├── playgrouping
+│   │           │   ├── playintegrity
+│   │           │   ├── plus
+│   │           │   ├── policyanalyzer
+│   │           │   ├── policysimulator
+│   │           │   ├── policytroubleshooter
+│   │           │   ├── pollen
+│   │           │   ├── poly
+│   │           │   ├── privateca
+│   │           │   ├── prod_tt_sasportal
+│   │           │   ├── publicca
+│   │           │   ├── pubsub
+│   │           │   ├── pubsublite
+│   │           │   ├── rapidmigrationassessment
+│   │           │   ├── readerrevenuesubscriptionlinking
+│   │           │   ├── realtimebidding
+│   │           │   ├── recaptchaenterprise
+│   │           │   ├── recommendationengine
+│   │           │   ├── recommender
+│   │           │   ├── redis
+│   │           │   ├── remotebuildexecution
+│   │           │   ├── reseller
+│   │           │   ├── resourcesettings
+│   │           │   ├── retail
+│   │           │   ├── run
+│   │           │   ├── runtimeconfig
+│   │           │   ├── safebrowsing
+│   │           │   ├── sasportal
+│   │           │   ├── script
+│   │           │   ├── searchads360
+│   │           │   ├── searchconsole
+│   │           │   ├── secretmanager
+│   │           │   ├── securitycenter
+│   │           │   ├── serviceconsumermanagement
+│   │           │   ├── servicecontrol
+│   │           │   ├── servicedirectory
+│   │           │   ├── servicemanagement
+│   │           │   ├── servicenetworking
+│   │           │   ├── serviceusage
+│   │           │   ├── sheets
+│   │           │   ├── siteVerification
+│   │           │   ├── slides
+│   │           │   ├── smartdevicemanagement
+│   │           │   ├── solar
+│   │           │   ├── sourcerepo
+│   │           │   ├── spanner
+│   │           │   ├── speech
+│   │           │   ├── sql
+│   │           │   ├── sqladmin
+│   │           │   ├── storage
+│   │           │   ├── storagetransfer
+│   │           │   ├── streetviewpublish
+│   │           │   ├── sts
+│   │           │   ├── tagmanager
+│   │           │   ├── tasks
+│   │           │   ├── testing
+│   │           │   ├── texttospeech
+│   │           │   ├── toolresults
+│   │           │   ├── tpu
+│   │           │   ├── trafficdirector
+│   │           │   ├── transcoder
+│   │           │   ├── translate
+│   │           │   ├── travelimpactmodel
+│   │           │   ├── vault
+│   │           │   ├── vectortile
+│   │           │   ├── verifiedaccess
+│   │           │   ├── versionhistory
+│   │           │   ├── videointelligence
+│   │           │   ├── vision
+│   │           │   ├── vmmigration
+│   │           │   ├── vmwareengine
+│   │           │   ├── vpcaccess
+│   │           │   ├── walletobjects
+│   │           │   ├── webfonts
+│   │           │   ├── webmasters
+│   │           │   ├── webrisk
+│   │           │   ├── websecurityscanner
+│   │           │   ├── workflowexecutions
+│   │           │   ├── workflows
+│   │           │   ├── workloadmanager
+│   │           │   ├── workspaceevents
+│   │           │   ├── workstations
+│   │           │   ├── youtube
+│   │           │   ├── youtubeAnalytics
+│   │           │   └── youtubereporting
+│   │           └── generator
+│   ├── googleapis-common
+│   │   ├── build
+│   │   │   └── src
+│   │   └── node_modules
+│   │       └── uuid
+│   │           └── dist
+│   │               ├── bin
+│   │               ├── commonjs-browser
+│   │               ├── esm-browser
+│   │               └── esm-node
+│   ├── gopd
+│   │   └── test
+│   ├── graceful-fs
+│   ├── graphemer
+│   │   └── lib
+│   ├── gtoken
+│   │   └── build
+│   │       └── src
+│   ├── has-bigints
+│   │   └── test
+│   ├── has-flag
+│   ├── has-property-descriptors
+│   │   └── test
+│   ├── has-proto
+│   │   └── test
+│   ├── has-symbols
+│   │   └── test
+│   │       └── shams
+│   ├── has-tostringtag
+│   │   └── test
+│   │       └── shams
+│   ├── hasown
+│   ├── https-proxy-agent
+│   │   └── dist
+│   ├── human-signals
+│   │   └── build
+│   │       └── src
+│   ├── ieee754
+│   ├── ignore
+│   ├── import-fresh
+│   ├── imurmurhash
+│   ├── inflight
+│   ├── inherits
+│   ├── internal-slot
+│   │   └── test
+│   ├── invariant
+│   ├── is-array-buffer
+│   │   └── test
+│   ├── is-async-function
+│   │   └── test
+│   ├── is-bigint
+│   │   └── test
+│   ├── is-binary-path
+│   ├── is-boolean-object
+│   │   └── test
+│   ├── is-bun-module
+│   │   └── dist
+│   │       ├── cjs
+│   │       └── esm
+│   ├── is-callable
+│   │   └── test
+│   ├── is-core-module
+│   │   └── test
+│   ├── is-data-view
+│   │   └── test
+│   ├── is-date-object
+│   │   └── test
+│   ├── is-extglob
+│   ├── is-finalizationregistry
+│   │   └── test
+│   ├── is-fullwidth-code-point
+│   ├── is-generator-function
+│   │   └── test
+│   ├── is-glob
+│   ├── is-interactive
+│   ├── is-map
+│   │   └── test
+│   ├── is-negative-zero
+│   │   └── test
+│   ├── is-number
+│   ├── is-number-object
+│   │   └── test
+│   ├── is-path-inside
+│   ├── is-regex
+│   │   └── test
+│   ├── is-set
+│   │   └── test
+│   ├── is-shared-array-buffer
+│   │   └── test
+│   ├── is-stream
+│   ├── is-string
+│   │   └── test
+│   ├── is-symbol
+│   │   └── test
+│   ├── is-typed-array
+│   │   └── test
+│   ├── is-unicode-supported
+│   ├── is-weakmap
+│   │   └── test
+│   ├── is-weakref
+│   │   └── test
+│   ├── is-weakset
+│   │   └── test
+│   ├── isarray
+│   ├── isexe
+│   │   └── test
+│   ├── iterator.prototype
+│   │   └── test
+│   ├── jackspeak
+│   │   └── dist
+│   │       ├── commonjs
+│   │       └── esm
+│   ├── jiti
+│   │   ├── bin
+│   │   ├── dist
+│   │   │   └── plugins
+│   │   └── lib
+│   ├── jose
+│   │   └── dist
+│   │       ├── browser
+│   │       │   ├── jwe
+│   │       │   │   ├── compact
+│   │       │   │   ├── flattened
+│   │       │   │   └── general
+│   │       │   ├── jwk
+│   │       │   ├── jwks
+│   │       │   ├── jws
+│   │       │   │   ├── compact
+│   │       │   │   ├── flattened
+│   │       │   │   └── general
+│   │       │   ├── jwt
+│   │       │   ├── key
+│   │       │   ├── lib
+│   │       │   ├── runtime
+│   │       │   └── util
+│   │       ├── node
+│   │       │   ├── cjs
+│   │       │   │   ├── jwe
+│   │       │   │   │   ├── compact
+│   │       │   │   │   ├── flattened
+│   │       │   │   │   └── general
+│   │       │   │   ├── jwk
+│   │       │   │   ├── jwks
+│   │       │   │   ├── jws
+│   │       │   │   │   ├── compact
+│   │       │   │   │   ├── flattened
+│   │       │   │   │   └── general
+│   │       │   │   ├── jwt
+│   │       │   │   ├── key
+│   │       │   │   ├── lib
+│   │       │   │   ├── runtime
+│   │       │   │   └── util
+│   │       │   └── esm
+│   │       │       ├── jwe
+│   │       │       │   ├── compact
+│   │       │       │   ├── flattened
+│   │       │       │   └── general
+│   │       │       ├── jwk
+│   │       │       ├── jwks
+│   │       │       ├── jws
+│   │       │       │   ├── compact
+│   │       │       │   ├── flattened
+│   │       │       │   └── general
+│   │       │       ├── jwt
+│   │       │       ├── key
+│   │       │       ├── lib
+│   │       │       ├── runtime
+│   │       │       └── util
+│   │       └── types
+│   │           ├── jwe
+│   │           │   ├── compact
+│   │           │   ├── flattened
+│   │           │   └── general
+│   │           ├── jwk
+│   │           ├── jwks
+│   │           ├── jws
+│   │           │   ├── compact
+│   │           │   ├── flattened
+│   │           │   └── general
+│   │           ├── jwt
+│   │           ├── key
+│   │           └── util
+│   ├── js-cookie
+│   │   └── dist
+│   ├── js-tokens
+│   ├── js-yaml
+│   │   ├── bin
+│   │   ├── dist
+│   │   └── lib
+│   │       ├── schema
+│   │       └── type
+│   ├── json-bigint
+│   │   └── lib
+│   ├── json-buffer
+│   │   └── test
+│   ├── json-schema-traverse
+│   │   └── spec
+│   │       └── fixtures
+│   ├── json-stable-stringify-without-jsonify
+│   │   ├── example
+│   │   └── test
+│   ├── json5
+│   │   ├── dist
+│   │   └── lib
+│   ├── jsonfile
+│   ├── jsx-ast-utils
+│   │   ├── __tests__
+│   │   │   └── src
+│   │   ├── lib
+│   │   │   └── values
+│   │   │       └── expressions
+│   │   └── src
+│   │       └── values
+│   │           └── expressions
+│   ├── jwa
+│   ├── jws
+│   │   └── lib
+│   ├── keyv
+│   │   └── src
+│   ├── kleur
+│   ├── language-subtag-registry
+│   │   └── data
+│   │       └── json
+│   ├── language-tags
+│   │   └── lib
+│   ├── levn
+│   │   └── lib
+│   ├── lilconfig
+│   │   └── dist
+│   ├── lines-and-columns
+│   │   └── build
+│   ├── locate-path
+│   ├── lodash.merge
+│   ├── log-symbols
+│   │   └── node_modules
+│   │       └── chalk
+│   │           └── source
+│   │               └── vendor
+│   │                   ├── ansi-styles
+│   │                   └── supports-color
+│   ├── loose-envify
+│   ├── lower-case
+│   │   ├── dist
+│   │   └── dist.es2015
+│   ├── lru-cache
+│   │   └── dist
+│   │       ├── commonjs
+│   │       └── esm
+│   ├── lucide-react
+│   │   └── dist
+│   │       ├── cjs
+│   │       ├── esm
+│   │       │   └── icons
+│   │       └── umd
+│   ├── map-obj
+│   ├── merge-stream
+│   ├── merge2
+│   ├── micromatch
+│   ├── mime-db
+│   ├── mime-types
+│   ├── mimic-fn
+│   ├── minimatch
+│   ├── minimist
+│   │   ├── example
+│   │   └── test
+│   ├── minipass
+│   │   └── dist
+│   │       ├── commonjs
+│   │       └── esm
+│   ├── ms
+│   ├── mz
+│   ├── nanoid
+│   │   ├── async
+│   │   ├── bin
+│   │   ├── non-secure
+│   │   └── url-alphabet
+│   ├── natural-compare
+│   ├── next
+│   │   ├── compat
+│   │   ├── dist
+│   │   │   ├── api
+│   │   │   ├── bin
+│   │   │   ├── build
+│   │   │   │   ├── analysis
+│   │   │   │   ├── babel
+│   │   │   │   │   ├── loader
+│   │   │   │   │   └── plugins
+│   │   │   │   ├── jest
+│   │   │   │   │   └── __mocks__
+│   │   │   │   ├── manifests
+│   │   │   │   │   └── formatter
+│   │   │   │   ├── output
+│   │   │   │   ├── polyfills
+│   │   │   │   │   ├── fetch
+│   │   │   │   │   └── object.assign
+│   │   │   │   ├── swc
+│   │   │   │   ├── templates
+│   │   │   │   ├── turborepo-access-trace
+│   │   │   │   ├── webpack
+│   │   │   │   │   ├── alias
+│   │   │   │   │   ├── config
+│   │   │   │   │   │   └── blocks
+│   │   │   │   │   │       ├── css
+│   │   │   │   │   │       │   └── loaders
+│   │   │   │   │   │       └── images
+│   │   │   │   │   ├── loaders
+│   │   │   │   │   │   ├── css-loader
+│   │   │   │   │   │   │   └── src
+│   │   │   │   │   │   │       ├── plugins
+│   │   │   │   │   │   │       └── runtime
+│   │   │   │   │   │   ├── lightningcss-loader
+│   │   │   │   │   │   │   └── src
+│   │   │   │   │   │   ├── metadata
+│   │   │   │   │   │   ├── next-edge-app-route-loader
+│   │   │   │   │   │   ├── next-edge-ssr-loader
+│   │   │   │   │   │   ├── next-flight-loader
+│   │   │   │   │   │   ├── next-font-loader
+│   │   │   │   │   │   ├── next-image-loader
+│   │   │   │   │   │   ├── next-route-loader
+│   │   │   │   │   │   ├── next-style-loader
+│   │   │   │   │   │   │   └── runtime
+│   │   │   │   │   │   ├── postcss-loader
+│   │   │   │   │   │   │   └── src
+│   │   │   │   │   │   └── resolve-url-loader
+│   │   │   │   │   │       └── lib
+│   │   │   │   │   └── plugins
+│   │   │   │   │       ├── next-types-plugin
+│   │   │   │   │       ├── terser-webpack-plugin
+│   │   │   │   │       │   └── src
+│   │   │   │   │       └── wellknown-errors-plugin
+│   │   │   │   ├── webpack-build
+│   │   │   │   └── webpack-config-rules
+│   │   │   ├── cli
+│   │   │   ├── client
+│   │   │   │   ├── compat
+│   │   │   │   ├── components
+│   │   │   │   │   ├── react-dev-overlay
+│   │   │   │   │   │   ├── app
+│   │   │   │   │   │   ├── internal
+│   │   │   │   │   │   │   ├── components
+│   │   │   │   │   │   │   │   ├── CodeFrame
+│   │   │   │   │   │   │   │   ├── Dialog
+│   │   │   │   │   │   │   │   ├── LeftRightDialogHeader
+│   │   │   │   │   │   │   │   ├── Overlay
+│   │   │   │   │   │   │   │   ├── Terminal
+│   │   │   │   │   │   │   │   ├── Toast
+│   │   │   │   │   │   │   │   ├── VersionStalenessInfo
+│   │   │   │   │   │   │   │   └── hot-linked-text
+│   │   │   │   │   │   │   ├── container
+│   │   │   │   │   │   │   │   └── RuntimeError
+│   │   │   │   │   │   │   ├── helpers
+│   │   │   │   │   │   │   ├── hooks
+│   │   │   │   │   │   │   ├── icons
+│   │   │   │   │   │   │   └── styles
+│   │   │   │   │   │   ├── pages
+│   │   │   │   │   │   └── server
+│   │   │   │   │   └── router-reducer
+│   │   │   │   │       └── reducers
+│   │   │   │   ├── dev
+│   │   │   │   │   └── error-overlay
+│   │   │   │   ├── legacy
+│   │   │   │   ├── portal
+│   │   │   │   └── tracing
+│   │   │   ├── compiled
+│   │   │   │   ├── @ampproject
+│   │   │   │   │   └── toolbox-optimizer
+│   │   │   │   ├── @babel
+│   │   │   │   │   └── runtime
+│   │   │   │   │       ├── helpers
+│   │   │   │   │       │   └── esm
+│   │   │   │   │       └── regenerator
+│   │   │   │   ├── @edge-runtime
+│   │   │   │   │   ├── cookies
+│   │   │   │   │   ├── ponyfill
+│   │   │   │   │   └── primitives
+│   │   │   │   ├── @hapi
+│   │   │   │   │   └── accept
+│   │   │   │   ├── @mswjs
+│   │   │   │   │   └── interceptors
+│   │   │   │   │       └── ClientRequest
+│   │   │   │   ├── @napi-rs
+│   │   │   │   │   └── triples
+│   │   │   │   ├── @next
+│   │   │   │   │   ├── font
+│   │   │   │   │   │   ├── dist
+│   │   │   │   │   │   │   ├── fontkit
+│   │   │   │   │   │   │   ├── google
+│   │   │   │   │   │   │   └── local
+│   │   │   │   │   │   ├── google
+│   │   │   │   │   │   └── local
+│   │   │   │   │   └── react-refresh-utils
+│   │   │   │   │       └── dist
+│   │   │   │   │           └── internal
+│   │   │   │   ├── @opentelemetry
+│   │   │   │   │   └── api
+│   │   │   │   ├── @vercel
+│   │   │   │   │   ├── nft
+│   │   │   │   │   └── og
+│   │   │   │   │       ├── emoji
+│   │   │   │   │       ├── figma
+│   │   │   │   │       ├── language
+│   │   │   │   │       └── satori
+│   │   │   │   ├── acorn
+│   │   │   │   ├── amphtml-validator
+│   │   │   │   ├── anser
+│   │   │   │   ├── arg
+│   │   │   │   ├── assert
+│   │   │   │   ├── async-retry
+│   │   │   │   ├── async-sema
+│   │   │   │   ├── babel
+│   │   │   │   ├── babel-packages
+│   │   │   │   ├── browserify-zlib
+│   │   │   │   ├── browserslist
+│   │   │   │   ├── buffer
+│   │   │   │   ├── bytes
+│   │   │   │   ├── ci-info
+│   │   │   │   ├── cli-select
+│   │   │   │   ├── client-only
+│   │   │   │   ├── commander
+│   │   │   │   ├── comment-json
+│   │   │   │   ├── compression
+│   │   │   │   ├── conf
+│   │   │   │   ├── constants-browserify
+│   │   │   │   ├── content-disposition
+│   │   │   │   ├── content-type
+│   │   │   │   ├── cookie
+│   │   │   │   ├── cross-spawn
+│   │   │   │   ├── crypto-browserify
+│   │   │   │   ├── css.escape
+│   │   │   │   ├── cssnano-simple
+│   │   │   │   ├── data-uri-to-buffer
+│   │   │   │   ├── debug
+│   │   │   │   ├── devalue
+│   │   │   │   ├── domain-browser
+│   │   │   │   ├── edge-runtime
+│   │   │   │   ├── events
+│   │   │   │   ├── find-cache-dir
+│   │   │   │   ├── find-up
+│   │   │   │   ├── fresh
+│   │   │   │   ├── get-orientation
+│   │   │   │   ├── glob
+│   │   │   │   ├── gzip-size
+│   │   │   │   ├── http-proxy
+│   │   │   │   ├── http-proxy-agent
+│   │   │   │   ├── https-browserify
+│   │   │   │   ├── https-proxy-agent
+│   │   │   │   ├── icss-utils
+│   │   │   │   ├── ignore-loader
+│   │   │   │   ├── image-size
+│   │   │   │   ├── is-animated
+│   │   │   │   ├── is-docker
+│   │   │   │   ├── is-wsl
+│   │   │   │   ├── jest-worker
+│   │   │   │   ├── json5
+│   │   │   │   ├── jsonwebtoken
+│   │   │   │   ├── loader-runner
+│   │   │   │   ├── loader-utils2
+│   │   │   │   ├── loader-utils3
+│   │   │   │   ├── lodash.curry
+│   │   │   │   ├── lru-cache
+│   │   │   │   ├── mini-css-extract-plugin
+│   │   │   │   │   └── hmr
+│   │   │   │   ├── nanoid
+│   │   │   │   ├── native-url
+│   │   │   │   ├── neo-async
+│   │   │   │   ├── next-server
+│   │   │   │   ├── node-fetch
+│   │   │   │   ├── node-html-parser
+│   │   │   │   ├── ora
+│   │   │   │   ├── os-browserify
+│   │   │   │   ├── p-limit
+│   │   │   │   ├── path-browserify
+│   │   │   │   ├── path-to-regexp
+│   │   │   │   ├── picomatch
+│   │   │   │   ├── platform
+│   │   │   │   ├── postcss-flexbugs-fixes
+│   │   │   │   ├── postcss-modules-extract-imports
+│   │   │   │   ├── postcss-modules-local-by-default
+│   │   │   │   ├── postcss-modules-scope
+│   │   │   │   ├── postcss-modules-values
+│   │   │   │   ├── postcss-plugin-stub-for-cssnano-simple
+│   │   │   │   ├── postcss-preset-env
+│   │   │   │   ├── postcss-safe-parser
+│   │   │   │   ├── postcss-scss
+│   │   │   │   ├── postcss-value-parser
+│   │   │   │   ├── process
+│   │   │   │   ├── punycode
+│   │   │   │   ├── querystring-es3
+│   │   │   │   ├── raw-body
+│   │   │   │   ├── react
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-dom
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-dom-experimental
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-experimental
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-is
+│   │   │   │   │   ├── cjs
+│   │   │   │   │   └── umd
+│   │   │   │   ├── react-refresh
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-server-dom-turbopack
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-server-dom-turbopack-experimental
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-server-dom-webpack
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── react-server-dom-webpack-experimental
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── regenerator-runtime
+│   │   │   │   ├── sass-loader
+│   │   │   │   ├── scheduler
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── scheduler-experimental
+│   │   │   │   │   └── cjs
+│   │   │   │   ├── schema-utils2
+│   │   │   │   ├── schema-utils3
+│   │   │   │   ├── semver
+│   │   │   │   ├── send
+│   │   │   │   ├── server-only
+│   │   │   │   ├── setimmediate
+│   │   │   │   ├── shell-quote
+│   │   │   │   ├── source-map
+│   │   │   │   ├── source-map08
+│   │   │   │   ├── stacktrace-parser
+│   │   │   │   ├── stream-browserify
+│   │   │   │   ├── stream-http
+│   │   │   │   ├── string-hash
+│   │   │   │   ├── string_decoder
+│   │   │   │   ├── strip-ansi
+│   │   │   │   ├── superstruct
+│   │   │   │   ├── tar
+│   │   │   │   ├── terser
+│   │   │   │   ├── text-table
+│   │   │   │   ├── timers-browserify
+│   │   │   │   ├── tty-browserify
+│   │   │   │   ├── ua-parser-js
+│   │   │   │   ├── unistore
+│   │   │   │   ├── util
+│   │   │   │   ├── vm-browserify
+│   │   │   │   ├── watchpack
+│   │   │   │   ├── web-vitals
+│   │   │   │   ├── web-vitals-attribution
+│   │   │   │   ├── webpack
+│   │   │   │   ├── webpack-sources1
+│   │   │   │   ├── webpack-sources3
+│   │   │   │   ├── ws
+│   │   │   │   └── zod
+│   │   │   ├── esm
+│   │   │   │   ├── api
+│   │   │   │   ├── build
+│   │   │   │   │   ├── analysis
+│   │   │   │   │   ├── babel
+│   │   │   │   │   │   ├── loader
+│   │   │   │   │   │   └── plugins
+│   │   │   │   │   ├── manifests
+│   │   │   │   │   │   └── formatter
+│   │   │   │   │   ├── output
+│   │   │   │   │   ├── polyfills
+│   │   │   │   │   │   ├── fetch
+│   │   │   │   │   │   └── object.assign
+│   │   │   │   │   ├── swc
+│   │   │   │   │   ├── templates
+│   │   │   │   │   ├── turborepo-access-trace
+│   │   │   │   │   ├── webpack
+│   │   │   │   │   │   ├── alias
+│   │   │   │   │   │   ├── config
+│   │   │   │   │   │   │   └── blocks
+│   │   │   │   │   │   │       ├── css
+│   │   │   │   │   │   │       │   └── loaders
+│   │   │   │   │   │   │       └── images
+│   │   │   │   │   │   ├── loaders
+│   │   │   │   │   │   │   ├── css-loader
+│   │   │   │   │   │   │   │   └── src
+│   │   │   │   │   │   │   │       ├── plugins
+│   │   │   │   │   │   │   │       └── runtime
+│   │   │   │   │   │   │   ├── lightningcss-loader
+│   │   │   │   │   │   │   │   └── src
+│   │   │   │   │   │   │   ├── metadata
+│   │   │   │   │   │   │   ├── next-edge-app-route-loader
+│   │   │   │   │   │   │   ├── next-edge-ssr-loader
+│   │   │   │   │   │   │   ├── next-flight-loader
+│   │   │   │   │   │   │   ├── next-font-loader
+│   │   │   │   │   │   │   ├── next-image-loader
+│   │   │   │   │   │   │   ├── next-route-loader
+│   │   │   │   │   │   │   ├── next-style-loader
+│   │   │   │   │   │   │   │   └── runtime
+│   │   │   │   │   │   │   ├── postcss-loader
+│   │   │   │   │   │   │   │   └── src
+│   │   │   │   │   │   │   └── resolve-url-loader
+│   │   │   │   │   │   │       └── lib
+│   │   │   │   │   │   └── plugins
+│   │   │   │   │   │       ├── next-types-plugin
+│   │   │   │   │   │       ├── terser-webpack-plugin
+│   │   │   │   │   │       │   └── src
+│   │   │   │   │   │       └── wellknown-errors-plugin
+│   │   │   │   │   ├── webpack-build
+│   │   │   │   │   └── webpack-config-rules
+│   │   │   │   ├── client
+│   │   │   │   │   ├── compat
+│   │   │   │   │   ├── components
+│   │   │   │   │   │   ├── react-dev-overlay
+│   │   │   │   │   │   │   ├── app
+│   │   │   │   │   │   │   ├── internal
+│   │   │   │   │   │   │   │   ├── components
+│   │   │   │   │   │   │   │   │   ├── CodeFrame
+│   │   │   │   │   │   │   │   │   ├── Dialog
+│   │   │   │   │   │   │   │   │   ├── LeftRightDialogHeader
+│   │   │   │   │   │   │   │   │   ├── Overlay
+│   │   │   │   │   │   │   │   │   ├── Terminal
+│   │   │   │   │   │   │   │   │   ├── Toast
+│   │   │   │   │   │   │   │   │   ├── VersionStalenessInfo
+│   │   │   │   │   │   │   │   │   └── hot-linked-text
+│   │   │   │   │   │   │   │   ├── container
+│   │   │   │   │   │   │   │   │   └── RuntimeError
+│   │   │   │   │   │   │   │   ├── helpers
+│   │   │   │   │   │   │   │   ├── hooks
+│   │   │   │   │   │   │   │   ├── icons
+│   │   │   │   │   │   │   │   └── styles
+│   │   │   │   │   │   │   ├── pages
+│   │   │   │   │   │   │   └── server
+│   │   │   │   │   │   └── router-reducer
+│   │   │   │   │   │       └── reducers
+│   │   │   │   │   ├── dev
+│   │   │   │   │   │   └── error-overlay
+│   │   │   │   │   ├── legacy
+│   │   │   │   │   ├── portal
+│   │   │   │   │   └── tracing
+│   │   │   │   ├── export
+│   │   │   │   │   ├── helpers
+│   │   │   │   │   └── routes
+│   │   │   │   ├── lib
+│   │   │   │   │   ├── eslint
+│   │   │   │   │   ├── fs
+│   │   │   │   │   ├── helpers
+│   │   │   │   │   ├── memory
+│   │   │   │   │   ├── metadata
+│   │   │   │   │   │   ├── generate
+│   │   │   │   │   │   ├── resolvers
+│   │   │   │   │   │   └── types
+│   │   │   │   │   └── typescript
+│   │   │   │   ├── pages
+│   │   │   │   ├── server
+│   │   │   │   │   ├── api-utils
+│   │   │   │   │   │   └── node
+│   │   │   │   │   ├── app-render
+│   │   │   │   │   │   ├── rsc
+│   │   │   │   │   │   └── static
+│   │   │   │   │   ├── async-storage
+│   │   │   │   │   ├── base-http
+│   │   │   │   │   ├── dev
+│   │   │   │   │   │   └── turbopack
+│   │   │   │   │   ├── future
+│   │   │   │   │   │   ├── helpers
+│   │   │   │   │   │   │   └── module-loader
+│   │   │   │   │   │   ├── normalizers
+│   │   │   │   │   │   │   ├── built
+│   │   │   │   │   │   │   │   ├── app
+│   │   │   │   │   │   │   │   └── pages
+│   │   │   │   │   │   │   └── request
+│   │   │   │   │   │   ├── route-definitions
+│   │   │   │   │   │   ├── route-matcher-managers
+│   │   │   │   │   │   ├── route-matcher-providers
+│   │   │   │   │   │   │   ├── dev
+│   │   │   │   │   │   │   │   └── helpers
+│   │   │   │   │   │   │   │       └── file-reader
+│   │   │   │   │   │   │   └── helpers
+│   │   │   │   │   │   │       └── manifest-loaders
+│   │   │   │   │   │   ├── route-matchers
+│   │   │   │   │   │   ├── route-matches
+│   │   │   │   │   │   └── route-modules
+│   │   │   │   │   │       ├── app-page
+│   │   │   │   │   │       │   └── vendored
+│   │   │   │   │   │       │       ├── contexts
+│   │   │   │   │   │       │       ├── rsc
+│   │   │   │   │   │       │       └── ssr
+│   │   │   │   │   │       ├── app-route
+│   │   │   │   │   │       │   └── helpers
+│   │   │   │   │   │       ├── helpers
+│   │   │   │   │   │       ├── pages
+│   │   │   │   │   │       │   ├── builtin
+│   │   │   │   │   │       │   └── vendored
+│   │   │   │   │   │       │       └── contexts
+│   │   │   │   │   │       └── pages-api
+│   │   │   │   │   ├── lib
+│   │   │   │   │   │   ├── incremental-cache
+│   │   │   │   │   │   ├── router-utils
+│   │   │   │   │   │   ├── server-ipc
+│   │   │   │   │   │   ├── squoosh
+│   │   │   │   │   │   │   ├── avif
+│   │   │   │   │   │   │   ├── mozjpeg
+│   │   │   │   │   │   │   ├── png
+│   │   │   │   │   │   │   ├── resize
+│   │   │   │   │   │   │   └── webp
+│   │   │   │   │   │   └── trace
+│   │   │   │   │   ├── og
+│   │   │   │   │   ├── response-cache
+│   │   │   │   │   ├── stream-utils
+│   │   │   │   │   ├── typescript
+│   │   │   │   │   │   └── rules
+│   │   │   │   │   └── web
+│   │   │   │   │       ├── exports
+│   │   │   │   │       ├── sandbox
+│   │   │   │   │       └── spec-extension
+│   │   │   │   │           └── adapters
+│   │   │   │   └── shared
+│   │   │   │       └── lib
+│   │   │   │           ├── i18n
+│   │   │   │           ├── isomorphic
+│   │   │   │           ├── lazy-dynamic
+│   │   │   │           ├── page-path
+│   │   │   │           ├── router
+│   │   │   │           │   └── utils
+│   │   │   │           └── utils
+│   │   │   ├── experimental
+│   │   │   │   └── testmode
+│   │   │   │       ├── playwright
+│   │   │   │       └── proxy
+│   │   │   ├── export
+│   │   │   │   ├── helpers
+│   │   │   │   └── routes
+│   │   │   ├── lib
+│   │   │   │   ├── eslint
+│   │   │   │   ├── fs
+│   │   │   │   ├── helpers
+│   │   │   │   ├── memory
+│   │   │   │   ├── metadata
+│   │   │   │   │   ├── generate
+│   │   │   │   │   ├── resolvers
+│   │   │   │   │   └── types
+│   │   │   │   └── typescript
+│   │   │   ├── pages
+│   │   │   ├── server
+│   │   │   │   ├── api-utils
+│   │   │   │   │   └── node
+│   │   │   │   ├── app-render
+│   │   │   │   │   ├── rsc
+│   │   │   │   │   └── static
+│   │   │   │   ├── async-storage
+│   │   │   │   ├── base-http
+│   │   │   │   ├── dev
+│   │   │   │   │   └── turbopack
+│   │   │   │   ├── future
+│   │   │   │   │   ├── helpers
+│   │   │   │   │   │   └── module-loader
+│   │   │   │   │   ├── normalizers
+│   │   │   │   │   │   ├── built
+│   │   │   │   │   │   │   ├── app
+│   │   │   │   │   │   │   └── pages
+│   │   │   │   │   │   └── request
+│   │   │   │   │   ├── route-definitions
+│   │   │   │   │   ├── route-matcher-managers
+│   │   │   │   │   ├── route-matcher-providers
+│   │   │   │   │   │   ├── dev
+│   │   │   │   │   │   │   └── helpers
+│   │   │   │   │   │   │       └── file-reader
+│   │   │   │   │   │   └── helpers
+│   │   │   │   │   │       └── manifest-loaders
+│   │   │   │   │   ├── route-matchers
+│   │   │   │   │   ├── route-matches
+│   │   │   │   │   └── route-modules
+│   │   │   │   │       ├── app-page
+│   │   │   │   │       │   └── vendored
+│   │   │   │   │       │       ├── contexts
+│   │   │   │   │       │       ├── rsc
+│   │   │   │   │       │       └── ssr
+│   │   │   │   │       ├── app-route
+│   │   │   │   │       │   └── helpers
+│   │   │   │   │       ├── helpers
+│   │   │   │   │       ├── pages
+│   │   │   │   │       │   ├── builtin
+│   │   │   │   │       │   └── vendored
+│   │   │   │   │       │       └── contexts
+│   │   │   │   │       └── pages-api
+│   │   │   │   ├── lib
+│   │   │   │   │   ├── incremental-cache
+│   │   │   │   │   ├── router-utils
+│   │   │   │   │   ├── server-ipc
+│   │   │   │   │   ├── squoosh
+│   │   │   │   │   │   ├── avif
+│   │   │   │   │   │   ├── mozjpeg
+│   │   │   │   │   │   ├── png
+│   │   │   │   │   │   ├── resize
+│   │   │   │   │   │   ├── rotate
+│   │   │   │   │   │   └── webp
+│   │   │   │   │   └── trace
+│   │   │   │   ├── og
+│   │   │   │   ├── response-cache
+│   │   │   │   ├── stream-utils
+│   │   │   │   ├── typescript
+│   │   │   │   │   └── rules
+│   │   │   │   └── web
+│   │   │   │       ├── exports
+│   │   │   │       ├── sandbox
+│   │   │   │       └── spec-extension
+│   │   │   │           └── adapters
+│   │   │   ├── shared
+│   │   │   │   └── lib
+│   │   │   │       ├── i18n
+│   │   │   │       ├── isomorphic
+│   │   │   │       ├── lazy-dynamic
+│   │   │   │       ├── page-path
+│   │   │   │       ├── router
+│   │   │   │       │   └── utils
+│   │   │   │       └── utils
+│   │   │   ├── src
+│   │   │   │   └── compiled
+│   │   │   │       └── @ampproject
+│   │   │   │           └── toolbox-optimizer
+│   │   │   ├── styled-jsx
+│   │   │   │   └── types
+│   │   │   ├── telemetry
+│   │   │   │   └── events
+│   │   │   └── trace
+│   │   │       └── report
+│   │   ├── experimental
+│   │   │   └── testmode
+│   │   │       └── playwright
+│   │   ├── font
+│   │   │   ├── google
+│   │   │   └── local
+│   │   ├── image-types
+│   │   ├── legacy
+│   │   ├── navigation-types
+│   │   │   └── compat
+│   │   ├── node_modules
+│   │   │   └── postcss
+│   │   │       └── lib
+│   │   └── types
+│   ├── next-auth
+│   │   ├── client
+│   │   │   └── __tests__
+│   │   │       └── helpers
+│   │   ├── core
+│   │   │   ├── lib
+│   │   │   │   ├── email
+│   │   │   │   └── oauth
+│   │   │   ├── pages
+│   │   │   └── routes
+│   │   ├── css
+│   │   ├── jwt
+│   │   ├── next
+│   │   ├── providers
+│   │   ├── react
+│   │   ├── src
+│   │   │   ├── client
+│   │   │   │   └── __tests__
+│   │   │   │       └── helpers
+│   │   │   ├── core
+│   │   │   │   ├── lib
+│   │   │   │   │   ├── email
+│   │   │   │   │   └── oauth
+│   │   │   │   ├── pages
+│   │   │   │   └── routes
+│   │   │   ├── css
+│   │   │   ├── jwt
+│   │   │   ├── next
+│   │   │   ├── providers
+│   │   │   ├── react
+│   │   │   └── utils
+│   │   └── utils
+│   ├── no-case
+│   │   ├── dist
+│   │   └── dist.es2015
+│   ├── node-domexception
+│   ├── node-fetch
+│   │   └── lib
+│   ├── node-releases
+│   │   └── data
+│   │       ├── processed
+│   │       └── release-schedule
+│   ├── normalize-path
+│   ├── normalize-range
+│   ├── npm-run-path
+│   │   └── node_modules
+│   │       └── path-key
+│   ├── oauth
+│   │   ├── examples
+│   │   │   └── express-gdata
+│   │   │       └── views
+│   │   ├── lib
+│   │   └── tests
+│   ├── object-assign
+│   ├── object-hash
+│   │   └── dist
+│   ├── object-inspect
+│   │   ├── example
+│   │   └── test
+│   │       └── browser
+│   ├── object-keys
+│   │   └── test
+│   ├── object.assign
+│   │   ├── dist
+│   │   └── test
+│   ├── object.entries
+│   │   └── test
+│   ├── object.fromentries
+│   │   └── test
+│   ├── object.groupby
+│   │   └── test
+│   ├── object.values
+│   │   └── test
+│   ├── oidc-token-hash
+│   │   └── lib
+│   ├── once
+│   ├── onetime
+│   ├── openid-client
+│   │   ├── lib
+│   │   │   └── helpers
+│   │   ├── node_modules
+│   │   │   ├── lru-cache
+│   │   │   └── object-hash
+│   │   │       └── dist
+│   │   └── types
+│   ├── optionator
+│   │   └── lib
+│   ├── ora
+│   │   └── node_modules
+│   │       ├── ansi-regex
+│   │       ├── chalk
+│   │       │   └── source
+│   │       │       └── vendor
+│   │       │           ├── ansi-styles
+│   │       │           └── supports-color
+│   │       └── strip-ansi
+│   ├── p-limit
+│   ├── p-locate
+│   ├── parent-module
+│   ├── path-exists
+│   ├── path-is-absolute
+│   ├── path-key
+│   ├── path-parse
+│   ├── path-scurry
+│   │   └── dist
+│   │       ├── commonjs
+│   │       └── esm
+│   ├── picocolors
+│   ├── picomatch
+│   │   └── lib
+│   ├── pify
+│   ├── pirates
+│   │   └── lib
+│   ├── possible-typed-array-names
+│   │   └── test
+│   ├── postcss
+│   │   └── lib
+│   ├── postcss-import
+│   │   └── lib
+│   ├── postcss-js
+│   ├── postcss-load-config
+│   │   ├── node_modules
+│   │   │   └── lilconfig
+│   │   │       └── src
+│   │   └── src
+│   ├── postcss-nested
+│   ├── postcss-selector-parser
+│   │   └── dist
+│   │       ├── selectors
+│   │       └── util
+│   ├── postcss-value-parser
+│   │   └── lib
+│   ├── preact
+│   │   ├── compat
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   ├── debug
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   ├── devtools
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   ├── dist
+│   │   ├── hooks
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   ├── jsx-runtime
+│   │   │   ├── dist
+│   │   │   └── src
+│   │   ├── src
+│   │   │   └── diff
+│   │   └── test-utils
+│   │       ├── dist
+│   │       └── src
+│   ├── preact-render-to-string
+│   │   ├── dist
+│   │   └── src
+│   ├── prelude-ls
+│   │   └── lib
+│   ├── pretty-format
+│   │   └── plugins
+│   ├── prompts
+│   │   ├── dist
+│   │   │   ├── dateparts
+│   │   │   ├── elements
+│   │   │   └── util
+│   │   └── lib
+│   │       ├── dateparts
+│   │       ├── elements
+│   │       └── util
+│   ├── prop-types
+│   │   └── lib
+│   ├── proxy-from-env
+│   ├── punycode
+│   ├── qs
+│   │   ├── dist
+│   │   ├── lib
+│   │   └── test
+│   ├── queue-microtask
+│   ├── react
+│   │   ├── cjs
+│   │   └── umd
+│   ├── react-dom
+│   │   ├── cjs
+│   │   └── umd
+│   ├── react-hook-form
+│   │   └── dist
+│   │       ├── __tests__
+│   │       │   ├── logic
+│   │       │   ├── useFieldArray
+│   │       │   └── useForm
+│   │       ├── __typetest__
+│   │       │   ├── __fixtures__
+│   │       │   └── path
+│   │       ├── logic
+│   │       ├── types
+│   │       │   └── path
+│   │       └── utils
+│   ├── react-is
+│   │   ├── cjs
+│   │   └── umd
+│   ├── react-remove-scroll
+│   │   ├── UI
+│   │   ├── dist
+│   │   │   ├── es2015
+│   │   │   ├── es2019
+│   │   │   └── es5
+│   │   └── sidecar
+│   ├── react-remove-scroll-bar
+│   │   ├── constants
+│   │   └── dist
+│   │       ├── es2015
+│   │       ├── es2019
+│   │       └── es5
+│   ├── react-style-singleton
+│   │   └── dist
+│   │       ├── es2015
+│   │       ├── es2019
+│   │       └── es5
+│   ├── read-cache
+│   ├── readable-stream
+│   │   └── lib
+│   │       └── internal
+│   │           └── streams
+│   ├── readdirp
+│   ├── reflect.getprototypeof
+│   │   └── test
+│   ├── regenerator-runtime
+│   ├── regexp.prototype.flags
+│   │   └── test
+│   ├── resolve
+│   │   ├── bin
+│   │   ├── example
+│   │   ├── lib
+│   │   └── test
+│   │       ├── dotdot
+│   │       │   └── abc
+│   │       ├── module_dir
+│   │       │   ├── xmodules
+│   │       │   │   └── aaa
+│   │       │   ├── ymodules
+│   │       │   │   └── aaa
+│   │       │   └── zmodules
+│   │       │       └── bbb
+│   │       ├── node_path
+│   │       │   ├── x
+│   │       │   │   ├── aaa
+│   │       │   │   └── ccc
+│   │       │   └── y
+│   │       │       ├── bbb
+│   │       │       └── ccc
+│   │       ├── pathfilter
+│   │       │   └── deep_ref
+│   │       ├── precedence
+│   │       │   ├── aaa
+│   │       │   └── bbb
+│   │       ├── resolver
+│   │       │   ├── baz
+│   │       │   ├── browser_field
+│   │       │   ├── dot_main
+│   │       │   ├── dot_slash_main
+│   │       │   ├── false_main
+│   │       │   ├── incorrect_main
+│   │       │   ├── invalid_main
+│   │       │   ├── multirepo
+│   │       │   │   └── packages
+│   │       │   │       ├── package-a
+│   │       │   │       └── package-b
+│   │       │   ├── nested_symlinks
+│   │       │   │   └── mylib
+│   │       │   ├── other_path
+│   │       │   │   └── lib
+│   │       │   ├── quux
+│   │       │   │   └── foo
+│   │       │   ├── same_names
+│   │       │   │   └── foo
+│   │       │   ├── symlinked
+│   │       │   │   ├── _
+│   │       │   │   │   ├── node_modules
+│   │       │   │   │   └── symlink_target
+│   │       │   │   └── package
+│   │       │   └── without_basedir
+│   │       └── shadowed_core
+│   │           └── node_modules
+│   │               └── util
+│   ├── resolve-from
+│   ├── resolve-pkg-maps
+│   │   └── dist
+│   ├── restore-cursor
+│   │   └── node_modules
+│   │       ├── mimic-fn
+│   │       ├── onetime
+│   │       └── signal-exit
+│   ├── reusify
+│   │   └── benchmarks
+│   ├── rimraf
+│   │   └── node_modules
+│   │       └── glob
+│   ├── run-parallel
+│   ├── safe-array-concat
+│   │   └── test
+│   ├── safe-buffer
+│   ├── safe-regex-test
+│   │   └── test
+│   ├── scheduler
+│   │   ├── cjs
+│   │   └── umd
+│   ├── semver
+│   │   ├── bin
+│   │   ├── classes
+│   │   ├── functions
+│   │   ├── internal
+│   │   └── ranges
+│   ├── server-only
+│   ├── set-function-length
+│   ├── set-function-name
+│   ├── shebang-command
+│   ├── shebang-regex
+│   ├── side-channel
+│   │   └── test
+│   ├── signal-exit
+│   │   └── dist
+│   │       ├── cjs
+│   │       └── mjs
+│   ├── sisteransi
+│   │   └── src
+│   ├── snake-case
+│   │   ├── dist
+│   │   └── dist.es2015
+│   ├── snakecase-keys
+│   │   └── node_modules
+│   │       └── type-fest
+│   │           └── source
+│   ├── source-map-js
+│   │   └── lib
+│   ├── std-env
+│   │   └── dist
+│   ├── stdin-discarder
+│   ├── streamsearch
+│   │   ├── lib
+│   │   └── test
+│   ├── string-width
+│   │   └── node_modules
+│   │       ├── ansi-regex
+│   │       └── strip-ansi
+│   ├── string-width-cjs
+│   │   └── node_modules
+│   │       └── emoji-regex
+│   │           └── es2015
+│   ├── string.prototype.includes
+│   │   └── tests
+│   ├── string.prototype.matchall
+│   │   └── test
+│   ├── string.prototype.repeat
+│   │   └── tests
+│   ├── string.prototype.trim
+│   │   └── test
+│   ├── string.prototype.trimend
+│   │   └── test
+│   ├── string.prototype.trimstart
+│   │   └── test
+│   ├── string_decoder
+│   │   └── lib
+│   ├── strip-ansi
+│   ├── strip-ansi-cjs
+│   ├── strip-bom
+│   ├── strip-final-newline
+│   ├── strip-json-comments
+│   ├── styled-jsx
+│   │   ├── dist
+│   │   │   ├── babel
+│   │   │   ├── index
+│   │   │   └── webpack
+│   │   └── lib
+│   ├── sucrase
+│   │   ├── bin
+│   │   ├── dist
+│   │   │   ├── esm
+│   │   │   │   ├── parser
+│   │   │   │   │   ├── plugins
+│   │   │   │   │   │   └── jsx
+│   │   │   │   │   ├── tokenizer
+│   │   │   │   │   ├── traverser
+│   │   │   │   │   └── util
+│   │   │   │   ├── transformers
+│   │   │   │   └── util
+│   │   │   ├── parser
+│   │   │   │   ├── plugins
+│   │   │   │   │   └── jsx
+│   │   │   │   ├── tokenizer
+│   │   │   │   ├── traverser
+│   │   │   │   └── util
+│   │   │   ├── transformers
+│   │   │   ├── types
+│   │   │   │   ├── parser
+│   │   │   │   │   ├── plugins
+│   │   │   │   │   │   └── jsx
+│   │   │   │   │   ├── tokenizer
+│   │   │   │   │   ├── traverser
+│   │   │   │   │   └── util
+│   │   │   │   ├── transformers
+│   │   │   │   └── util
+│   │   │   └── util
+│   │   ├── register
+│   │   └── ts-node-plugin
+│   ├── supports-color
+│   ├── supports-preserve-symlinks-flag
+│   │   └── test
+│   ├── swr
+│   │   ├── _internal
+│   │   ├── dist
+│   │   │   ├── _internal
+│   │   │   ├── core
+│   │   │   ├── immutable
+│   │   │   ├── infinite
+│   │   │   ├── mutation
+│   │   │   └── subscription
+│   │   ├── immutable
+│   │   ├── infinite
+│   │   ├── mutation
+│   │   └── subscription
+│   ├── tailwind-merge
+│   │   ├── dist
+│   │   │   └── lib
+│   │   └── src
+│   │       └── lib
+│   ├── tailwindcss
+│   │   ├── lib
+│   │   │   ├── cli
+│   │   │   │   ├── build
+│   │   │   │   ├── help
+│   │   │   │   └── init
+│   │   │   ├── css
+│   │   │   ├── lib
+│   │   │   ├── postcss-plugins
+│   │   │   │   └── nesting
+│   │   │   ├── public
+│   │   │   ├── util
+│   │   │   └── value-parser
+│   │   ├── nesting
+│   │   ├── peers
+│   │   ├── scripts
+│   │   ├── src
+│   │   │   ├── cli
+│   │   │   │   ├── build
+│   │   │   │   ├── help
+│   │   │   │   └── init
+│   │   │   ├── css
+│   │   │   ├── lib
+│   │   │   ├── postcss-plugins
+│   │   │   │   └── nesting
+│   │   │   ├── public
+│   │   │   ├── util
+│   │   │   └── value-parser
+│   │   ├── stubs
+│   │   └── types
+│   │       └── generated
+│   ├── tailwindcss-animate
+│   ├── tapable
+│   │   └── lib
+│   ├── text-table
+│   │   ├── example
+│   │   └── test
+│   ├── thenify
+│   ├── thenify-all
+│   ├── to-regex-range
+│   ├── tr46
+│   │   └── lib
+│   ├── ts-api-utils
+│   │   └── lib
+│   ├── ts-interface-checker
+│   │   └── dist
+│   ├── tsconfig-paths
+│   │   ├── lib
+│   │   │   └── __tests__
+│   │   │       └── data
+│   │   └── src
+│   │       └── __tests__
+│   │           └── data
+│   ├── tslib
+│   │   └── modules
+│   ├── type-check
+│   │   └── lib
+│   ├── type-fest
+│   │   ├── source
+│   │   └── ts41
+│   ├── typed-array-buffer
+│   │   └── test
+│   ├── typed-array-byte-length
+│   │   └── test
+│   ├── typed-array-byte-offset
+│   │   └── test
+│   ├── typed-array-length
+│   │   └── test
+│   ├── typescript
+│   │   ├── bin
+│   │   └── lib
+│   │       ├── cs
+│   │       ├── de
+│   │       ├── es
+│   │       ├── fr
+│   │       ├── it
+│   │       ├── ja
+│   │       ├── ko
+│   │       ├── pl
+│   │       ├── pt-br
+│   │       ├── ru
+│   │       ├── tr
+│   │       ├── zh-cn
+│   │       └── zh-tw
+│   ├── unbox-primitive
+│   │   └── test
+│   ├── undici-types
+│   ├── universalify
+│   ├── update-browserslist-db
+│   ├── uri-js
+│   │   └── dist
+│   │       ├── es5
+│   │       └── esnext
+│   │           └── schemes
+│   ├── url-template
+│   │   ├── lib
+│   │   ├── test
+│   │   └── uritemplate-test
+│   ├── use-callback-ref
+│   │   └── dist
+│   │       ├── es2015
+│   │       ├── es2019
+│   │       └── es5
+│   ├── use-sidecar
+│   │   └── dist
+│   │       ├── es2015
+│   │       ├── es2019
+│   │       └── es5
+│   ├── use-sync-external-store
+│   │   ├── cjs
+│   │   │   └── use-sync-external-store-shim
+│   │   └── shim
+│   ├── util-deprecate
+│   ├── uuid
+│   │   └── dist
+│   │       ├── bin
+│   │       ├── esm-browser
+│   │       ├── esm-node
+│   │       └── umd
+│   ├── wcwidth
+│   │   ├── docs
+│   │   └── test
+│   ├── web-streams-polyfill
+│   │   ├── dist
+│   │   │   └── types
+│   │   │       └── ts3.6
+│   │   ├── es2018
+│   │   ├── es6
+│   │   └── ponyfill
+│   │       ├── es2018
+│   │       └── es6
+│   ├── webidl-conversions
+│   │   └── lib
+│   ├── whatwg-url
+│   │   └── lib
+│   ├── which
+│   │   └── bin
+│   ├── which-boxed-primitive
+│   │   └── test
+│   ├── which-builtin-type
+│   │   └── test
+│   ├── which-collection
+│   │   └── test
+│   ├── which-typed-array
+│   │   └── test
+│   ├── word-wrap
+│   ├── wrap-ansi
+│   │   └── node_modules
+│   │       ├── ansi-regex
+│   │       ├── ansi-styles
+│   │       └── strip-ansi
+│   ├── wrap-ansi-cjs
+│   │   └── node_modules
+│   │       ├── emoji-regex
+│   │       │   └── es2015
+│   │       └── string-width
+│   ├── wrappy
+│   ├── yallist
+│   ├── yaml
+│   │   ├── browser
+│   │   │   └── dist
+│   │   │       ├── compose
+│   │   │       ├── doc
+│   │   │       ├── nodes
+│   │   │       ├── parse
+│   │   │       ├── schema
+│   │   │       │   ├── common
+│   │   │       │   ├── core
+│   │   │       │   ├── json
+│   │   │       │   └── yaml-1.1
+│   │   │       └── stringify
+│   │   └── dist
+│   │       ├── compose
+│   │       ├── doc
+│   │       ├── nodes
+│   │       ├── parse
+│   │       ├── schema
+│   │       │   ├── common
+│   │       │   ├── core
+│   │       │   ├── json
+│   │       │   └── yaml-1.1
+│   │       └── stringify
+│   ├── yocto-queue
+│   └── zod
+│       └── lib
+│           ├── __tests__
+│           ├── benchmarks
+│           ├── helpers
+│           └── locales
+├── public
+└── src
+    ├── app
+    │   ├── admin
+    │   │   └── admin
+    │   │       └── import
+    │   │           ├── clearance
+    │   │           └── components
+    │   ├── api
+    │   │   └── admin
+    │   │       └── import
+    │   │           └── documents
+    │   │               └── upload
+    │   └── fonts
+    ├── components
+    │   ├── admin
+    │   └── ui
+    └── lib
+        └── google
+
+2823 directories
