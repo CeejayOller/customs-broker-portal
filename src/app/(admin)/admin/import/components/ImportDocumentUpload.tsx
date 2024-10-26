@@ -6,10 +6,11 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/components/ui/use-toast';
+import type { DocumentType } from '@/types/clearance';
 
 interface ImportDocumentUploadProps {
   clearanceId?: string;
-  documentType: 'bill_of_lading' | 'commercial_invoice' | 'packing_list' | 'other';
+  documentType: DocumentType;
   maxFileSize?: number;
   onUploadSuccess?: (fileUrl: string) => void;
 }
@@ -19,12 +20,12 @@ interface UploadResponse {
   message: string;
 }
 
-const DOCUMENT_TYPE_LABELS = {
+const DOCUMENT_TYPE_LABELS: Record<DocumentType, string> = {
   bill_of_lading: 'Bill of Lading',
   commercial_invoice: 'Commercial Invoice',
   packing_list: 'Packing List',
   other: 'Other Document'
-};
+} as const;
 
 const ImportDocumentUpload: React.FC<ImportDocumentUploadProps> = ({
   clearanceId,

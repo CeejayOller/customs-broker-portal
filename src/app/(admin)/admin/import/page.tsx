@@ -1,4 +1,4 @@
-// src/app/admin/admin/import/page.tsx
+// src/app/(admin)/admin/import/page.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ export default function ImportClearance() {
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Import Clearance Requests</h1>
-        <Link href="/admin/admin/import/clearance">
+        <Link href="/admin/import/clearance">
           <Button className="flex items-center gap-2">
             <PlusCircle className="w-5 h-5" />
             New Clearance
@@ -67,7 +67,6 @@ export default function ImportClearance() {
                 created: "2024-03-14",
                 updated: "2024-03-15",
               },
-              // Add more sample data
             ].map((request) => (
               <TableRow key={request.ref}>
                 <TableCell className="font-medium">{request.ref}</TableCell>
@@ -84,7 +83,7 @@ export default function ImportClearance() {
                 <TableCell>{request.created}</TableCell>
                 <TableCell>{request.updated}</TableCell>
                 <TableCell>
-                  <Link href={`/admin/admin/import/clearance?ref=${request.ref}`}>
+                  <Link href={`/admin/import/${request.ref}`}>
                     <Button variant="outline" size="sm">View</Button>
                   </Link>
                 </TableCell>

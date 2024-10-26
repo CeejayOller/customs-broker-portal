@@ -21,131 +21,71 @@ export default function Sidebar() {
     return pathname?.startsWith(path);
   };
 
+  const routes = [
+    {
+      href: '/admin/admin',
+      icon: <TrendingUp className="w-5 h-5 mr-3" />,
+      label: 'Overview',
+      exact: true
+    },
+    {
+      href: '/admin/admin/import',
+      icon: <ArrowDownToLine className="w-5 h-5 mr-3" />,
+      label: 'Import Clearance'
+    },
+    {
+      href: '/admin/admin/export',
+      icon: <ArrowUpFromLine className="w-5 h-5 mr-3" />,
+      label: 'Export Clearance'
+    },
+    {
+      href: '/admin/admin/shipments',
+      icon: <Package className="w-5 h-5 mr-3" />,
+      label: 'Shipments'
+    },
+    {
+      href: '/admin/admin/documents',
+      icon: <FileText className="w-5 h-5 mr-3" />,
+      label: 'Documents'
+    },
+    {
+      href: '/admin/admin/clients',
+      icon: <Users className="w-5 h-5 mr-3" />,
+      label: 'Importers'
+    },
+    {
+      href: '/admin/admin/reports',
+      icon: <ClipboardList className="w-5 h-5 mr-3" />,
+      label: 'Reports'
+    },
+    {
+      href: '/admin/admin/settings',
+      icon: <Settings className="w-5 h-5 mr-3" />,
+      label: 'Settings'
+    }
+  ];
+
   return (
     <div className="w-64 min-h-screen bg-gray-900">
       <div className="p-4">
         <h2 className="text-lg font-semibold text-gray-100 mb-6 px-2">Broker Dashboard</h2>
         <nav>
           <ul className="space-y-1">
-            {/* Overview */}
-            <li>
-              <Link 
-                href="/admin/admin"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin') && !isActive('/admin/admin/import') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <TrendingUp className="w-5 h-5 mr-3" />
-                Overview
-              </Link>
-            </li>
-
-            {/* Import Clearance */}
-            <li>
-              <Link 
-                href="/admin/admin/import/clearance"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/import') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <ArrowDownToLine className="w-5 h-5 mr-3" />
-                Import Clearance
-              </Link>
-            </li>
-
-            {/* Export Clearance */}
-            <li>
-              <Link 
-                href="/admin/admin/export"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/export') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <ArrowUpFromLine className="w-5 h-5 mr-3" />
-                Export Clearance
-              </Link>
-            </li>
-
-            {/* Shipments */}
-            <li>
-              <Link 
-                href="/admin/admin/shipments"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/shipments') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <Package className="w-5 h-5 mr-3" />
-                Shipments
-              </Link>
-            </li>
-
-            {/* Documents */}
-            <li>
-              <Link 
-                href="/admin/admin/documents"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/documents') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <FileText className="w-5 h-5 mr-3" />
-                Documents
-              </Link>
-            </li>
-
-            {/* Importers/Clients */}
-            <li>
-              <Link 
-                href="/admin/admin/clients"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/clients') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <Users className="w-5 h-5 mr-3" />
-                Importers
-              </Link>
-            </li>
-
-            {/* Reports */}
-            <li>
-              <Link 
-                href="/admin/admin/reports"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/reports') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <ClipboardList className="w-5 h-5 mr-3" />
-                Reports
-              </Link>
-            </li>
-
-            {/* Settings */}
-            <li>
-              <Link 
-                href="/admin/admin/settings"
-                className={`flex items-center p-2 rounded-lg ${
-                  isActive('/admin/admin/settings') 
-                    ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                }`}
-              >
-                <Settings className="w-5 h-5 mr-3" />
-                Settings
-              </Link>
-            </li>
+            {routes.map((route) => (
+              <li key={route.href}>
+                <Link 
+                  href={route.href}
+                  className={`flex items-center p-2 rounded-lg ${
+                    isActive(route.href) && (!route.exact || pathname === route.href)
+                      ? 'bg-blue-600 text-white' 
+                      : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                  }`}
+                >
+                  {route.icon}
+                  {route.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
       </div>

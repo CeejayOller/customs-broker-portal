@@ -1,11 +1,13 @@
 // src/app/layout.tsx
-import './globals.css'
-import type { Metadata } from 'next'
+import './globals.css';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Customs Broker Portal',
-  description: 'Manage your customs brokerage operations',
+  title: 'CLEX Customs Brokerage',
+  description: 'Customs Brokerage Management System',
 }
+
+export const dynamic = 'force-dynamic';
 
 export default function RootLayout({
   children,
@@ -14,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
-  )
+  );
 }
