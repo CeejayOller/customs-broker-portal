@@ -1,9 +1,9 @@
 {
   "name": "customs-broker-portal",
   "version": "0.1.0",
-  "lastUpdate": "2024-10-28",
+  "lastUpdate": "2024-03-26",
   "stack": {
-    "framework": "Next.js 15.0.1",
+    "framework": "Next.js 14.2.16",
     "authentication": "Clerk",
     "styling": "Tailwind CSS",
     "uiComponents": "shadcn/ui",
@@ -24,21 +24,26 @@
       ]
     },
     "importClearance": {
-      "status": "partially-implemented",
+      "status": "in_progress",
       "features": [
         "Document Upload Interface",
         "Workflow Management",
         "Status Tracking",
-        "Sea Freight Form",
-        "Air Freight Form",
-        "Multiple B/L Support",
-        "Reference Number Generation"
+        "Reference Number Generation",
+        "Freight Type Selection (Sea/Air)"
       ],
-      "completedComponents": [
-        "ShipmentFormFields",
-        "NewImportForm",
-        "Document Upload"
-      ]
+      "components": {
+        "implemented": [
+          "ImportClearanceWorkflow Base Structure",
+          "Reference Number Generation",
+          "Freight Type Selection"
+        ],
+        "inProgress": [
+          "Document Upload System",
+          "Timeline Tracking",
+          "Stage Management"
+        ]
+      }
     },
     "navigation": {
       "status": "implemented",
@@ -51,8 +56,9 @@
   "projectStructure": {
     "src": {
       "app": {
-        "(admin)": {
+        "admin": {
           "admin": {
+            "page.tsx": "Main dashboard with stats and activities",
             "import": {
               "page.tsx": "Import clearance list view",
               "clearance": {
@@ -60,41 +66,49 @@
               },
               "components": {
                 "ImportClearanceWorkflow.tsx": "Document workflow component",
-                "ImportDocumentUpload.tsx": "File upload component",
-                "NewImportForm.tsx": "New import form component",
-                "types": {
-                  "import-form.ts": "Form type definitions"
-                }
+                "ImportDocumentUpload.tsx": "File upload component"
+              },
+              "types": {
+                "workflow.ts": "Workflow related types"
+              },
+              "constants": {
+                "workflow-states.ts": "Workflow states and constants"
               }
-            },
-            "layout.tsx": "Admin layout with authentication"
-          }
+            }
+          },
+          "layout.tsx": "Admin layout with authentication"
         },
         "api": {
           "admin": {
             "import": {
               "documents": {
                 "upload": "Document upload API endpoint"
-              },
-              "reference-number": "Reference number generation endpoint"
+              }
             }
+          },
+          "reference-number": {
+            "route.ts": "Reference number generation API"
           }
+        }
+      },
+      "lib": {
+        "utils": {
+          "reference-number.ts": "Reference number generation utilities"
         }
       }
     }
   },
   "inProgress": {
     "importClearance": {
-      "status": "in-progress",
-      "pendingFeatures": [
-        "HS Code Auto-identification",
-        "Document Validation",
-        "Form Submission API Integration"
+      "status": "in_development",
+      "description": "Implementing document workflow and verification system",
+      "nextSteps": [
+        "Complete document upload functionality",
+        "Implement document verification system",
+        "Add form validation",
+        "Implement stage-specific content",
+        "Add error handling and notifications"
       ]
-    },
-    "database": {
-      "status": "pending",
-      "description": "Setting up Cloud SQL and database schemas"
     }
   },
   "plannedFeatures": {
@@ -109,12 +123,14 @@
     "clientPortal": {
       "status": "planned",
       "description": "Client-facing portal for tracking shipments"
+    },
+    "exportShipment": {
+      "status": "planned",
+      "description": "Export shipment management module"
+    },
+    "accreditation": {
+      "status": "planned",
+      "description": "Accreditation management system for new and renewal"
     }
-  },
-  "security": {
-    "authentication": "Clerk",
-    "apiProtection": "Next.js API Routes with authentication",
-    "fileStorage": "Google Cloud Storage (planned)",
-    "sensitiveData": "Environment variables"
   }
 }

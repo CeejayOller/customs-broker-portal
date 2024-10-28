@@ -1,6 +1,22 @@
 // src/lib/utils/reference-number.ts
 
-export type TransactionType = 'IMS' | 'IMA' | 'ACN' | 'ACR' | 'EXP';
+// Main TransactionType that includes all possible types
+export type TransactionType = 
+  | ImportTransactionType 
+  | ExportTransactionType 
+  | AccreditationTransactionType;
+
+// Specific transaction type for imports
+export type ImportTransactionType = 'IMS' | 'IMA';
+
+// For future use
+export type ExportTransactionType = 'EXP';
+export type AccreditationTransactionType = 'ACN' | 'ACR';
+
+// Helper type guard for import transactions
+export const isImportTransaction = (type: TransactionType): type is ImportTransactionType => {
+  return type === 'IMS' || type === 'IMA';
+};
 
 export interface ReferenceNumberConfig {
   prefix: string;

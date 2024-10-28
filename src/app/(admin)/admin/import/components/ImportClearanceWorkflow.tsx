@@ -1,183 +1,69 @@
-import React, { useState } from 'react';
+// src/app/(admin)/admin/import/components/ImportClearanceWorkflow.tsx
+// 1. Import and Components Setup
+import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  ClipboardList, 
-  FileCheck, 
-  Calculator, 
-  Upload, 
-  Truck, 
-  Package, 
-  Check,
-  FileText,
-  DollarSign,
-  Building,
-  LucideIcon
-} from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Edit } from 'lucide-react';
 
-// Define the base state interface
-interface WorkflowStateBase {
-  label: string;
-  icon: LucideIcon;
-  color: string;
-  bgColor: string;
+// Import types and constants
+import { WORKFLOW_STATES, REQUIRED_DOCUMENTS } from '../constants/workflow-states';
+import type { ShipmentData, WorkflowStageStatus, ReferenceNumberResponse } from '../types/workflow';
+import type { ImportTransactionType } from '@/lib/utils/reference-number';
+
+// State interfaces for the component
+interface WorkflowState {
+  currentState: keyof typeof WORKFLOW_STATES;
+  showConfirmDialog: boolean;
+  showUploadDialog: boolean;
+  selectedDocument: string | null;
+  isLoading: boolean;
+  freightType: ImportTransactionType;
 }
-
-// Define specific state interfaces
-interface DocumentState extends WorkflowStateBase {
-  requiredDocs: string[];
-}
-
-interface VerificationState extends WorkflowStateBase {
-  checkPoints: string[];
-}
-
-interface ComputationState extends WorkflowStateBase {
-  computationItems: string[];
-}
-
-interface BasicState extends WorkflowStateBase {}
-
-// Define the union type for all possible state types
-type WorkflowState = DocumentState | VerificationState | ComputationState | BasicState;
-
-// Define the type for the entire workflow states object
-type WorkflowStates = {
-  [K in keyof typeof WORKFLOW_STATES]: WorkflowState;
-};
-
-interface ShipmentData {
-  referenceNumber: string;
-  clientName: string;
-  consignee: string;
-  shipmentDetails: {
-    bl_number: string;
-    vessel: string;
-    eta: string;
-    port_of_discharge: string;
-  };
-  documents: string[];
-  computations: {
-    dutiable_value: number;
-    customs_duty: number;
-    vat: number;
-    other_charges: number;
-    total_payable: number;
-  };
-  timeline: string[];
-  notes: string[];
-}
-
-const WORKFLOW_STATES = {
-  CLIENT_ORDER: {
-    label: 'Client Order Received',
-    icon: ClipboardList,
-    color: 'text-blue-500',
-    bgColor: 'bg-blue-100',
-    requiredDocs: [
-      'Purchase Order',
-      'Client Authorization Letter',
-      'Client Profile/Registration'
-    ]
-  } as DocumentState,
-  
-  DOCUMENT_COLLECTION: {
-    label: 'Document Collection',
-    icon: FileText,
-    color: 'text-yellow-500',
-    bgColor: 'bg-yellow-100',
-    requiredDocs: [
-      'Bill of Lading',
-      'Commercial Invoice',
-      'Packing List',
-      'Certificate of Origin',
-      'Import Permit (if applicable)',
-      'Product Certifications (if applicable)'
-    ]
-  } as DocumentState,
-  
-  DOCUMENT_VERIFICATION: {
-    label: 'Document Verification',
-    icon: FileCheck,
-    color: 'text-orange-500',
-    bgColor: 'bg-orange-100',
-    checkPoints: [
-      'HS Code Verification',
-      'Document Completeness',
-      'Value Declaration Check',
-      'Import Restrictions Check'
-    ]
-  } as VerificationState,
-  
-  TAX_COMPUTATION: {
-    label: 'Tax/Duty Computation',
-    icon: Calculator,
-    color: 'text-purple-500',
-    bgColor: 'bg-purple-100',
-    computationItems: [
-      'Customs Duty',
-      'VAT',
-      'Other Taxes/Fees',
-      'Brokerage Fees'
-    ]
-  } as ComputationState,
-  
-  READY_FOR_LODGEMENT: {
-    label: 'Ready for E2M',
-    icon: Upload,
-    color: 'text-green-500',
-    bgColor: 'bg-green-100'
-  } as BasicState,
-  
-  LODGED: {
-    label: 'Lodged in E2M',
-    icon: Check,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100'
-  } as BasicState,
-  
-  PAYMENT_COMPLETED: {
-    label: 'Payment Completed',
-    icon: DollarSign,
-    color: 'text-emerald-500',
-    bgColor: 'bg-emerald-100'
-  } as BasicState,
-  
-  PORT_RELEASE: {
-    label: 'Port Release',
-    icon: Building,
-    color: 'text-indigo-500',
-    bgColor: 'bg-indigo-100'
-  } as BasicState,
-  
-  IN_TRANSIT: {
-    label: 'In Transit',
-    icon: Truck,
-    color: 'text-amber-500',
-    bgColor: 'bg-amber-100'
-  } as BasicState,
-  
-  DELIVERED: {
-    label: 'Delivered',
-    icon: Package,
-    color: 'text-green-600',
-    bgColor: 'bg-green-100'
-  } as BasicState
-} as const;
 
 const ImportClearanceWorkflow: React.FC = () => {
-  const [currentState, setCurrentState] = useState<keyof typeof WORKFLOW_STATES>('CLIENT_ORDER');
+  // Component states
+  const [state, setState] = useState<WorkflowState>({
+    currentState: 'CLIENT_DETAILS',
+    showConfirmDialog: false,
+    showUploadDialog: false,
+    selectedDocument: null,
+    isLoading: true,
+    freightType: 'IMS'
+  });
+
+  // Shipment data state
   const [shipmentData, setShipmentData] = useState<ShipmentData>({
     referenceNumber: '',
-    clientName: '',
-    consignee: '',
+    consignee: {
+      name: '',
+      address: '',
+      tin: '',
+      brn: ''
+    },
+    exporter: {
+      name: '',
+      address: ''
+    },
     shipmentDetails: {
       bl_number: '',
-      vessel: '',
+      vessel_name: '',
+      flight_number: '',
+      registry_number: '',
+      voyage_number: '',
+      port_of_origin: '',
+      port_of_discharge: '',
       eta: '',
-      port_of_discharge: ''
+      ata: '',
+      description_of_goods: '',
+      volume: ''
     },
-    documents: [],
+    documents: REQUIRED_DOCUMENTS.map(doc => ({
+      name: doc.name,
+      status: 'not_uploaded',
+      isVerified: false,
+      isRequired: doc.isRequired
+    })),
     computations: {
       dutiable_value: 0,
       customs_duty: 0,
@@ -189,175 +75,444 @@ const ImportClearanceWorkflow: React.FC = () => {
     notes: []
   });
 
-  // Helper function to check if a state has required docs
-  const hasRequiredDocs = (state: WorkflowState): state is DocumentState => {
-    return 'requiredDocs' in state;
-  };
+  // 2. Utility Functions and Event Handlers
+  // Reference number generation
+  const generateReferenceNumber = async () => {
+    try {
+      const currentYear = new Date().getFullYear().toString();
+      const response = await fetch('/api/reference-number', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          transactionType: state.freightType,
+          year: currentYear,
+        }),
+      });
 
-  // Helper function to check if a state has checkpoints
-  const hasCheckPoints = (state: WorkflowState): state is VerificationState => {
-    return 'checkPoints' in state;
-  };
+      if (!response.ok) throw new Error('Failed to generate reference number');
 
-  // Helper function to check if a state has computation items
-  const hasComputationItems = (state: WorkflowState): state is ComputationState => {
-    return 'computationItems' in state;
-  };
-
-  // Timeline component showing all states
-  const WorkflowTimeline: React.FC = () => {
-    const states = Object.entries(WORKFLOW_STATES);
-    const currentIndex = states.findIndex(([key]) => key === currentState);
-
-    return (
-      <div className="relative mt-8">
-        <div className="absolute left-0 w-full h-1 bg-gray-200 top-5" />
-        <div className="relative flex justify-between">
-          {states.map(([key, state], index) => {
-            const StateIcon = state.icon;
-            const isActive = index <= currentIndex;
-            const isCurrent = key === currentState;
-            
-            return (
-              <div key={key} className="flex flex-col items-center relative group">
-                <div
-                  className={`z-10 flex items-center justify-center w-10 h-10 rounded-full 
-                    ${isActive ? state.bgColor : 'bg-gray-200'} 
-                    ${isActive ? state.color : 'text-gray-400'}
-                    ${isCurrent ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
-                >
-                  <StateIcon className="w-5 h-5" />
-                </div>
-                <span className={`mt-2 text-sm font-medium 
-                  ${isActive ? 'text-gray-900' : 'text-gray-400'}`}>
-                  {state.label}
-                </span>
-                
-                {/* Hover tooltip for required items */}
-                <div className="absolute bottom-full mb-2 hidden group-hover:block w-48 bg-white p-2 rounded shadow-lg text-xs">
-                  {hasRequiredDocs(state) && (
-                    <>
-                      <strong>Required Documents:</strong>
-                      <ul className="ml-2 mt-1">
-                        {state.requiredDocs.map((doc: string) => (
-                          <li key={doc}>• {doc}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                  {hasCheckPoints(state) && (
-                    <>
-                      <strong>Checkpoints:</strong>
-                      <ul className="ml-2 mt-1">
-                        {state.checkPoints.map((point: string) => (
-                          <li key={point}>• {point}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                  {hasComputationItems(state) && (
-                    <>
-                      <strong>Computation Items:</strong>
-                      <ul className="ml-2 mt-1">
-                        {state.computationItems.map((item: string) => (
-                          <li key={item}>• {item}</li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
-
-  // Current state details card
-  const StateDetailsCard: React.FC = () => {
-    const currentStateData = WORKFLOW_STATES[currentState];
-    const StateIcon = currentStateData.icon;
-
-    return (
-      <Card className="mt-6">
-        <CardHeader className="flex flex-row items-center space-x-4">
-          <div className={`p-2 rounded-full ${currentStateData.bgColor}`}>
-            <StateIcon className={`w-6 h-6 ${currentStateData.color}`} />
-          </div>
-          <div>
-            <CardTitle className="text-xl">
-              Current Status: {currentStateData.label}
-            </CardTitle>
-            <p className="text-sm text-gray-500">
-              Ref: {shipmentData.referenceNumber || 'Not yet assigned'}
-            </p>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {hasRequiredDocs(currentStateData) && (
-              <div>
-                <h4 className="font-medium mb-2">Required Documents</h4>
-                <ul className="grid grid-cols-2 gap-2">
-                  {currentStateData.requiredDocs.map((doc: string) => (
-                    <li key={doc} className="flex items-center text-sm">
-                      <div className="w-2 h-2 rounded-full bg-gray-300 mr-2" />
-                      {doc}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            
-            {currentState === 'TAX_COMPUTATION' && (
-              <div>
-                <h4 className="font-medium mb-2">Computation Summary</h4>
-                <div className="bg-gray-50 p-3 rounded">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>Dutiable Value:</div>
-                    <div className="text-right">₱{shipmentData.computations.dutiable_value.toLocaleString()}</div>
-                    <div>Customs Duty:</div>
-                    <div className="text-right">₱{shipmentData.computations.customs_duty.toLocaleString()}</div>
-                    <div>VAT:</div>
-                    <div className="text-right">₱{shipmentData.computations.vat.toLocaleString()}</div>
-                    <div>Other Charges:</div>
-                    <div className="text-right">₱{shipmentData.computations.other_charges.toLocaleString()}</div>
-                    <div className="font-medium">Total Payable:</div>
-                    <div className="text-right font-medium">₱{shipmentData.computations.total_payable.toLocaleString()}</div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    );
-  };
-
-  return (
-    <div className="p-6">
-      <WorkflowTimeline />
-      <StateDetailsCard />
+      const data: ReferenceNumberResponse = await response.json();
       
-      {/* Action buttons */}
-      <div className="mt-6 space-x-4">
-        <Button 
-          onClick={() => {
-            const states = Object.keys(WORKFLOW_STATES) as Array<keyof typeof WORKFLOW_STATES>;
-            const currentIndex = states.indexOf(currentState);
-            if (currentIndex < states.length - 1) {
-              setCurrentState(states[currentIndex + 1]);
-            }
-          }}
-          variant="default"
-          disabled={currentState === 'DELIVERED'}
-        >
-          Move to Next State
-        </Button>
+      setShipmentData(prev => ({
+        ...prev,
+        referenceNumber: data.referenceNumber,
+      }));
+    } catch (error) {
+      console.error('Error generating reference number:', error);
+    } finally {
+      setState(prev => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  // Freight type handler
+  const handleFreightTypeChange = (freightType: ImportTransactionType) => {
+    setState(prev => ({ ...prev, freightType }));
+    generateReferenceNumber();
+  };
+
+  // Stage status helper
+  const getStageStatus = (stage: keyof typeof WORKFLOW_STATES): WorkflowStageStatus => {
+    const timeline = shipmentData.timeline.find(t => t.stage === stage);
+    return timeline?.status || 'pending';
+  };
+
+  // Stage completion handler
+  const handleStageCompletion = () => {
+    const newTimeline = [...shipmentData.timeline];
+    const timelineEntry = {
+      stage: state.currentState,
+      status: 'complete' as WorkflowStageStatus,
+      timestamp: new Date().toISOString()
+    };
+
+    const existingEntryIndex = newTimeline.findIndex(t => t.stage === state.currentState);
+    if (existingEntryIndex >= 0) {
+      newTimeline[existingEntryIndex] = timelineEntry;
+    } else {
+      newTimeline.push(timelineEntry);
+    }
+
+    setShipmentData(prev => ({ ...prev, timeline: newTimeline }));
+
+    // Move to next stage
+    const states = Object.keys(WORKFLOW_STATES) as Array<keyof typeof WORKFLOW_STATES>;
+    const currentIndex = states.indexOf(state.currentState);
+    if (currentIndex < states.length - 1) {
+      setState(prev => ({ 
+        ...prev, 
+        currentState: states[currentIndex + 1],
+        showConfirmDialog: false 
+      }));
+    }
+  };
+  // 3. Effects
+  // Generate reference number on mount
+  useEffect(() => {
+    if (!shipmentData.referenceNumber) {
+      generateReferenceNumber();
+    }
+  }, []);
+
+  // 4. Header Component
+const ShipmentHeader: React.FC = () => {
+  return (
+    <div className="mb-8">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">
+          {shipmentData.referenceNumber || 'Loading...'}
+        </h2>
+        <div className="flex gap-2">
+          <Button
+            variant={state.freightType === 'IMS' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => handleFreightTypeChange('IMS')}
+            disabled={!!shipmentData.referenceNumber}
+          >
+            Sea Freight
+          </Button>
+          <Button
+            variant={state.freightType === 'IMA' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => handleFreightTypeChange('IMA')}
+            disabled={!!shipmentData.referenceNumber}
+          >
+            Air Freight
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
+// 5. Card Components
+const ShipmentDetailsCard: React.FC = () => {
+  return (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="font-medium">Shipment Details</h3>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            <Edit className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="text-sm space-y-1">
+          <p>
+            <span className="font-medium">
+              {state.freightType === 'IMS' ? 'BL Number:' : 'AWB Number:'}
+            </span> {shipmentData.shipmentDetails.bl_number}
+          </p>
+          {state.freightType === 'IMS' ? (
+            <>
+              <p><span className="font-medium">Vessel:</span> {shipmentData.shipmentDetails.vessel_name}</p>
+              <p><span className="font-medium">Voyage No:</span> {shipmentData.shipmentDetails.voyage_number}</p>
+              <p><span className="font-medium">Registry No:</span> {shipmentData.shipmentDetails.registry_number}</p>
+            </>
+          ) : (
+            <p><span className="font-medium">Flight Number:</span> {shipmentData.shipmentDetails.flight_number}</p>
+          )}
+          <p><span className="font-medium">Port of Origin:</span> {shipmentData.shipmentDetails.port_of_origin}</p>
+          <p><span className="font-medium">Port of Discharge:</span> {shipmentData.shipmentDetails.port_of_discharge}</p>
+          <p><span className="font-medium">ETA:</span> {shipmentData.shipmentDetails.eta}</p>
+          <p><span className="font-medium">ATA:</span> {shipmentData.shipmentDetails.ata}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const ConsigneeCard: React.FC = () => {
+  return (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="font-medium">Consignee Details</h3>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            <Edit className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="text-sm space-y-1">
+          <p><span className="font-medium">Name:</span> {shipmentData.consignee.name}</p>
+          <p><span className="font-medium">Address:</span> {shipmentData.consignee.address}</p>
+          <p><span className="font-medium">TIN:</span> {shipmentData.consignee.tin}</p>
+          <p><span className="font-medium">BRN:</span> {shipmentData.consignee.brn}</p>
+        </div>
+        <div className="mt-4">
+          <h4 className="font-medium mb-2">Exporter Details</h4>
+          <div className="text-sm space-y-1">
+            <p><span className="font-medium">Name:</span> {shipmentData.exporter.name}</p>
+            <p><span className="font-medium">Address:</span> {shipmentData.exporter.address}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+const CargoDetailsCard: React.FC = () => {
+  return (
+    <Card>
+      <CardContent className="pt-6">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="font-medium">Cargo Details</h3>
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+            <Edit className="h-4 w-4" />
+          </Button>
+        </div>
+        <div className="text-sm space-y-1">
+          <p><span className="font-medium">Description:</span></p>
+          <p className="text-gray-600">{shipmentData.shipmentDetails.description_of_goods}</p>
+          <p><span className="font-medium">Volume:</span> {shipmentData.shipmentDetails.volume}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+// 6. Timeline Component
+const WorkflowTimeline: React.FC = () => {
+  const states = Object.entries(WORKFLOW_STATES);
+  const currentIndex = states.findIndex(([key]) => key === state.currentState);
+
+  return (
+    <div className="relative mt-8">
+      <div className="absolute left-0 w-full h-1 bg-gray-200 top-5" />
+      <div className="relative flex justify-between">
+        {states.map(([key, stageInfo], index) => {
+          const StateIcon = stageInfo.icon;
+          const isActive = index <= currentIndex;
+          const isCurrent = key === state.currentState;
+          const stageStatus = getStageStatus(key as keyof typeof WORKFLOW_STATES);
+          
+          const getIconColor = () => {
+            if (!isActive) return 'bg-gray-200 text-gray-400';
+            if (stageStatus === 'complete') return `${stageInfo.bgColor} ${stageInfo.color}`;
+            if (stageStatus === 'partial') return 'bg-yellow-100 text-yellow-500';
+            return `${stageInfo.bgColor} ${stageInfo.color}`;
+          };
+
+          return (
+            <div key={key} className="flex flex-col items-center relative group">
+              <div
+                className={`z-10 flex items-center justify-center w-10 h-10 rounded-full 
+                  ${getIconColor()}
+                  ${isCurrent ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
+              >
+                <StateIcon className="w-5 h-5" />
+              </div>
+              <span className={`mt-2 text-sm font-medium 
+                ${isActive ? 'text-gray-900' : 'text-gray-400'}`}>
+                {stageInfo.label}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+// 7. Dialog Components
+const ConfirmationDialog: React.FC = () => {
+  return (
+    <Dialog 
+      open={state.showConfirmDialog} 
+      onOpenChange={(open) => setState(prev => ({ ...prev, showConfirmDialog: open }))}
+    >
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Confirm Stage Completion</DialogTitle>
+        </DialogHeader>
+        <div className="py-4">
+          <p>Are you sure you want to complete this stage?</p>
+          <p className="text-sm text-gray-500 mt-2">
+            This action cannot be undone for fully completed stages.
+          </p>
+        </div>
+        <DialogFooter>
+          <Button 
+            variant="outline" 
+            onClick={() => setState(prev => ({ ...prev, showConfirmDialog: false }))}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleStageCompletion}
+          >
+            Confirm
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+const DocumentUploadDialog: React.FC = () => {
+  const [uploadType, setUploadType] = useState<'draft' | 'final'>('draft');
+
+  const handleUpload = () => {
+    if (state.selectedDocument) {
+      // Handle the document upload
+      setShipmentData(prev => ({
+        ...prev,
+        documents: prev.documents.map(doc =>
+          doc.name === state.selectedDocument
+            ? { ...doc, status: uploadType }
+            : doc
+        )
+      }));
+      setState(prev => ({ ...prev, showUploadDialog: false, selectedDocument: null }));
+    }
+  };
+
+  return (
+    <Dialog 
+      open={state.showUploadDialog} 
+      onOpenChange={(open) => setState(prev => ({ ...prev, showUploadDialog: open }))}
+    >
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Upload Document</DialogTitle>
+        </DialogHeader>
+        <div className="py-4 space-y-4">
+          <div>
+            <h4 className="text-sm font-medium mb-2">Document Type</h4>
+            <p className="text-sm text-gray-500">{state.selectedDocument}</p>
+          </div>
+          <div>
+            <h4 className="text-sm font-medium mb-2">Document Status</h4>
+            <div className="flex gap-4">
+              <Button
+                variant={uploadType === 'draft' ? 'default' : 'outline'}
+                onClick={() => setUploadType('draft')}
+              >
+                Draft
+              </Button>
+              <Button
+                variant={uploadType === 'final' ? 'default' : 'outline'}
+                onClick={() => setUploadType('final')}
+              >
+                Final
+              </Button>
+            </div>
+          </div>
+          {/* Add file upload input here */}
+        </div>
+        <DialogFooter>
+          <Button 
+            variant="outline" 
+            onClick={() => setState(prev => ({ ...prev, showUploadDialog: false }))}
+          >
+            Cancel
+          </Button>
+          <Button onClick={handleUpload}>
+            Upload
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+// 8. Main Render Function
+return (
+  <div className="p-6">
+    {state.isLoading ? (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
+          <p className="mt-2">Generating reference number...</p>
+        </div>
+      </div>
+    ) : (
+      <>
+        <ShipmentHeader />
+        
+        <div className="grid grid-cols-3 gap-4">
+          <ShipmentDetailsCard />
+          <ConsigneeCard />
+          <CargoDetailsCard />
+        </div>
+
+        <WorkflowTimeline />
+
+        {/* Current Stage Content */}
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>{WORKFLOW_STATES[state.currentState].label}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {state.currentState === 'CLIENT_DETAILS' && (
+                <div>
+                  {/* Client details stage content */}
+                  <Button
+                    onClick={() => setState(prev => ({ ...prev, showConfirmDialog: true }))}
+                    disabled={!shipmentData.consignee.name} // Add more validation as needed
+                  >
+                    Confirm Details
+                  </Button>
+                </div>
+              )}
+
+              {state.currentState === 'DOCUMENT_COLLECTION' && (
+                <div className="space-y-4">
+                  {shipmentData.documents.map((doc) => (
+                    <div 
+                      key={doc.name}
+                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          doc.status === 'not_uploaded' ? 'bg-gray-400' :
+                          doc.status === 'draft' ? 'bg-yellow-400' :
+                          doc.isVerified ? 'bg-green-400' : 'bg-orange-400'
+                        }`} />
+                        <span>{doc.name}</span>
+                        {doc.isRequired && (
+                          <span className="text-xs text-red-500">Required</span>
+                        )}
+                      </div>
+                      {doc.status === 'not_uploaded' ? (
+                        <Button
+                          size="sm"
+                          onClick={() => setState(prev => ({
+                            ...prev,
+                            showUploadDialog: true,
+                            selectedDocument: doc.name
+                          }))}
+                        >
+                          Upload
+                        </Button>
+                      ) : !doc.isVerified ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => {/* Handle verification */}}
+                        >
+                          Verify
+                        </Button>
+                      ) : (
+                        <span className="text-green-500 text-sm">Verified</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Add more stage-specific content here */}
+            </div>
+          </CardContent>
+        </Card>
+
+        <ConfirmationDialog />
+        <DocumentUploadDialog />
+      </>
+    )}
+  </div>
+);
+};
+
+//export component
 export default ImportClearanceWorkflow;
