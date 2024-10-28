@@ -32,7 +32,8 @@
         "Document Upload Interface",
         "Workflow Management",
         "Status Tracking",
-        "Statement of Facts Timeline"
+        "Statement of Facts Timeline",
+        "Reference Number Generation System"
       ],
       "forms": {
         "seaFreight": [
@@ -81,7 +82,10 @@
               },
               "components": {
                 "ImportClearanceWorkflow.tsx": "Workflow status tracker",
-                "NewImportForm.tsx": "Import creation form"
+                "NewImportForm.tsx": "Import creation form",
+                "types": {
+                  "import-form.ts": "Import form type definitions"
+                }
               }
             }
           },
@@ -91,40 +95,19 @@
           "admin": {
             "import": {
               "documents": {
-                "upload": "Document upload API endpoint (planned)"
+                "upload": "Document upload API endpoint"
+              },
+              "reference-number": {
+                "route.ts": "Reference number generation API"
               }
             }
           }
-        },
-        "globals.css": "Global styles",
-        "layout.tsx": "Root layout",
-        "page.tsx": "Landing page"
-      },
-      "components": {
-        "admin": {
-          "header.tsx": "Admin header with notifications",
-          "sidebar.tsx": "Navigation sidebar"
-        },
-        "ui": {
-          "alert.tsx": "Alert component",
-          "button.tsx": "Button component",
-          "card.tsx": "Card component",
-          "dialog.tsx": "Dialog component",
-          "input.tsx": "Input component",
-          "select.tsx": "Select component",
-          "table.tsx": "Table component",
-          "tabs.tsx": "Tabs component",
-          "textarea.tsx": "Textarea component",
-          "toast.tsx": "Toast component"
         }
       },
       "lib": {
-        "google": {
-          "auth.ts": "Google authentication utilities",
-          "drive.ts": "Google Drive integration",
-          "gmail.ts": "Gmail integration"
-        },
-        "utils.ts": "Utility functions"
+        "utils": {
+          "reference-number.ts": "Reference number generation utilities"
+        }
       }
     }
   },
@@ -140,6 +123,23 @@
     "hsCodeDetection": {
       "status": "pending",
       "description": "Implementing automatic HS code detection from PDF"
+    },
+    "bugfixes": {
+      "status": "in-progress",
+      "NewImportForm": {
+        "issues": [
+          "Form fields not properly binding to state",
+          "Reference number generation not integrated with backend",
+          "Validation errors not displaying correctly",
+          "Missing TypeScript type definitions for some form handlers"
+        ],
+        "nextSteps": [
+          "Implement proper form state management",
+          "Connect reference number API",
+          "Fix validation error display",
+          "Complete TypeScript definitions"
+        ]
+      }
     }
   },
   "plannedFeatures": {

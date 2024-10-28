@@ -1,7 +1,9 @@
+// src/app/(admin)/admin/import/page.tsx
+
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';  // Changed from next/router
+import { useRouter } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -10,6 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -31,6 +34,7 @@ import NewImportForm from './components/NewImportForm';
 
 interface Shipment {
   id: string;
+  referenceNumber: string;
   consignee: string;
   type: 'sea' | 'air';
   blNumber?: string;
@@ -39,6 +43,7 @@ interface Shipment {
   eta?: string;
   completionDate?: string;
   lastUpdate: string;
+  isLocked?: boolean;
 }
 
 interface ShipmentTableProps {
@@ -46,46 +51,68 @@ interface ShipmentTableProps {
   isHistorical?: boolean;
 }
 
-// Mock data with proper typing
+// Mock data with proper typing and reference numbers
 const MOCK_ACTIVE_SHIPMENTS: Shipment[] = [
   {
     id: '1',
+    referenceNumber: 'CLEX-IMS24-0001',
     consignee: 'ABC Company',
     type: 'sea',
     blNumber: 'BL123456',
     status: 'DOCUMENT_COLLECTION',
     eta: '2024-11-01',
     lastUpdate: '2024-10-26T10:30:00',
+    isLocked: false
   },
   {
     id: '2',
+    referenceNumber: 'CLEX-IMA24-0001',
     consignee: 'XYZ Corp',
     type: 'air',
     awbNumber: 'AWB789012',
     status: 'TAX_COMPUTATION',
     eta: '2024-10-29',
     lastUpdate: '2024-10-26T09:15:00',
+    isLocked: false
   },
 ];
 
 const MOCK_HISTORICAL_SHIPMENTS: Shipment[] = [
   {
     id: '3',
+    referenceNumber: 'CLEX-IMS24-0002',
     consignee: 'DEF Industries',
     type: 'sea',
     blNumber: 'BL654321',
     status: 'DELIVERED',
     completionDate: '2024-10-20',
     lastUpdate: '2024-10-20T15:45:00',
+    isLocked: true
   },
 ];
+
+const getStatusStyle = (status: string) => {
+  const styles: { [key: string]: string } = {
+    DOCUMENT_COLLECTION: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-100/80',
+    TAX_COMPUTATION: 'bg-purple-100 text-purple-800 hover:bg-purple-100/80',
+    READY_FOR_E2M: 'bg-blue-100 text-blue-800 hover:bg-blue-100/80',
+    LODGED_IN_E2M: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-100/80',
+    PAYMENT_COMPLETED: 'bg-emerald-100 text-emerald-800 hover:bg-emerald-100/80',
+    PORT_RELEASE: 'bg-orange-100 text-orange-800 hover:bg-orange-100/80',
+    IN_TRANSIT: 'bg-cyan-100 text-cyan-800 hover:bg-cyan-100/80',
+    DELIVERED: 'bg-green-100 text-green-800 hover:bg-green-100/80'
+  };
+
+  return styles[status] || 'bg-gray-100 text-gray-800 hover:bg-gray-100/80';
+};
 
 const ImportClearancePage = () => {
   const router = useRouter();
   const [isNewImportOpen, setIsNewImportOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("active");
 
-  const handleViewShipment = (id: string) => {
-    router.push(`/admin/import/${id}`);
+  const handleViewShipment = (id: string, isLocked: boolean) => {
+    router.push(`/admin/import/${id}?locked=${isLocked}`);
   };
 
   const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, isHistorical = false }) => (
@@ -105,15 +132,20 @@ const ImportClearancePage = () => {
       <TableBody>
         {shipments.map((shipment) => (
           <TableRow key={shipment.id}>
-            <TableCell className="font-medium">{shipment.id}</TableCell>
+            <TableCell className="font-medium">{shipment.referenceNumber}</TableCell>
             <TableCell>{shipment.consignee}</TableCell>
             <TableCell>
               {shipment.type === 'sea' ? (
-                <Ship className="w-4 h-4 inline mr-1" />
+                <div className="flex items-center">
+                  <Ship className="w-4 h-4 mr-1" />
+                  SEA
+                </div>
               ) : (
-                <Plane className="w-4 h-4 inline mr-1" />
+                <div className="flex items-center">
+                  <Plane className="w-4 h-4 mr-1" />
+                  AIR
+                </div>
               )}
-              {shipment.type.toUpperCase()}
             </TableCell>
             <TableCell>
               {format(
@@ -125,24 +157,32 @@ const ImportClearancePage = () => {
               {shipment.type === 'sea' ? shipment.blNumber : shipment.awbNumber}
             </TableCell>
             <TableCell>
-              <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium
-                ${shipment.status === 'DELIVERED' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`
-              }>
+              <Badge 
+                className={`${getStatusStyle(shipment.status)} border-none`}
+                variant="outline"
+              >
                 {shipment.status.replace(/_/g, ' ')}
-              </span>
+              </Badge>
             </TableCell>
             <TableCell>
               {format(new Date(shipment.lastUpdate), 'MMM dd, HH:mm')}
             </TableCell>
             <TableCell>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleViewShipment(shipment.id)}
-              >
-                <FileText className="w-4 h-4 mr-1" />
-                View
-              </Button>
+              <div className="flex items-center space-x-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleViewShipment(shipment.id, shipment.isLocked || false)}
+                >
+                  <FileText className="w-4 h-4 mr-1" />
+                  View
+                </Button>
+                {shipment.isLocked && (
+                  <Badge variant="secondary">
+                    Locked
+                  </Badge>
+                )}
+              </div>
             </TableCell>
           </TableRow>
         ))}
@@ -161,7 +201,7 @@ const ImportClearancePage = () => {
               New Import
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl">
+          <DialogContent className="max-w-5xl">
             <DialogHeader>
               <DialogTitle>Create New Import Clearance</DialogTitle>
             </DialogHeader>
@@ -170,8 +210,8 @@ const ImportClearancePage = () => {
         </Dialog>
       </div>
 
-      <Tabs defaultValue="active" className="w-full">
-        <TabsList>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
           <TabsTrigger value="active">Active Shipments</TabsTrigger>
           <TabsTrigger value="history">Shipment History</TabsTrigger>
         </TabsList>
