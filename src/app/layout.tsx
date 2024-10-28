@@ -1,13 +1,12 @@
 // src/app/layout.tsx
 import './globals.css'
 import { Inter } from 'next/font/google'
-import { Providers } from '@/components/providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Customs Broker Portal',
-  description: 'Professional customs brokerage services in the Philippines',
+  description: 'A comprehensive customs brokerage management system',
 }
 
 export default function RootLayout({
@@ -17,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Providers>{children}</Providers>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }

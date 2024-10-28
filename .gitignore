@@ -1,47 +1,84 @@
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# testing
+# Testing
 /coverage
+/test-results
+/playwright-report
 
-# next.js
+# Next.js
 /.next/
 /out/
-
-# production
 /build
+.next-env
 
-# misc
-.DS_Store
-*.pem
+# Production
+/build
+/dist
 
-# debug
+# Environment Variables & Secrets
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# Google Cloud / Firebase
+service-account.json
+google-credentials.json
+firebase-credentials.json
+*-credentials.json
+gcp-key.json
+
+# Clerk Authentication
+clerk.json
+clerk-credentials.json
+
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-# local env files
-.env
-.env*.local
-
-# sensitive configuration files
-/config/*.json
-service-account.json
-google-credentials.json
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# IDE
+# IDE / Editors
 .idea/
 .vscode/
+*.swp
+*.swo
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.sublime-workspace
+*.sublime-project
 
-# Temporary files
+# Temp files
 *.temp
 *.tmp
+.cache
+tsconfig.tsbuildinfo
+next-env.d.ts
+
+# Debug
+debug.log
+debug/
+
+# Misc
+*.pem
+.DS_Store
+Thumbs.db
+
+# Project specific
+/config/*.json
+/config/secrets/
+/custom-declarations/
+/uploads/
+*.backup

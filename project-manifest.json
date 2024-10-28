@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "lastUpdate": "2024-10-28",
   "stack": {
-    "framework": "Next.js 14.2.16",
+    "framework": "Next.js 15.0.1",
     "authentication": "Clerk",
     "styling": "Tailwind CSS",
     "uiComponents": "shadcn/ui",
@@ -24,42 +24,21 @@
       ]
     },
     "importClearance": {
-      "status": "implemented",
+      "status": "partially-implemented",
       "features": [
-        "Active Shipments View",
-        "Historical Shipments View",
-        "New Import Form",
         "Document Upload Interface",
         "Workflow Management",
         "Status Tracking",
-        "Statement of Facts Timeline",
-        "Reference Number Generation System"
+        "Sea Freight Form",
+        "Air Freight Form",
+        "Multiple B/L Support",
+        "Reference Number Generation"
       ],
-      "forms": {
-        "seaFreight": [
-          "Consignee Selection",
-          "Exporter Details",
-          "Bill of Lading Management",
-          "Vessel Information",
-          "Multiple B/L Support"
-        ],
-        "airFreight": [
-          "Consignee Selection",
-          "Exporter Details",
-          "Airway Bill Management",
-          "Aircraft Information"
-        ],
-        "goodsDeclaration": [
-          "Multi-item Support",
-          "HS Code Fields",
-          "Weight and Value Inputs"
-        ],
-        "documentUpload": [
-          "Commercial Invoice",
-          "Packing List",
-          "Upload Status Display"
-        ]
-      }
+      "completedComponents": [
+        "ShipmentFormFields",
+        "NewImportForm",
+        "Document Upload"
+      ]
     },
     "navigation": {
       "status": "implemented",
@@ -72,24 +51,24 @@
   "projectStructure": {
     "src": {
       "app": {
-        "admin": {
+        "(admin)": {
           "admin": {
-            "page.tsx": "Main dashboard with stats and activities",
             "import": {
               "page.tsx": "Import clearance list view",
-              "[id]": {
-                "page.tsx": "Individual shipment view"
+              "clearance": {
+                "page.tsx": "New clearance form"
               },
               "components": {
-                "ImportClearanceWorkflow.tsx": "Workflow status tracker",
-                "NewImportForm.tsx": "Import creation form",
+                "ImportClearanceWorkflow.tsx": "Document workflow component",
+                "ImportDocumentUpload.tsx": "File upload component",
+                "NewImportForm.tsx": "New import form component",
                 "types": {
-                  "import-form.ts": "Import form type definitions"
+                  "import-form.ts": "Form type definitions"
                 }
               }
-            }
-          },
-          "layout.tsx": "Admin layout with authentication"
+            },
+            "layout.tsx": "Admin layout with authentication"
+          }
         },
         "api": {
           "admin": {
@@ -97,49 +76,25 @@
               "documents": {
                 "upload": "Document upload API endpoint"
               },
-              "reference-number": {
-                "route.ts": "Reference number generation API"
-              }
+              "reference-number": "Reference number generation endpoint"
             }
           }
-        }
-      },
-      "lib": {
-        "utils": {
-          "reference-number.ts": "Reference number generation utilities"
         }
       }
     }
   },
   "inProgress": {
+    "importClearance": {
+      "status": "in-progress",
+      "pendingFeatures": [
+        "HS Code Auto-identification",
+        "Document Validation",
+        "Form Submission API Integration"
+      ]
+    },
     "database": {
       "status": "pending",
       "description": "Setting up Cloud SQL and database schemas"
-    },
-    "storage": {
-      "status": "pending",
-      "description": "Implementing Google Cloud Storage for documents"
-    },
-    "hsCodeDetection": {
-      "status": "pending",
-      "description": "Implementing automatic HS code detection from PDF"
-    },
-    "bugfixes": {
-      "status": "in-progress",
-      "NewImportForm": {
-        "issues": [
-          "Form fields not properly binding to state",
-          "Reference number generation not integrated with backend",
-          "Validation errors not displaying correctly",
-          "Missing TypeScript type definitions for some form handlers"
-        ],
-        "nextSteps": [
-          "Implement proper form state management",
-          "Connect reference number API",
-          "Fix validation error display",
-          "Complete TypeScript definitions"
-        ]
-      }
     }
   },
   "plannedFeatures": {
@@ -155,5 +110,11 @@
       "status": "planned",
       "description": "Client-facing portal for tracking shipments"
     }
+  },
+  "security": {
+    "authentication": "Clerk",
+    "apiProtection": "Next.js API Routes with authentication",
+    "fileStorage": "Google Cloud Storage (planned)",
+    "sensitiveData": "Environment variables"
   }
 }
