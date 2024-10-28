@@ -1,194 +1,361 @@
-// src/app/(admin)/admin/import/components/ImportClearanceWorkflow.tsx
-"use client"
+import React, { useState } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { 
+  ClipboardList, 
+  FileCheck, 
+  Calculator, 
+  Upload, 
+  Truck, 
+  Package, 
+  Check,
+  FileText,
+  DollarSign,
+  Building,
+  LucideIcon
+} from 'lucide-react';
 
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CheckCircle, Clock, AlertTriangle } from "lucide-react";
-import ImportDocumentUpload from './ImportDocumentUpload'; // Changed to default import
-import { useToast } from '@/components/ui/use-toast';
-import type { ImportClearance, ClearanceStatus, DocumentType } from '@/types/clearance';
-
-const DOCUMENT_TYPE_LABELS: Record<DocumentType, string> = {
-  bill_of_lading: 'Bill of Lading',
-  commercial_invoice: 'Commercial Invoice',
-  packing_list: 'Packing List',
-  other: 'Other Document'
-} as const;
-
-const STATUS_CONFIG: Record<ClearanceStatus, {
+// Define the base state interface
+interface WorkflowStateBase {
   label: string;
+  icon: LucideIcon;
   color: string;
-  icon: React.ReactNode;
-}> = {
-  DRAFT: {
-    label: "Draft",
-    color: "bg-gray-200",
-    icon: <Clock className="h-5 w-5 text-gray-500" />
-  },
-  DOCUMENTS_PENDING: {
-    label: "Documents Pending",
-    color: "bg-yellow-200",
-    icon: <AlertTriangle className="h-5 w-5 text-yellow-500" />
-  },
-  DOCUMENTS_SUBMITTED: {
-    label: "Documents Submitted",
-    color: "bg-blue-200",
-    icon: <Clock className="h-5 w-5 text-blue-500" />
-  },
-  UNDER_ASSESSMENT: {
-    label: "Under Assessment",
-    color: "bg-purple-200",
-    icon: <Clock className="h-5 w-5 text-purple-500" />
-  },
-  PAYMENT_PENDING: {
-    label: "Payment Pending",
-    color: "bg-orange-200",
-    icon: <AlertTriangle className="h-5 w-5 text-orange-500" />
-  },
-  PAYMENT_COMPLETED: {
-    label: "Payment Completed",
-    color: "bg-green-200",
-    icon: <CheckCircle className="h-5 w-5 text-green-500" />
-  },
-  GOODS_RELEASE_PENDING: {
-    label: "Release Pending",
-    color: "bg-blue-200",
-    icon: <Clock className="h-5 w-5 text-blue-500" />
-  },
-  COMPLETED: {
-    label: "Completed",
-    color: "bg-green-200",
-    icon: <CheckCircle className="h-5 w-5 text-green-500" />
-  },
-  ON_HOLD: {
-    label: "On Hold",
-    color: "bg-red-200",
-    icon: <AlertTriangle className="h-5 w-5 text-red-500" />
-  }
-};
-
-interface ImportClearanceWorkflowProps {
-  clearanceId?: string;
-  clearance?: ImportClearance;
-  onUpdateStatus?: (status: ClearanceStatus) => void;
+  bgColor: string;
 }
 
-const ImportClearanceWorkflow: React.FC<ImportClearanceWorkflowProps> = ({
-  clearanceId,
-  clearance,
-  onUpdateStatus
-}) => {
-  const { toast } = useToast();
+// Define specific state interfaces
+interface DocumentState extends WorkflowStateBase {
+  requiredDocs: string[];
+}
 
-  const handleUploadSuccess = (documentType: string, fileUrl: string) => {
-    toast({
-      title: 'Document Uploaded',
-      description: `${documentType} has been uploaded successfully.`,
-    });
+interface VerificationState extends WorkflowStateBase {
+  checkPoints: string[];
+}
+
+interface ComputationState extends WorkflowStateBase {
+  computationItems: string[];
+}
+
+interface BasicState extends WorkflowStateBase {}
+
+// Define the union type for all possible state types
+type WorkflowState = DocumentState | VerificationState | ComputationState | BasicState;
+
+// Define the type for the entire workflow states object
+type WorkflowStates = {
+  [K in keyof typeof WORKFLOW_STATES]: WorkflowState;
+};
+
+interface ShipmentData {
+  referenceNumber: string;
+  clientName: string;
+  consignee: string;
+  shipmentDetails: {
+    bl_number: string;
+    vessel: string;
+    eta: string;
+    port_of_discharge: string;
+  };
+  documents: string[];
+  computations: {
+    dutiable_value: number;
+    customs_duty: number;
+    vat: number;
+    other_charges: number;
+    total_payable: number;
+  };
+  timeline: string[];
+  notes: string[];
+}
+
+const WORKFLOW_STATES = {
+  CLIENT_ORDER: {
+    label: 'Client Order Received',
+    icon: ClipboardList,
+    color: 'text-blue-500',
+    bgColor: 'bg-blue-100',
+    requiredDocs: [
+      'Purchase Order',
+      'Client Authorization Letter',
+      'Client Profile/Registration'
+    ]
+  } as DocumentState,
+  
+  DOCUMENT_COLLECTION: {
+    label: 'Document Collection',
+    icon: FileText,
+    color: 'text-yellow-500',
+    bgColor: 'bg-yellow-100',
+    requiredDocs: [
+      'Bill of Lading',
+      'Commercial Invoice',
+      'Packing List',
+      'Certificate of Origin',
+      'Import Permit (if applicable)',
+      'Product Certifications (if applicable)'
+    ]
+  } as DocumentState,
+  
+  DOCUMENT_VERIFICATION: {
+    label: 'Document Verification',
+    icon: FileCheck,
+    color: 'text-orange-500',
+    bgColor: 'bg-orange-100',
+    checkPoints: [
+      'HS Code Verification',
+      'Document Completeness',
+      'Value Declaration Check',
+      'Import Restrictions Check'
+    ]
+  } as VerificationState,
+  
+  TAX_COMPUTATION: {
+    label: 'Tax/Duty Computation',
+    icon: Calculator,
+    color: 'text-purple-500',
+    bgColor: 'bg-purple-100',
+    computationItems: [
+      'Customs Duty',
+      'VAT',
+      'Other Taxes/Fees',
+      'Brokerage Fees'
+    ]
+  } as ComputationState,
+  
+  READY_FOR_LODGEMENT: {
+    label: 'Ready for E2M',
+    icon: Upload,
+    color: 'text-green-500',
+    bgColor: 'bg-green-100'
+  } as BasicState,
+  
+  LODGED: {
+    label: 'Lodged in E2M',
+    icon: Check,
+    color: 'text-blue-600',
+    bgColor: 'bg-blue-100'
+  } as BasicState,
+  
+  PAYMENT_COMPLETED: {
+    label: 'Payment Completed',
+    icon: DollarSign,
+    color: 'text-emerald-500',
+    bgColor: 'bg-emerald-100'
+  } as BasicState,
+  
+  PORT_RELEASE: {
+    label: 'Port Release',
+    icon: Building,
+    color: 'text-indigo-500',
+    bgColor: 'bg-indigo-100'
+  } as BasicState,
+  
+  IN_TRANSIT: {
+    label: 'In Transit',
+    icon: Truck,
+    color: 'text-amber-500',
+    bgColor: 'bg-amber-100'
+  } as BasicState,
+  
+  DELIVERED: {
+    label: 'Delivered',
+    icon: Package,
+    color: 'text-green-600',
+    bgColor: 'bg-green-100'
+  } as BasicState
+} as const;
+
+const ImportClearanceWorkflow: React.FC = () => {
+  const [currentState, setCurrentState] = useState<keyof typeof WORKFLOW_STATES>('CLIENT_ORDER');
+  const [shipmentData, setShipmentData] = useState<ShipmentData>({
+    referenceNumber: '',
+    clientName: '',
+    consignee: '',
+    shipmentDetails: {
+      bl_number: '',
+      vessel: '',
+      eta: '',
+      port_of_discharge: ''
+    },
+    documents: [],
+    computations: {
+      dutiable_value: 0,
+      customs_duty: 0,
+      vat: 0,
+      other_charges: 0,
+      total_payable: 0
+    },
+    timeline: [],
+    notes: []
+  });
+
+  // Helper function to check if a state has required docs
+  const hasRequiredDocs = (state: WorkflowState): state is DocumentState => {
+    return 'requiredDocs' in state;
+  };
+
+  // Helper function to check if a state has checkpoints
+  const hasCheckPoints = (state: WorkflowState): state is VerificationState => {
+    return 'checkPoints' in state;
+  };
+
+  // Helper function to check if a state has computation items
+  const hasComputationItems = (state: WorkflowState): state is ComputationState => {
+    return 'computationItems' in state;
+  };
+
+  // Timeline component showing all states
+  const WorkflowTimeline: React.FC = () => {
+    const states = Object.entries(WORKFLOW_STATES);
+    const currentIndex = states.findIndex(([key]) => key === currentState);
+
+    return (
+      <div className="relative mt-8">
+        <div className="absolute left-0 w-full h-1 bg-gray-200 top-5" />
+        <div className="relative flex justify-between">
+          {states.map(([key, state], index) => {
+            const StateIcon = state.icon;
+            const isActive = index <= currentIndex;
+            const isCurrent = key === currentState;
+            
+            return (
+              <div key={key} className="flex flex-col items-center relative group">
+                <div
+                  className={`z-10 flex items-center justify-center w-10 h-10 rounded-full 
+                    ${isActive ? state.bgColor : 'bg-gray-200'} 
+                    ${isActive ? state.color : 'text-gray-400'}
+                    ${isCurrent ? 'ring-2 ring-offset-2 ring-blue-500' : ''}`}
+                >
+                  <StateIcon className="w-5 h-5" />
+                </div>
+                <span className={`mt-2 text-sm font-medium 
+                  ${isActive ? 'text-gray-900' : 'text-gray-400'}`}>
+                  {state.label}
+                </span>
+                
+                {/* Hover tooltip for required items */}
+                <div className="absolute bottom-full mb-2 hidden group-hover:block w-48 bg-white p-2 rounded shadow-lg text-xs">
+                  {hasRequiredDocs(state) && (
+                    <>
+                      <strong>Required Documents:</strong>
+                      <ul className="ml-2 mt-1">
+                        {state.requiredDocs.map((doc: string) => (
+                          <li key={doc}>• {doc}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  {hasCheckPoints(state) && (
+                    <>
+                      <strong>Checkpoints:</strong>
+                      <ul className="ml-2 mt-1">
+                        {state.checkPoints.map((point: string) => (
+                          <li key={point}>• {point}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  {hasComputationItems(state) && (
+                    <>
+                      <strong>Computation Items:</strong>
+                      <ul className="ml-2 mt-1">
+                        {state.computationItems.map((item: string) => (
+                          <li key={item}>• {item}</li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  // Current state details card
+  const StateDetailsCard: React.FC = () => {
+    const currentStateData = WORKFLOW_STATES[currentState];
+    const StateIcon = currentStateData.icon;
+
+    return (
+      <Card className="mt-6">
+        <CardHeader className="flex flex-row items-center space-x-4">
+          <div className={`p-2 rounded-full ${currentStateData.bgColor}`}>
+            <StateIcon className={`w-6 h-6 ${currentStateData.color}`} />
+          </div>
+          <div>
+            <CardTitle className="text-xl">
+              Current Status: {currentStateData.label}
+            </CardTitle>
+            <p className="text-sm text-gray-500">
+              Ref: {shipmentData.referenceNumber || 'Not yet assigned'}
+            </p>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {hasRequiredDocs(currentStateData) && (
+              <div>
+                <h4 className="font-medium mb-2">Required Documents</h4>
+                <ul className="grid grid-cols-2 gap-2">
+                  {currentStateData.requiredDocs.map((doc: string) => (
+                    <li key={doc} className="flex items-center text-sm">
+                      <div className="w-2 h-2 rounded-full bg-gray-300 mr-2" />
+                      {doc}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {currentState === 'TAX_COMPUTATION' && (
+              <div>
+                <h4 className="font-medium mb-2">Computation Summary</h4>
+                <div className="bg-gray-50 p-3 rounded">
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div>Dutiable Value:</div>
+                    <div className="text-right">₱{shipmentData.computations.dutiable_value.toLocaleString()}</div>
+                    <div>Customs Duty:</div>
+                    <div className="text-right">₱{shipmentData.computations.customs_duty.toLocaleString()}</div>
+                    <div>VAT:</div>
+                    <div className="text-right">₱{shipmentData.computations.vat.toLocaleString()}</div>
+                    <div>Other Charges:</div>
+                    <div className="text-right">₱{shipmentData.computations.other_charges.toLocaleString()}</div>
+                    <div className="font-medium">Total Payable:</div>
+                    <div className="text-right font-medium">₱{shipmentData.computations.total_payable.toLocaleString()}</div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    );
   };
 
   return (
-    <div className="space-y-6">
-      {/* Status Card */}
-      {clearance && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Clearance Status</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center space-x-4">
-              {STATUS_CONFIG[clearance.status].icon}
-              <div>
-                <p className="font-medium">{STATUS_CONFIG[clearance.status].label}</p>
-                <p className="text-sm text-gray-500">
-                  Reference: {clearance.referenceNumber}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Documents Management Card */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Import Clearance Documents</CardTitle>
-          <CardDescription>
-            Upload and manage required documents for import clearance
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Tabs defaultValue="required" className="space-y-4">
-            <TabsList>
-              <TabsTrigger value="required">Required Documents</TabsTrigger>
-              <TabsTrigger value="additional">Additional Documents</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="required" className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <ImportDocumentUpload
-                  clearanceId={clearanceId}
-                  documentType="bill_of_lading"
-                  onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Bill of Lading', fileUrl)}
-                />
-                <ImportDocumentUpload
-                  clearanceId={clearanceId}
-                  documentType="commercial_invoice"
-                  onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Commercial Invoice', fileUrl)}
-                />
-                <ImportDocumentUpload
-                  clearanceId={clearanceId}
-                  documentType="packing_list"
-                  onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Packing List', fileUrl)}
-                />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="additional">
-              <ImportDocumentUpload
-                clearanceId={clearanceId}
-                documentType="other"
-                onUploadSuccess={(fileUrl: string) => handleUploadSuccess('Additional Document', fileUrl)}
-              />
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-
-      {/* Display uploaded documents if available */}
-      {clearance?.documents && clearance.documents.length > 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Uploaded Documents</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {clearance.documents.map((doc) => (
-                <div key={doc.id} className="flex items-center justify-between p-2 border rounded">
-                  <div>
-                    <p className="font-medium">
-                      {DOCUMENT_TYPE_LABELS[doc.type as DocumentType]}
-                    </p>
-                    <p className="text-sm text-gray-500">{doc.fileName}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      doc.status === 'APPROVED' ? 'bg-green-100 text-green-800' :
-                      doc.status === 'REJECTED' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {doc.status}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
+    <div className="p-6">
+      <WorkflowTimeline />
+      <StateDetailsCard />
+      
+      {/* Action buttons */}
+      <div className="mt-6 space-x-4">
+        <Button 
+          onClick={() => {
+            const states = Object.keys(WORKFLOW_STATES) as Array<keyof typeof WORKFLOW_STATES>;
+            const currentIndex = states.indexOf(currentState);
+            if (currentIndex < states.length - 1) {
+              setCurrentState(states[currentIndex + 1]);
+            }
+          }}
+          variant="default"
+          disabled={currentState === 'DELIVERED'}
+        >
+          Move to Next State
+        </Button>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 {
   "name": "customs-broker-portal",
   "version": "0.1.0",
-  "lastUpdate": "2024-10-26",
+  "lastUpdate": "2024-10-28",
   "stack": {
     "framework": "Next.js 14.2.16",
     "authentication": "Clerk",
@@ -23,93 +23,81 @@
         "Alerts & Deadlines"
       ]
     },
+    "importClearance": {
+      "status": "implemented",
+      "features": [
+        "Active Shipments View",
+        "Historical Shipments View",
+        "New Import Form",
+        "Document Upload Interface",
+        "Workflow Management",
+        "Status Tracking",
+        "Statement of Facts Timeline"
+      ],
+      "forms": {
+        "seaFreight": [
+          "Consignee Selection",
+          "Exporter Details",
+          "Bill of Lading Management",
+          "Vessel Information",
+          "Multiple B/L Support"
+        ],
+        "airFreight": [
+          "Consignee Selection",
+          "Exporter Details",
+          "Airway Bill Management",
+          "Aircraft Information"
+        ],
+        "goodsDeclaration": [
+          "Multi-item Support",
+          "HS Code Fields",
+          "Weight and Value Inputs"
+        ],
+        "documentUpload": [
+          "Commercial Invoice",
+          "Packing List",
+          "Upload Status Display"
+        ]
+      }
+    },
     "navigation": {
       "status": "implemented",
       "components": [
         "Sidebar Navigation",
         "Header with Notifications"
       ]
-    },
-    "landingPage": {
-      "status": "implemented",
-      "components": [
-        "Hero Section",
-        "Feature Highlights",
-        "Navigation"
-      ]
-    },
-    "importClearance": {
-      "status": "partially_implemented",
-      "components": [
-        "Document Upload Interface",
-        "Workflow Status Display",
-        "Document Type Management"
-      ],
-      "completedItems": [
-        "Workflow Component Structure",
-        "Upload Interface UI",
-        "Status Tracking UI",
-        "Document Types Definition",
-        "Toast Notifications"
-      ]
-    }
-  },
-  "inProgress": {
-    "importClearance": {
-      "status": "in_progress",
-      "components": [
-        "API Integration",
-        "Document Storage",
-        "Status Management Logic"
-      ],
-      "completedItems": [
-        "Component Structure",
-        "TypeScript Types",
-        "UI Implementation",
-        "Error Handling"
-      ],
-      "pendingItems": [
-        "Backend API Integration",
-        "File Storage Implementation",
-        "Real-time Status Updates"
-      ]
-    },
-    "database": {
-      "status": "pending",
-      "description": "Setting up Cloud SQL and database schemas"
     }
   },
   "projectStructure": {
     "src": {
       "app": {
-        "(admin)": {
+        "admin": {
           "admin": {
-            "page.tsx": "Admin dashboard with stats and activities",
+            "page.tsx": "Main dashboard with stats and activities",
             "import": {
               "page.tsx": "Import clearance list view",
-              "clearance": {
-                "page.tsx": "New clearance form"
-              },
               "[id]": {
-                "page.tsx": "Clearance details view"
+                "page.tsx": "Individual shipment view"
               },
               "components": {
-                "ImportClearanceWorkflow.tsx": "Document workflow component with status tracking",
-                "ImportDocumentUpload.tsx": "File upload component with progress tracking"
+                "ImportClearanceWorkflow.tsx": "Workflow status tracker",
+                "NewImportForm.tsx": "Import creation form"
               }
             }
           },
-          "layout.tsx": "Admin layout with navigation"
+          "layout.tsx": "Admin layout with authentication"
         },
         "api": {
           "admin": {
             "import": {
               "documents": {
-                "upload": "Document upload API endpoint (in progress)"
+                "upload": "Document upload API endpoint (planned)"
               }
             }
           }
         },
+        "globals.css": "Global styles",
+        "layout.tsx": "Root layout",
         "page.tsx": "Landing page"
       },
       "components": {
@@ -117,12 +105,41 @@
           "header.tsx": "Admin header with notifications",
           "sidebar.tsx": "Navigation sidebar"
         },
-        "ui": "shadcn/ui components",
-        "providers.tsx": "React Query and other providers"
+        "ui": {
+          "alert.tsx": "Alert component",
+          "button.tsx": "Button component",
+          "card.tsx": "Card component",
+          "dialog.tsx": "Dialog component",
+          "input.tsx": "Input component",
+          "select.tsx": "Select component",
+          "table.tsx": "Table component",
+          "tabs.tsx": "Tabs component",
+          "textarea.tsx": "Textarea component",
+          "toast.tsx": "Toast component"
+        }
       },
-      "types": {
-        "clearance.ts": "TypeScript types for clearance system"
+      "lib": {
+        "google": {
+          "auth.ts": "Google authentication utilities",
+          "drive.ts": "Google Drive integration",
+          "gmail.ts": "Gmail integration"
+        },
+        "utils.ts": "Utility functions"
       }
+    }
+  },
+  "inProgress": {
+    "database": {
+      "status": "pending",
+      "description": "Setting up Cloud SQL and database schemas"
+    },
+    "storage": {
+      "status": "pending",
+      "description": "Implementing Google Cloud Storage for documents"
+    },
+    "hsCodeDetection": {
+      "status": "pending",
+      "description": "Implementing automatic HS code detection from PDF"
     }
   },
   "plannedFeatures": {

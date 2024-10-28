@@ -1,182 +1,320 @@
-// src/app/admin/admin/import/clearance/page.tsx
-"use client";
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState, ChangeEvent } from 'react';
+import { useRouter } from 'next/router';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/components/ui/use-toast';
-import type { ImportClearance } from '@/types/clearance';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Label } from '@/components/ui/label';
+import { 
+  Ship, 
+  Plane, 
+  Package, 
+  Upload as UploadIcon,
+  Plus,
+  FileText
+} from 'lucide-react';
 
-export default function NewClearancePage() {
+interface Client {
+  id: number;
+  name: string;
+  contact: string;
+}
+
+interface Exporter {
+  id: number;
+  name: string;
+  address: string;
+}
+
+interface UploadedDocs {
+  [key: string]: string[];
+}
+
+interface BlForm {
+  id: number;
+}
+
+type ShipmentType = 'sea' | 'air';
+
+// Mock data
+const MOCK_CLIENTS: Client[] = [
+  { id: 1, name: 'ABC Company', contact: 'John Doe' },
+  { id: 2, name: 'XYZ Corp', contact: 'Jane Smith' },
+];
+
+const MOCK_EXPORTERS: Exporter[] = [
+  { id: 1, name: 'Supplier Co Ltd', address: '123 Export St, China' },
+  { id: 2, name: 'Global Trade Inc', address: '456 Trade Ave, Singapore' },
+];
+
+const INCOTERMS: string[] = [
+  'FOB', 'CIF', 'CFR', 'EXW', 'DDP', 'DAP'
+];
+
+const ImportClearancePage: React.FC = () => {
   const router = useRouter();
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
-  
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    const formData = new FormData(e.currentTarget);
-    const clearanceData = {
-      referenceNumber: `IMP-${new Date().getFullYear()}-${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`,
-      status: "DOCUMENTS_PENDING",
-      clientId: "client123",
-      shipmentDetails: {
-        consignee: formData.get('consignee'),
-        portOfEntry: formData.get('portOfEntry'),
-        estimatedArrival: new Date(formData.get('estimatedArrival') as string),
-        shipmentType: formData.get('shipmentType'),
-        cargoDescription: formData.get('cargoDescription')
-      },
-      documents: [],
-      timeline: {
-        createdAt: new Date(),
-      },
-      customsValue: {
-        declaredValue: parseFloat(formData.get('declaredValue') as string),
-        currency: formData.get('currency') || 'USD',
-      },
-      notes: []
-    };
+  const [shipmentType, setShipmentType] = useState<ShipmentType>('sea');
+  const [selectedClient, setSelectedClient] = useState<number | null>(null);
+  const [blForms, setBlForms] = useState<BlForm[]>([{ id: 1 }]);
+  const [uploadedDocs, setUploadedDocs] = useState<UploadedDocs>({});
 
-    try {
-      // In a real app, you would make an API call here
-      // const response = await fetch('/api/clearances', {
-      //   method: 'POST',
-      //   body: JSON.stringify(clearanceData)
-      // });
-      // const data = await response.json();
-      
-      // For testing, we'll just simulate a success
-      toast({
-        title: "Success",
-        description: "New clearance created successfully",
-      });
-      
-      // Redirect to the clearance list
-      router.push('/admin/admin/import');
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to create clearance",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+  const handleDocumentUpload = (event: ChangeEvent<HTMLInputElement>, docType: string) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setUploadedDocs(prev => ({
+        ...prev,
+        [docType]: [...(prev[docType] || []), file.name]
+      }));
     }
   };
 
-  return (
-    <div className="container mx-auto py-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">New Import Clearance</h1>
-        <Button
-          variant="outline"
-          onClick={() => router.push('/admin/admin/import')}
-        >
-          Back to List
-        </Button>
+  const ShipmentForm: React.FC<{ formId: number }> = ({ formId }) => (
+    <div className="space-y-6 p-6 bg-gray-50 rounded-lg mt-4">
+      <div className="grid grid-cols-2 gap-4">
+        {/* Client Selection */}
+        <div className="col-span-2">
+          <Label>Consignee</Label>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select client" />
+            </SelectTrigger>
+            <SelectContent>
+              {MOCK_CLIENTS.map(client => (
+                <SelectItem key={client.id} value={client.id.toString()}>
+                  {client.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Exporter Details */}
+        <div>
+          <Label>Exporter Name</Label>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select or enter exporter" />
+            </SelectTrigger>
+            <SelectContent>
+              {MOCK_EXPORTERS.map(exporter => (
+                <SelectItem key={exporter.id} value={exporter.id.toString()}>
+                  {exporter.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div>
+          <Label>Exporter Address</Label>
+          <Input placeholder="Exporter address will auto-fill" />
+        </div>
+
+        {/* Shipment Type Specific Fields */}
+        {shipmentType === 'sea' ? (
+          <>
+            <div>
+              <Label>Bill of Lading No.</Label>
+              <Input placeholder="Enter B/L number" />
+            </div>
+            <div>
+              <Label>Vessel Name</Label>
+              <Input placeholder="Enter vessel name" />
+            </div>
+            <div>
+              <Label>Container No.</Label>
+              <Input placeholder="Enter container number" />
+            </div>
+          </>
+        ) : (
+          <>
+            <div>
+              <Label>Airway Bill No.</Label>
+              <Input placeholder="Enter AWB number" />
+            </div>
+            <div>
+              <Label>Aircraft Name</Label>
+              <Input placeholder="Enter aircraft name" />
+            </div>
+            <div>
+              <Label>Flight No.</Label>
+              <Input placeholder="Enter flight number" />
+            </div>
+          </>
+        )}
+
+        {/* Common Fields */}
+        <div>
+          <Label>Port of Origin</Label>
+          <Input placeholder="Enter port of origin" />
+        </div>
+        
+        <div>
+          <Label>Port of Discharge</Label>
+          <Input placeholder="Enter port of discharge" />
+        </div>
+
+        <div>
+          <Label>Terms of Delivery</Label>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select incoterm" />
+            </SelectTrigger>
+            <SelectContent>
+              {INCOTERMS.map(term => (
+                <SelectItem key={term} value={term}>
+                  {term}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Shipment Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Consignee</label>
-                <Input
-                  name="consignee"
-                  placeholder="Enter consignee name"
-                  required
-                />
-              </div>
+      {/* Goods Declaration */}
+      <div className="mt-6">
+        <h3 className="text-lg font-medium mb-4">Goods Declaration</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="p-2 text-left">Description</th>
+                <th className="p-2 text-left">Invoice Value (USD)</th>
+                <th className="p-2 text-left">Gross Weight</th>
+                <th className="p-2 text-left">Net Weight</th>
+                <th className="p-2 text-left">Quantity</th>
+                <th className="p-2 text-left">HS Code</th>
+                <th className="p-2 text-left">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="p-2"><Input placeholder="Description" /></td>
+                <td className="p-2"><Input type="number" placeholder="0.00" /></td>
+                <td className="p-2"><Input type="number" placeholder="0.00" /></td>
+                <td className="p-2"><Input type="number" placeholder="0.00" /></td>
+                <td className="p-2"><Input type="number" placeholder="0" /></td>
+                <td className="p-2"><Input placeholder="Auto-detect" /></td>
+                <td className="p-2">
+                  <Button variant="outline" size="sm">
+                    <Plus className="w-4 h-4" />
+                  </Button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Port of Entry</label>
-                <Input
-                  name="portOfEntry"
-                  placeholder="Enter port of entry"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Estimated Arrival</label>
-                <Input
-                  type="date"
-                  name="estimatedArrival"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Shipment Type</label>
-                <select
-                  name="shipmentType"
-                  className="w-full border rounded-md h-10 px-3"
-                  required
-                >
-                  <option value="SEA">Sea Freight</option>
-                  <option value="AIR">Air Freight</option>
-                  <option value="LAND">Land Freight</option>
-                </select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Declared Value</label>
-                <Input
-                  type="number"
-                  name="declaredValue"
-                  placeholder="Enter value"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Currency</label>
-                <select
-                  name="currency"
-                  className="w-full border rounded-md h-10 px-3"
-                  required
-                >
-                  <option value="USD">USD</option>
-                  <option value="PHP">PHP</option>
-                  <option value="EUR">EUR</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Cargo Description</label>
-              <textarea
-                name="cargoDescription"
-                className="w-full border rounded-md p-3"
-                rows={3}
-                placeholder="Enter cargo description"
-                required
+      {/* Document Upload */}
+      <div className="mt-6">
+        <h3 className="text-lg font-medium mb-4">Supporting Documents</h3>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label>Commercial Invoice</Label>
+            <div className="mt-2">
+              <Button variant="outline" className="w-full" onClick={() => document.getElementById(`invoice-upload-${formId}`)?.click()}>
+                <UploadIcon className="w-4 h-4 mr-2" />
+                Upload Invoice
+              </Button>
+              <input
+                id={`invoice-upload-${formId}`}
+                type="file"
+                className="hidden"
+                onChange={(e) => handleDocumentUpload(e, 'invoice')}
               />
             </div>
-          </CardContent>
-        </Card>
-
-        <div className="flex justify-end gap-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => router.push('/admin/admin/import')}
-          >
-            Cancel
-          </Button>
-          <Button type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Create Clearance'}
-          </Button>
+            {uploadedDocs['invoice']?.map((doc: string) => (
+              <div key={doc} className="text-sm text-gray-600 mt-1 flex items-center">
+                <FileText className="w-4 h-4 mr-1" />
+                {doc}
+              </div>
+            ))}
+          </div>
+          <div>
+            <Label>Packing List</Label>
+            <div className="mt-2">
+              <Button variant="outline" className="w-full" onClick={() => document.getElementById(`packing-upload-${formId}`)?.click()}>
+                <UploadIcon className="w-4 h-4 mr-2" />
+                Upload Packing List
+              </Button>
+              <input
+                id={`packing-upload-${formId}`}
+                type="file"
+                className="hidden"
+                onChange={(e) => handleDocumentUpload(e, 'packing')}
+              />
+            </div>
+            {uploadedDocs['packing']?.map((doc: string) => (
+              <div key={doc} className="text-sm text-gray-600 mt-1 flex items-center">
+                <FileText className="w-4 h-4 mr-1" />
+                {doc}
+              </div>
+            ))}
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   );
-}
+
+  return (
+    <div className="p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Import Clearance</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Tabs defaultValue="sea" onValueChange={(value) => setShipmentType(value as ShipmentType)}>
+            <TabsList>
+              <TabsTrigger value="sea">
+                <Ship className="w-4 h-4 mr-2" />
+                Sea Freight
+              </TabsTrigger>
+              <TabsTrigger value="air">
+                <Plane className="w-4 h-4 mr-2" />
+                Air Freight
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="sea">
+              {blForms.map(form => (
+                <ShipmentForm key={form.id} formId={form.id} />
+              ))}
+              <Button
+                variant="outline"
+                className="mt-4"
+                onClick={() => setBlForms(prev => [...prev, { id: prev.length + 1 }])}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Another B/L
+              </Button>
+            </TabsContent>
+
+            <TabsContent value="air">
+              <ShipmentForm formId={1} />
+            </TabsContent>
+          </Tabs>
+
+          <div className="mt-6 flex justify-end space-x-4">
+            <Button variant="outline">Cancel</Button>
+            <Button>Create Import Clearance</Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default ImportClearancePage;
