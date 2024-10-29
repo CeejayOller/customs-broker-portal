@@ -1,8 +1,22 @@
 // src/app/(admin)/admin/import/types/import-form.ts
 
+export interface CustomEntity {
+  name: string;
+  address: string;
+  tin?: string;
+  brn?: string;
+}
+
 export interface ShipmentForm {
     id: string;
     // Common fields
+    // Custom entry flags
+    useCustomConsignee: boolean;
+    useCustomExporter: boolean;
+    // Custom entries
+    customConsignee?: CustomEntity;
+    customExporter?: CustomEntity;
+    // Original fields
     consigneeId: string;
     contactPerson: string;
     exporterId: string;

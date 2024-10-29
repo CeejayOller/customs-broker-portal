@@ -5,6 +5,9 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Edit } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
+import { Loader2 } from 'lucide-react';
 
 // Import types and constants
 import { WORKFLOW_STATES, REQUIRED_DOCUMENTS } from '../constants/workflow-states';
@@ -22,6 +25,8 @@ interface WorkflowState {
 }
 
 const ImportClearanceWorkflow: React.FC = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   // Component states
   const [state, setState] = useState<WorkflowState>({
     currentState: 'CLIENT_DETAILS',
@@ -34,6 +39,7 @@ const ImportClearanceWorkflow: React.FC = () => {
 
   // Shipment data state
   const [shipmentData, setShipmentData] = useState<ShipmentData>({
+    id: '',
     referenceNumber: '',
     consignee: {
       name: '',
@@ -79,30 +85,77 @@ const ImportClearanceWorkflow: React.FC = () => {
   // Reference number generation
   const generateReferenceNumber = async () => {
     try {
-      const currentYear = new Date().getFullYear().toString();
-      const response = await fetch('/api/reference-number', {
+      setState(prev => ({ ...prev, isLoading: true }));
+      
+      const response = await fetch('/api/admin/import', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          transactionType: state.freightType,
-          year: currentYear,
+          shipmentType: state.freightType,
+          formData: {
+            consignee: {},
+            exporter: {},
+            shipmentDetails: {},
+            documents: REQUIRED_DOCUMENTS.map(doc => ({
+              name: doc.name,
+              status: 'not_uploaded',
+              isVerified: false,
+              isRequired: doc.isRequired
+            }))
+          }
         }),
       });
 
-      if (!response.ok) throw new Error('Failed to generate reference number');
+      if (!response.ok) throw new Error('Failed to create shipment');
 
-      const data: ReferenceNumberResponse = await response.json();
-      
-      setShipmentData(prev => ({
-        ...prev,
-        referenceNumber: data.referenceNumber,
-      }));
+      const data = await response.json();
+      setShipmentData(data);
     } catch (error) {
-      console.error('Error generating reference number:', error);
+      console.error('Error creating shipment:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to create shipment',
+        variant: 'destructive',
+      });
     } finally {
       setState(prev => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  // function to update shipment
+  const updateShipment = async (updates: Partial<ShipmentData>) => {
+    try {
+      if (!shipmentData?.id) return;
+
+      const response = await fetch(`/api/admin/import/${shipmentData.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...updates,
+          currentStage: state.currentState,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update shipment');
+
+      const updatedShipment = await response.json();
+      setShipmentData(updatedShipment);
+      
+      toast({
+        title: 'Success',
+        description: 'Shipment updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating shipment:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update shipment',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -118,35 +171,85 @@ const ImportClearanceWorkflow: React.FC = () => {
     return timeline?.status || 'pending';
   };
 
-  // Stage completion handler
-  const handleStageCompletion = () => {
-    const newTimeline = [...shipmentData.timeline];
-    const timelineEntry = {
-      stage: state.currentState,
-      status: 'complete' as WorkflowStageStatus,
-      timestamp: new Date().toISOString()
-    };
+  // Stage completion handler to use API
+  const handleStageCompletion = async () => {
+    try {
+      await updateShipment({
+        timeline: [
+          ...shipmentData.timeline,
+          {
+            stage: state.currentState,
+            status: 'complete',
+            timestamp: new Date().toISOString()
+          }
+        ]
+      });
 
-    const existingEntryIndex = newTimeline.findIndex(t => t.stage === state.currentState);
-    if (existingEntryIndex >= 0) {
-      newTimeline[existingEntryIndex] = timelineEntry;
-    } else {
-      newTimeline.push(timelineEntry);
-    }
-
-    setShipmentData(prev => ({ ...prev, timeline: newTimeline }));
-
-    // Move to next stage
-    const states = Object.keys(WORKFLOW_STATES) as Array<keyof typeof WORKFLOW_STATES>;
-    const currentIndex = states.indexOf(state.currentState);
-    if (currentIndex < states.length - 1) {
-      setState(prev => ({ 
-        ...prev, 
-        currentState: states[currentIndex + 1],
-        showConfirmDialog: false 
-      }));
+      const states = Object.keys(WORKFLOW_STATES) as Array<keyof typeof WORKFLOW_STATES>;
+      const currentIndex = states.indexOf(state.currentState);
+      if (currentIndex < states.length - 1) {
+        setState(prev => ({
+          ...prev,
+          currentState: states[currentIndex + 1],
+          showConfirmDialog: false
+        }));
+      }
+    } catch (error) {
+      console.error('Error completing stage:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to complete stage',
+        variant: 'destructive',
+      });
     }
   };
+
+  // Document Upload Handler
+  const handleDocumentUpload = async (file: File, documentType: string) => {
+    try {
+      if (!shipmentData?.id) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('documentType', documentType);
+      formData.append('shipmentId', shipmentData.id);
+
+      const response = await fetch('/api/admin/import/documents/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Failed to upload document');
+
+      const result = await response.json();
+      
+      // Update local state
+      const docIndex = shipmentData.documents.findIndex(d => d.name === documentType);
+      if (docIndex !== -1) {
+        const updatedDocs = [...shipmentData.documents];
+        updatedDocs[docIndex] = {
+          ...updatedDocs[docIndex],
+          status: 'draft',
+          url: result.fileUrl,
+        };
+
+        await updateShipment({ documents: updatedDocs });
+      }
+
+      toast({
+        title: 'Success',
+        description: 'Document uploaded successfully',
+      });
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to upload document',
+        variant: 'destructive',
+      });
+    }
+  };
+
   // 3. Effects
   // Generate reference number on mount
   useEffect(() => {
@@ -350,20 +453,14 @@ const ConfirmationDialog: React.FC = () => {
 
 const DocumentUploadDialog: React.FC = () => {
   const [uploadType, setUploadType] = useState<'draft' | 'final'>('draft');
+  const [file, setFile] = useState<File | null>(null);
 
-  const handleUpload = () => {
-    if (state.selectedDocument) {
-      // Handle the document upload
-      setShipmentData(prev => ({
-        ...prev,
-        documents: prev.documents.map(doc =>
-          doc.name === state.selectedDocument
-            ? { ...doc, status: uploadType }
-            : doc
-        )
-      }));
-      setState(prev => ({ ...prev, showUploadDialog: false, selectedDocument: null }));
-    }
+  const handleUpload = async () => {
+    if (!file || !state.selectedDocument) return;
+    
+    await handleDocumentUpload(file, state.selectedDocument);
+    setState(prev => ({ ...prev, showUploadDialog: false, selectedDocument: null }));
+    setFile(null);
   };
 
   return (
@@ -397,7 +494,14 @@ const DocumentUploadDialog: React.FC = () => {
               </Button>
             </div>
           </div>
-          {/* Add file upload input here */}
+          <div>
+            <input
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="w-full"
+            />
+          </div>
         </div>
         <DialogFooter>
           <Button 
@@ -406,7 +510,7 @@ const DocumentUploadDialog: React.FC = () => {
           >
             Cancel
           </Button>
-          <Button onClick={handleUpload}>
+          <Button onClick={handleUpload} disabled={!file}>
             Upload
           </Button>
         </DialogFooter>

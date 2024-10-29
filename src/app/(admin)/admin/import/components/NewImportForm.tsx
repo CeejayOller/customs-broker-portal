@@ -1,7 +1,7 @@
 // src/app/(admin)/admin/import/components/NewImportForm.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getNextReferenceNumber } from '@/lib/utils/reference-number';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
@@ -38,12 +38,14 @@ import {
   type ValidationErrors,
   type GoodsItem,
   type PackageCode,
+  type CustomEntity,  // Add this import
   MOCK_CLIENTS,
   MOCK_EXPORTERS,
   INCOTERMS,
   PACKAGE_CODES,
   REQUIRED_DOCUMENTS,
 } from '../types/import-form';
+import { EntityInput } from './EntityInput';
 
 const ShipmentFormFields = ({ 
   formIndex,
@@ -64,29 +66,54 @@ const ShipmentFormFields = ({
   onGoodsAdd: (formIndex: number) => void;
   onDocumentUpload: (event: React.ChangeEvent<HTMLInputElement>, docType: string, formIndex: number) => void;
 }) => {
+  // Add the states for saved entries
+  const [savedConsignees, setSavedConsignees] = useState<CustomEntity[]>([]);
+  const [savedExporters, setSavedExporters] = useState<CustomEntity[]>([]);
+
+  useEffect(() => {
+    const loadSavedEntries = async () => {
+      try {
+        const [consigneesRes, exportersRes] = await Promise.all([
+          fetch('/api/admin/saved-entries?type=consignee'),
+          fetch('/api/admin/saved-entries?type=exporter')
+        ]);
+
+        const consignees = await consigneesRes.json();
+        const exporters = await exportersRes.json();
+
+        setSavedConsignees(consignees.data);
+        setSavedExporters(exporters.data);
+      } catch (error) {
+        console.error('Error loading saved entries:', error);
+      }
+    };
+
+    loadSavedEntries();
+  }, []);
+
   return (
     <div className="space-y-6 p-4 bg-gray-50 rounded-lg mt-4">
       {/* Basic Details Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Consignee & Contact Person */}
-        <div className="col-span-1 md:col-span-2">
-          <Label>Consignee</Label>
-          <Select 
-            value={form.consigneeId}
-            onValueChange={(value) => onChange(formIndex, 'consigneeId', value)}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select consignee" />
-            </SelectTrigger>
-            <SelectContent>
-              {MOCK_CLIENTS.map(client => (
-                <SelectItem key={client.id} value={client.id}>
-                  {client.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <div className="col-span-1 md:col-span-2 grid gap-6">
+          <EntityInput
+            type="consignee"
+            value={form.customConsignee || { name: '', address: '', tin: '', brn: '' }}
+            onChange={(value) => onChange(formIndex, 'customConsignee', value)}
+            savedEntries={savedConsignees}
+            onSelectSaved={(entry) => onChange(formIndex, 'customConsignee', entry)}
+          />
+
+          <EntityInput
+            type="exporter"
+            value={form.customExporter || { name: '', address: '' }}
+            onChange={(value) => onChange(formIndex, 'customExporter', value)}
+            savedEntries={savedExporters}
+            onSelectSaved={(entry) => onChange(formIndex, 'customExporter', entry)}
+          />
+    </div>
+
         <div>
           <Label>Contact Person</Label>
           <Input 
@@ -95,40 +122,16 @@ const ShipmentFormFields = ({
             placeholder="Enter contact person"
           />
         </div>
-
-        {/* Exporter Details */}
-        <div>
-          <Label>Exporter</Label>
-          <Select 
-            value={form.exporterId}
-            onValueChange={(value) => {
-              const exporter = MOCK_EXPORTERS.find(e => e.id === value);
-              if (exporter) {
-                onChange(formIndex, 'exporterId', value);
-                onChange(formIndex, 'exporterAddress', exporter.address);
-              }
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select exporter" />
-            </SelectTrigger>
-            <SelectContent>
-              {MOCK_EXPORTERS.map(exporter => (
-                <SelectItem key={exporter.id} value={exporter.id}>
-                  {exporter.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Exporter Address</Label>
-          <Input 
-            value={form.exporterAddress} 
-            onChange={(e) => onChange(formIndex, 'exporterAddress', e.target.value)}
-            placeholder="Enter exporter address"
-          />
-        </div>
+        
+<div>
+  <Label>Exporter Address</Label>
+  <Input 
+    value={form.exporterAddress} 
+    onChange={(e) => onChange(formIndex, 'exporterAddress', e.target.value)}
+    placeholder="Enter exporter address"
+    disabled // Make this read-only since it's populated from selection
+  />
+</div>
 
         {/* Origin & Destination */}
         <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -445,6 +448,11 @@ const NewImportForm = ({ onComplete }: NewImportFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [forms, setForms] = useState<ShipmentForm[]>([{
     id: '1',
+    // Custom entry flags
+    useCustomConsignee: false,
+    useCustomExporter: false,
+    customConsignee: undefined,
+    customExporter: undefined,
     // Common fields
     consigneeId: '',
     contactPerson: '',
@@ -479,6 +487,10 @@ const NewImportForm = ({ onComplete }: NewImportFormProps) => {
   // Add function to create a new empty form
   const createEmptyForm = (): ShipmentForm => ({
     id: Math.random().toString(),
+    useCustomConsignee: false,
+    useCustomExporter: false,
+    customConsignee: undefined,
+    customExporter: undefined,
     // Common fields
     consigneeId: '',
     contactPerson: '',
@@ -570,20 +582,65 @@ const NewImportForm = ({ onComplete }: NewImportFormProps) => {
       setFormErrors(errors);
       return;
     }
-
+  
     try {
-      const { referenceNumber } = await getNextReferenceNumber(
-        shipmentType === 'sea' ? 'IMS' : 'IMA'
-      );
-
-      setReferenceNumber(referenceNumber);
+      setIsSubmitting(true);
+      
+      const formData = forms[0];
+      const response = await fetch('/api/admin/import', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          shipmentType: shipmentType === 'sea' ? 'IMS' : 'IMA',
+          formData: {
+            consignee: formData.useCustomConsignee 
+              ? formData.customConsignee
+              : {
+                  name: MOCK_CLIENTS.find(c => c.id === formData.consigneeId)?.name || '',
+                  address: MOCK_CLIENTS.find(c => c.id === formData.consigneeId)?.address || '',
+                  tin: '',
+                  brn: '',
+                },
+            exporter: formData.useCustomExporter
+              ? formData.customExporter
+              : {
+                  name: MOCK_EXPORTERS.find(e => e.id === formData.exporterId)?.name || '',
+                  address: formData.exporterAddress,
+                },
+            shipmentDetails: {
+              bl_number: formData.blNumber || '',
+              vessel_name: formData.vesselName || '',
+              flight_number: formData.flightNo || '',
+              registry_number: formData.registryNo || '',
+              voyage_number: formData.voyageNo || '',
+              port_of_origin: formData.portOfOrigin,
+              port_of_discharge: formData.portOfDischarge,
+              eta: '',
+              ata: '',
+              description_of_goods: formData.goods.map(g => g.description).join(', '),
+              volume: ''
+            }
+          }
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create shipment');
+      }
+  
+      const newShipment = await response.json();
+      setReferenceNumber(newShipment.referenceNumber);
       setIsConfirmDialogOpen(true);
     } catch (error) {
-      console.error('Error generating reference number:', error);
+      console.error('Error creating shipment:', error);
       setFormErrors({
         ...formErrors,
-        submit: 'Failed to generate reference number. Please try again.',
+        submit: 'Failed to create shipment. Please try again.',
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -640,23 +697,6 @@ const NewImportForm = ({ onComplete }: NewImportFormProps) => {
     // Validate goods if needed
     if (form.goods.length === 0) {
       errors.goods = 'At least one item must be added';
-    }
-  
-    // Validate required documents
-    const requiredDocs = REQUIRED_DOCUMENTS.filter((doc: { 
-      type: string; 
-      required: boolean; 
-      forType: 'sea' | 'air' | 'both' 
-    }) => 
-      doc.required && (doc.forType === 'both' || doc.forType === shipmentType)
-    );
-      
-    const missingDocs = requiredDocs.filter((doc: { type: string }) => 
-      !form.documents[doc.type] || form.documents[doc.type].length === 0
-    );
-  
-    if (missingDocs.length > 0) {
-      errors.documents = `Missing required documents: ${missingDocs.map((d: { name: string }) => d.name).join(', ')}`;
     }
       
     return errors;

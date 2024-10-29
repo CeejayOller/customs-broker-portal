@@ -1,13 +1,18 @@
 {
   "name": "customs-broker-portal",
-  "version": "0.1.0",
-  "lastUpdate": "2024-03-26",
+  "version": "0.1.1",
+  "lastUpdate": "2024-10-29",
   "stack": {
     "framework": "Next.js 14.2.16",
     "authentication": "Clerk",
     "styling": "Tailwind CSS",
     "uiComponents": "shadcn/ui",
-    "stateManagement": "@tanstack/react-query"
+    "stateManagement": "@tanstack/react-query",
+    "api": {
+      "backend": "Next.js API Routes",
+      "storage": "Local (Development)",
+      "planned": "Google Cloud Platform"
+    }
   },
   "completedFeatures": {
     "authentication": {
@@ -30,18 +35,22 @@
         "Workflow Management",
         "Status Tracking",
         "Reference Number Generation",
-        "Freight Type Selection (Sea/Air)"
+        "Freight Type Selection (Sea/Air)",
+        "Flexible Entity Management"
       ],
       "components": {
         "implemented": [
           "ImportClearanceWorkflow Base Structure",
           "Reference Number Generation",
-          "Freight Type Selection"
+          "Freight Type Selection",
+          "Basic API Integration",
+          "Entity Input System"
         ],
         "inProgress": [
           "Document Upload System",
           "Timeline Tracking",
-          "Stage Management"
+          "Stage Management",
+          "Entity Data Management"
         ]
       }
     },
@@ -66,10 +75,14 @@
               },
               "components": {
                 "ImportClearanceWorkflow.tsx": "Document workflow component",
-                "ImportDocumentUpload.tsx": "File upload component"
+                "ImportDocumentUpload.tsx": "File upload component",
+                "EntityInput.tsx": "Consignee/Exporter input component",
+                "NewImportForm.tsx": "Import creation form"
               },
               "types": {
-                "workflow.ts": "Workflow related types"
+                "workflow.ts": "Workflow related types",
+                "import-form.ts": "Form and entity types",
+                "index.ts": "Type exports"
               },
               "constants": {
                 "workflow-states.ts": "Workflow states and constants"
@@ -83,7 +96,14 @@
             "import": {
               "documents": {
                 "upload": "Document upload API endpoint"
+              },
+              "route.ts": "Main import API routes",
+              "[id]": {
+                "route.ts": "Single shipment operations"
               }
+            },
+            "saved-entries": {
+              "route.ts": "Entity management API"
             }
           },
           "reference-number": {
@@ -94,6 +114,9 @@
       "lib": {
         "utils": {
           "reference-number.ts": "Reference number generation utilities"
+        },
+        "services": {
+          "import-clearance.ts": "Import clearance service layer"
         }
       }
     }
@@ -107,7 +130,18 @@
         "Implement document verification system",
         "Add form validation",
         "Implement stage-specific content",
-        "Add error handling and notifications"
+        "Add error handling and notifications",
+        "Improve entity input system",
+        "Implement data persistence"
+      ]
+    },
+    "api": {
+      "status": "in_development",
+      "description": "Implementing local API system",
+      "completed": [
+        "Basic CRUD operations",
+        "Reference number generation",
+        "Entity management structure"
       ]
     }
   },

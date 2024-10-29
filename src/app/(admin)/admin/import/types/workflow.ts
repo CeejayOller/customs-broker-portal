@@ -12,6 +12,7 @@ export interface WorkflowStateBase {
 
 // Shipment data interfaces
 export interface ShipmentData {
+  id: string;
   referenceNumber: string;
   consignee: {
     name: string;
@@ -52,7 +53,7 @@ export interface ShipmentData {
   };
   timeline: {
     stage: string;
-    status: 'pending' | 'partial' | 'complete';
+    status: WorkflowStageStatus;
     timestamp: string;
   }[];
   notes: string[];
@@ -65,3 +66,19 @@ export interface ReferenceNumberResponse {
     referenceNumber: string;
     sequenceNumber: number;
   }
+
+// to handle API responses
+export interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+  error?: string;
+}
+
+// for pagination responses
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  totalPages: number;
+}

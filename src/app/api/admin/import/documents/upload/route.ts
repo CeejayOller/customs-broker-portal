@@ -1,88 +1,79 @@
 // src/app/api/admin/import/documents/upload/route.ts
-import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
-import { Readable } from 'stream';
+import { NextRequest, NextResponse } from 'next/server';
+import { writeFile } from 'fs/promises';
+import path from 'path';
+import { randomUUID } from 'crypto';
 
-const GOOGLE_DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_IMPORT_DOCS_FOLDER_ID;
-
-const getGoogleDriveService = () => {
-  const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
-  
-  const auth = new google.auth.GoogleAuth({
-    credentials: {
-      client_email: process.env.GOOGLE_CLIENT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    },
-    scopes: SCOPES,
-  });
-
-  return google.drive({ version: 'v3', auth });
+// In production, replace this with Google Cloud Storage
+const saveFile = async (file: File, docType: string, shipmentId: string) => {
+  try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    
+    // Create unique filename
+    const extension = path.extname(file.name);
+    const filename = `${shipmentId}-${docType}-${randomUUID()}${extension}`;
+    const filepath = path.join(process.cwd(), 'public', 'uploads', filename);
+    
+    await writeFile(filepath, buffer);
+    return `/uploads/${filename}`;
+  } catch (error) {
+    console.error('Error saving file:', error);
+    throw new Error('Failed to save file');
+  }
 };
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const formData = await request.formData();
+    const formData = await req.formData();
     const file = formData.get('file') as File;
-    const documentType = formData.get('documentType') as string;
-    const clearanceId = formData.get('clearanceId') as string | null;
-    
-    if (!file) {
+    const docType = formData.get('documentType') as string;
+    const shipmentId = formData.get('shipmentId') as string;
+
+    if (!file || !docType || !shipmentId) {
       return NextResponse.json(
-        { error: 'No file provided' },
+        { error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
-    if (!documentType) {
+    // Validate file type
+    const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
+    if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Document type not specified' },
+        { error: 'Invalid file type. Only PDF, JPEG, and PNG files are allowed' },
         { status: 400 }
       );
     }
 
-    const drive = getGoogleDriveService();
-    
-    // Convert File to Buffer
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const stream = Readable.from(buffer);
+    // Save file and get URL
+    const fileUrl = await saveFile(file, docType, shipmentId);
 
-    // Create file in Google Drive
-    const driveResponse = await drive.files.create({
-      requestBody: {
-        name: `${clearanceId || 'import'}_${documentType}_${file.name}`,
-        mimeType: file.type,
-        parents: GOOGLE_DRIVE_FOLDER_ID ? [GOOGLE_DRIVE_FOLDER_ID] : undefined,
-      },
-      media: {
-        mimeType: file.type,
-        body: stream,
-      },
-    });
-
-    // Set file permissions to anyone with link can view
-    await drive.permissions.create({
-      fileId: driveResponse.data.id!,
-      requestBody: {
-        role: 'reader',
-        type: 'anyone',
-      },
-    });
-
-    // Get the web view link
-    const fileData = await drive.files.get({
-      fileId: driveResponse.data.id!,
-      fields: 'webViewLink',
-    });
+    // Update shipment documents (replace with database update later)
+    const shipmentIndex = shipments.findIndex(s => s.id === shipmentId);
+    if (shipmentIndex !== -1) {
+      const docIndex = shipments[shipmentIndex].documents.findIndex(
+        d => d.name === docType
+      );
+      
+      if (docIndex !== -1) {
+        shipments[shipmentIndex].documents[docIndex] = {
+          ...shipments[shipmentIndex].documents[docIndex],
+          status: 'draft',
+          url: fileUrl
+        };
+      }
+    }
 
     return NextResponse.json({
-      fileUrl: fileData.data.webViewLink,
-      message: 'File uploaded successfully',
+      success: true,
+      fileUrl,
+      message: 'Document uploaded successfully'
     });
-    
   } catch (error) {
-    console.error('Upload error:', error);
+    console.error('Error uploading document:', error);
     return NextResponse.json(
-      { error: 'Failed to upload file' },
+      { error: 'Failed to upload document' },
       { status: 500 }
     );
   }

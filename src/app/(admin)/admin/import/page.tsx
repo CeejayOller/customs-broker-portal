@@ -1,8 +1,7 @@
 // src/app/(admin)/admin/import/page.tsx
-
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Card,
@@ -51,68 +50,48 @@ interface ShipmentTableProps {
   isHistorical?: boolean;
 }
 
-// Mock data with proper typing and reference numbers
-const MOCK_ACTIVE_SHIPMENTS: Shipment[] = [
-  {
-    id: '1',
-    referenceNumber: 'CLEX-IMS24-0001',
-    consignee: 'ABC Company',
-    type: 'sea',
-    blNumber: 'BL123456',
-    status: 'DOCUMENT_COLLECTION',
-    eta: '2024-11-01',
-    lastUpdate: '2024-10-26T10:30:00',
-    isLocked: false
-  },
-  {
-    id: '2',
-    referenceNumber: 'CLEX-IMA24-0001',
-    consignee: 'XYZ Corp',
-    type: 'air',
-    awbNumber: 'AWB789012',
-    status: 'TAX_COMPUTATION',
-    eta: '2024-10-29',
-    lastUpdate: '2024-10-26T09:15:00',
-    isLocked: false
-  },
-];
-
-const MOCK_HISTORICAL_SHIPMENTS: Shipment[] = [
-  {
-    id: '3',
-    referenceNumber: 'CLEX-IMS24-0002',
-    consignee: 'DEF Industries',
-    type: 'sea',
-    blNumber: 'BL654321',
-    status: 'DELIVERED',
-    completionDate: '2024-10-20',
-    lastUpdate: '2024-10-20T15:45:00',
-    isLocked: true
-  },
-];
-
-const getStatusStyle = (status: string) => {
-  const styles: { [key: string]: string } = {
-    DOCUMENT_COLLECTION: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-100/80',
-    TAX_COMPUTATION: 'bg-purple-100 text-purple-800 hover:bg-purple-100/80',
-    READY_FOR_E2M: 'bg-blue-100 text-blue-800 hover:bg-blue-100/80',
-    LODGED_IN_E2M: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-100/80',
-    PAYMENT_COMPLETED: 'bg-emerald-100 text-emerald-800 hover:bg-emerald-100/80',
-    PORT_RELEASE: 'bg-orange-100 text-orange-800 hover:bg-orange-100/80',
-    IN_TRANSIT: 'bg-cyan-100 text-cyan-800 hover:bg-cyan-100/80',
-    DELIVERED: 'bg-green-100 text-green-800 hover:bg-green-100/80'
-  };
-
-  return styles[status] || 'bg-gray-100 text-gray-800 hover:bg-gray-100/80';
-};
-
 const ImportClearancePage = () => {
   const router = useRouter();
   const [isNewImportOpen, setIsNewImportOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("active");
+  const [isLoading, setIsLoading] = useState(true);
+  const [shipments, setShipments] = useState<Shipment[]>([]);
+
+  // Fetch shipments
+  useEffect(() => {
+    const fetchShipments = async () => {
+      try {
+        const response = await fetch('/api/admin/import');
+        if (!response.ok) throw new Error('Failed to fetch shipments');
+        const data = await response.json();
+        setShipments(data.data);
+      } catch (error) {
+        console.error('Error fetching shipments:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchShipments();
+  }, []);
 
   const handleViewShipment = (id: string, isLocked: boolean) => {
     router.push(`/admin/import/${id}?locked=${isLocked}`);
+  };
+
+  // Status style helper
+  const getStatusStyle = (status: string) => {
+    const styles: { [key: string]: string } = {
+      DOCUMENT_COLLECTION: 'bg-yellow-100 text-yellow-800 hover:bg-yellow-100/80',
+      TAX_COMPUTATION: 'bg-purple-100 text-purple-800 hover:bg-purple-100/80',
+      READY_FOR_E2M: 'bg-blue-100 text-blue-800 hover:bg-blue-100/80',
+      LODGED_IN_E2M: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-100/80',
+      PAYMENT_COMPLETED: 'bg-emerald-100 text-emerald-800 hover:bg-emerald-100/80',
+      PORT_RELEASE: 'bg-orange-100 text-orange-800 hover:bg-orange-100/80',
+      IN_TRANSIT: 'bg-cyan-100 text-cyan-800 hover:bg-cyan-100/80',
+      DELIVERED: 'bg-green-100 text-green-800 hover:bg-green-100/80'
+    };
+    return styles[status] || 'bg-gray-100 text-gray-800 hover:bg-gray-100/80';
   };
 
   const ShipmentTable: React.FC<ShipmentTableProps> = ({ shipments, isHistorical = false }) => (
@@ -222,7 +201,13 @@ const ImportClearancePage = () => {
               <CardTitle>Active Shipments</CardTitle>
             </CardHeader>
             <CardContent>
-              <ShipmentTable shipments={MOCK_ACTIVE_SHIPMENTS} />
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                <ShipmentTable 
+                  shipments={shipments.filter((s: Shipment) => s.status !== 'DELIVERED')} 
+                />
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -233,10 +218,14 @@ const ImportClearancePage = () => {
               <CardTitle>Shipment History</CardTitle>
             </CardHeader>
             <CardContent>
-              <ShipmentTable 
-                shipments={MOCK_HISTORICAL_SHIPMENTS} 
-                isHistorical={true}
-              />
+              {isLoading ? (
+                <div>Loading...</div>
+              ) : (
+                <ShipmentTable 
+                  shipments={shipments.filter((s: Shipment) => s.status === 'DELIVERED')}
+                  isHistorical={true}
+                />
+              )}
             </CardContent>
           </Card>
         </TabsContent>
