@@ -1,170 +1,117 @@
 {
   "name": "customs-broker-portal",
-  "version": "0.1.1",
-  "lastUpdate": "2024-10-29",
+  "version": "0.1.0",
+  "lastUpdate": "2024-10-30",
   "stack": {
-    "framework": "Next.js 14.2.16",
-    "authentication": "Clerk",
-    "styling": "Tailwind CSS",
-    "uiComponents": "shadcn/ui",
-    "stateManagement": "@tanstack/react-query",
-    "api": {
-      "backend": "Next.js API Routes",
-      "storage": "Local (Development)",
-      "planned": "Google Cloud Platform"
-    }
+      "framework": "Next.js 14.0.4",
+      "authentication": "Clerk",
+      "database": {
+          "type": "PostgreSQL",
+          "host": "Google Cloud SQL",
+          "version": "16"
+      },
+      "styling": "Tailwind CSS",
+      "uiComponents": "shadcn/ui",
+      "stateManagement": "@tanstack/react-query"
   },
   "completedFeatures": {
-    "authentication": {
-      "status": "implemented",
-      "provider": "Clerk",
-      "features": ["Sign In", "Sign Out", "Protected Routes"]
-    },
-    "adminDashboard": {
-      "status": "implemented",
-      "components": [
-        "Activity Stats",
-        "Recent Activities",
-        "Alerts & Deadlines"
-      ]
-    },
-    "importClearance": {
-      "status": "in_progress",
-      "features": [
-        "Document Upload Interface",
-        "Workflow Management",
-        "Status Tracking",
-        "Reference Number Generation",
-        "Freight Type Selection (Sea/Air)",
-        "Flexible Entity Management"
-      ],
-      "components": {
-        "implemented": [
-          "ImportClearanceWorkflow Base Structure",
-          "Reference Number Generation",
-          "Freight Type Selection",
-          "Basic API Integration",
-          "Entity Input System"
-        ],
-        "inProgress": [
-          "Document Upload System",
-          "Timeline Tracking",
-          "Stage Management",
-          "Entity Data Management"
-        ]
+      "authentication": {
+          "status": "implemented",
+          "provider": "Clerk",
+          "features": ["Sign In", "Sign Out", "Protected Routes"]
+      },
+      "adminDashboard": {
+          "status": "implemented",
+          "components": [
+              "Activity Stats",
+              "Recent Activities",
+              "Alerts & Deadlines"
+          ]
+      },
+      "importClearance": {
+          "status": "implemented",
+          "features": [
+              "Document Upload Interface",
+              "Workflow Management",
+              "Status Tracking",
+              "Entity Management (Consignee/Exporter)",
+              "Google Cloud SQL Integration",
+              "Reference Number Generation"
+          ]
+      },
+      "navigation": {
+          "status": "implemented",
+          "components": [
+              "Sidebar Navigation",
+              "Header with Notifications"
+          ]
+      },
+      "database": {
+          "status": "implemented",
+          "features": [
+              "Google Cloud SQL Setup",
+              "Local Development Proxy",
+              "Entity Tables",
+              "Import Clearance Schema"
+          ]
       }
-    },
-    "navigation": {
-      "status": "implemented",
-      "components": [
-        "Sidebar Navigation",
-        "Header with Notifications"
-      ]
-    }
   },
   "projectStructure": {
-    "src": {
-      "app": {
-        "admin": {
-          "admin": {
-            "page.tsx": "Main dashboard with stats and activities",
-            "import": {
-              "page.tsx": "Import clearance list view",
-              "clearance": {
-                "page.tsx": "New clearance form"
+      "src": {
+          "app": {
+              "admin": {
+                  "import": {
+                      "page.tsx": "Main import clearance view",
+                      "clearance": {
+                          "page.tsx": "New clearance form"
+                      },
+                      "components": {
+                          "EntityInput.tsx": "Entity management component",
+                          "ImportClearanceWorkflow.tsx": "Document workflow component",
+                          "ImportDocumentUpload.tsx": "File upload component",
+                          "NewImportForm.tsx": "Import creation form"
+                      }
+                  }
               },
-              "components": {
-                "ImportClearanceWorkflow.tsx": "Document workflow component",
-                "ImportDocumentUpload.tsx": "File upload component",
-                "EntityInput.tsx": "Consignee/Exporter input component",
-                "NewImportForm.tsx": "Import creation form"
-              },
-              "types": {
-                "workflow.ts": "Workflow related types",
-                "import-form.ts": "Form and entity types",
-                "index.ts": "Type exports"
-              },
-              "constants": {
-                "workflow-states.ts": "Workflow states and constants"
-              }
-            }
+              "layout.tsx": "Admin layout with authentication"
           },
-          "layout.tsx": "Admin layout with authentication"
-        },
-        "api": {
-          "admin": {
-            "import": {
-              "documents": {
-                "upload": "Document upload API endpoint"
-              },
-              "route.ts": "Main import API routes",
-              "[id]": {
-                "route.ts": "Single shipment operations"
+          "components": {
+              "ui": "shadcn/ui components",
+              "admin": {
+                  "header.tsx": "Admin header with notifications",
+                  "sidebar.tsx": "Navigation sidebar"
               }
-            },
-            "saved-entries": {
-              "route.ts": "Entity management API"
-            }
           },
-          "reference-number": {
-            "route.ts": "Reference number generation API"
+          "lib": {
+              "db.ts": "Database configuration",
+              "config.ts": "Environment configuration",
+              "utils": "Utility functions",
+              "google": "Google Cloud integrations"
           }
-        }
-      },
-      "lib": {
-        "utils": {
-          "reference-number.ts": "Reference number generation utilities"
-        },
-        "services": {
-          "import-clearance.ts": "Import clearance service layer"
-        }
       }
-    }
   },
   "inProgress": {
-    "importClearance": {
-      "status": "in_development",
-      "description": "Implementing document workflow and verification system",
-      "nextSteps": [
-        "Complete document upload functionality",
-        "Implement document verification system",
-        "Add form validation",
-        "Implement stage-specific content",
-        "Add error handling and notifications",
-        "Improve entity input system",
-        "Implement data persistence"
-      ]
-    },
-    "api": {
-      "status": "in_development",
-      "description": "Implementing local API system",
-      "completed": [
-        "Basic CRUD operations",
-        "Reference number generation",
-        "Entity management structure"
-      ]
-    }
+      "database": {
+          "status": "in_progress",
+          "description": "Implementing additional database features and optimizations"
+      },
+      "storage": {
+          "status": "pending",
+          "description": "Setting up Google Cloud Storage for document management"
+      }
   },
   "plannedFeatures": {
-    "notifications": {
-      "status": "planned",
-      "description": "Real-time notifications using Cloud PubSub"
-    },
-    "reporting": {
-      "status": "planned",
-      "description": "Generate custom reports and analytics"
-    },
-    "clientPortal": {
-      "status": "planned",
-      "description": "Client-facing portal for tracking shipments"
-    },
-    "exportShipment": {
-      "status": "planned",
-      "description": "Export shipment management module"
-    },
-    "accreditation": {
-      "status": "planned",
-      "description": "Accreditation management system for new and renewal"
-    }
+      "notifications": {
+          "status": "planned",
+          "description": "Real-time notifications using Cloud PubSub"
+      },
+      "reporting": {
+          "status": "planned",
+          "description": "Generate custom reports and analytics"
+      },
+      "clientPortal": {
+          "status": "planned",
+          "description": "Client-facing portal for tracking shipments"
+      }
   }
 }

@@ -1,5 +1,5 @@
-// src/components/ui/table.tsx
 import * as React from "react"
+
 import { cn } from "@/lib/utils"
 
 const Table = React.forwardRef<
@@ -36,6 +36,21 @@ const TableBody = React.forwardRef<
 ))
 TableBody.displayName = "TableBody"
 
+const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  React.HTMLAttributes<HTMLTableSectionElement>
+>(({ className, ...props }, ref) => (
+  <tfoot
+    ref={ref}
+    className={cn(
+      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableFooter.displayName = "TableFooter"
+
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
@@ -43,13 +58,28 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-gray-50/50 data-[state=selected]:bg-gray-50",
+      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
       className
     )}
     {...props}
   />
 ))
 TableRow.displayName = "TableRow"
+
+const TableHead = React.forwardRef<
+  HTMLTableCellElement,
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(
+      "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+      className
+    )}
+    {...props}
+  />
+))
+TableHead.displayName = "TableHead"
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
@@ -63,26 +93,25 @@ const TableCell = React.forwardRef<
 ))
 TableCell.displayName = "TableCell"
 
-const TableHead = React.forwardRef<
-  HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement>
+const TableCaption = React.forwardRef<
+  HTMLTableCaptionElement,
+  React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <th
+  <caption
     ref={ref}
-    className={cn(
-      "h-12 px-4 text-left align-middle font-medium text-gray-500 [&:has([role=checkbox])]:pr-0",
-      className
-    )}
+    className={cn("mt-4 text-sm text-muted-foreground", className)}
     {...props}
   />
 ))
-TableHead.displayName = "TableHead"
+TableCaption.displayName = "TableCaption"
 
 export {
   Table,
   TableHeader,
   TableBody,
+  TableFooter,
   TableHead,
   TableRow,
   TableCell,
+  TableCaption,
 }
